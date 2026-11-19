@@ -1,0 +1,48 @@
+FÉRIAS SABIDAS - como publicar no Netlify e instalar como aplicativo
+
+PUBLICAR
+1. Entre em app.netlify.com e abra a aba "Sites".
+2. Descompacte este zip e arraste a PASTA INTEIRA (com todos os arquivos) para a área
+   "Drag and drop your site output folder here". Não envie só o index.html: o app
+   precisa também dos ícones, do manifest.webmanifest e do sw.js para poder ser instalado.
+3. O Netlify gera um endereço (https). Abra esse endereço no celular, tablet ou computador.
+
+INSTALAR COMO APLICATIVO
+- Android (Chrome): abra o endereço, toque nos 3 pontinhos e em "Instalar app"
+  (ou "Adicionar à tela inicial"). O ícone aparece na tela inicial.
+- Computador (Chrome ou Edge): clique no ícone de instalar na barra de endereço
+  (ou menu > "Instalar Mundo Sabido").
+- iPhone/iPad (Safari): toque em Compartilhar > "Adicionar à Tela de Início".
+Depois de aberto uma vez com internet, o app também funciona sem internet.
+A opção de instalar só aparece no endereço do Netlify, não dentro do Claude.
+
+COMO USAR COMO AVALIAÇÃO (professora ou psicopedagoga)
+- Cadastre cada criança em "Novo aluno". Cada aluno tem estrelas, tema e histórico próprios.
+- Toque em "Adultos" > "Iniciar avaliação guiada". Escolha a Forma A ou B e as partes.
+  Os itens são fixos em cada forma, então dá para comparar uma aplicação com outra.
+  Use a Forma B ao repetir, para a criança não decorar as respostas.
+- Em "Adultos" > "Ver e imprimir relatório", escolha a aplicação, preencha as observações
+  e toque em Imprimir (A4). Também dá para copiar o texto ou baixar uma planilha (CSV).
+- Apoios: modo calmo, tudo maior, letra de fácil leitura e velocidade da voz, em "Adultos".
+
+IMPORTANTE
+- O relatório é um registro de apoio à observação. Não é diagnóstico e não tem notas de corte por idade.
+- Os dados ficam salvos só no navegador do aparelho usado (não vão para nenhum servidor).
+  Limpar os dados do navegador apaga o histórico. Baixe o CSV para guardar uma cópia.
+- A voz usa as vozes do aparelho. Se faltar a voz em português do Brasil, instale-a nas
+  configurações de voz do celular ou tablet.
+
+
+NOVO: RECURSOS PARA CRIANÇAS AUTISTAS (Adultos > abas abertas por seção)
+- Conforto sensorial: sons, confete, animações, mascote e fundo ponteado podem ser ligados/desligados separadamente; volume; "Modo calmo" desliga tudo.
+- Rotina visual "primeiro / depois": monte a sequência do dia (ex.: Contas > Pausa > Brincar). A tela inicial mostra Feito / Agora / Depois.
+- Botão de pausa sempre visível (ícone || no topo): tela calma com respiração; o tempo de pausa não conta no tempo de resposta.
+- Interesses (trens, dinossauros, carros, espaço, animais, futebol, princesas): aparecem nas contagens, palavras, memória e padrões. A avaliação guiada NÃO usa interesses, para continuar comparável.
+- Quadro de fichas: a criança junta fichas por acerto de primeira e, ao completar, aparece o prêmio escolhido pelo adulto (ex.: "Hora de brincar!").
+- Modo mediado: o adulto marca Sozinha(o) / Com dica / Com ajuda a cada item. O relatório mostra a coluna "Com apoio".
+- Poucas opções: reduz para 2 alternativas nas atividades (não na avaliação).
+- Metas individuais (Adultos > Metas) e "Evolução entre aplicações" no relatório (▲ ▼ =).
+- Cada aluno guarda suas próprias configurações.
+Observação: é um registro de apoio; não é diagnóstico. A configuração ideal deve ser definida com a equipe que acompanha a criança.
+
+TEMA "MUNDO SABIDO" (novo): céu azul, capivara Capi, cartões coloridos e menu inferior (Início, Meu Progresso, Conquistas, Perfil). Escolha em Adultos > Tema ou ao cadastrar o aluno. Os temas Algodão-doce e Aventura continuam disponíveis.
