@@ -11,7 +11,7 @@ INSTALAR COMO APLICATIVO
 - Android (Chrome): abra o endereço, toque nos 3 pontinhos e em "Instalar app"
   (ou "Adicionar à tela inicial"). O ícone aparece na tela inicial.
 - Computador (Chrome ou Edge): clique no ícone de instalar na barra de endereço
-  (ou menu > "Instalar Mundo Sabido").
+  (ou menu > "Instalar Mundo das Descobertas").
 - iPhone/iPad (Safari): toque em Compartilhar > "Adicionar à Tela de Início".
 Depois de aberto uma vez com internet, o app também funciona sem internet.
 A opção de instalar só aparece no endereço do Netlify, não dentro do Claude.
@@ -46,3 +46,36 @@ NOVO: RECURSOS PARA CRIANÇAS AUTISTAS (Adultos > abas abertas por seção)
 Observação: é um registro de apoio; não é diagnóstico. A configuração ideal deve ser definida com a equipe que acompanha a criança.
 
 TEMA "MUNDO SABIDO" (novo): céu azul, capivara Capi, cartões coloridos e menu inferior (Início, Meu Progresso, Conquistas, Perfil). Escolha em Adultos > Tema ou ao cadastrar o aluno. Os temas Algodão-doce e Aventura continuam disponíveis.
+
+NOVIDADES (mais conteúdo e mais dinâmica)
+- Desafio do dia (6 perguntas surpresa de todas as áreas, +5 estrelas na primeira vez do dia) e botão Surpresa.
+- Sequência de dias seguidos e álbum de 40 figurinhas (uma nova a cada rodada completa), em Conquistas.
+- Novas atividades: Ordem do alfabeto, Maiúscula e minúscula, Quem rima?, Palavras opostas, Quanto falta?, Maior ou menor?, Dobro e metade, Antes e depois, Contar figuras, Qual não combina?
+- Mais palavras, frases e 3 histórias novas; 8 novos temas de inglês; 3 novos quebra-cabeças.
+- A avaliação guiada continua usando só os itens originais, para as aplicações seguirem comparáveis.
+
+CAPIVARA NA TELA INICIAL: o "Modo calmo" antigo escondia a capivara em alguns aparelhos. Agora o Modo calmo desliga só sons, confete, animações e fundo; a capivara fica parada. Para escondê-la de propósito: Adultos > Conforto sensorial > Mascote.
+
+CAPI MAIS INTERATIVA
+- A Capi reage nos jogos (feliz ao acertar, incentiva ao errar). Na avaliação guiada ela não aparece.
+- Toque na Capi da tela inicial: ela pula e fala uma frase.
+- Armário da Capi (tela Conquistas ou botão na tela inicial): acessórios desbloqueados por rodadas completas.
+- Novas atividades "Traçar letras" e "Traçar números" (dedo na tela, com registro no relatório).
+- Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
+
+COPIA DE SEGURANCA
+- Area dos adultos > Copia de seguranca > "Salvar copia de seguranca" gera um arquivo .json com todos os alunos, progresso e relatorios.
+- "Restaurar de um arquivo" (tambem na tela Quem vai estudar?) recupera os dados em outro aparelho ou apos limpar o navegador.
+- Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
+
+NIVEL QUE SE AJUSTA, RECOMENDACAO E MAIS CONTEUDO
+- "Contas do meu nivel" e "Palavras do meu nivel" (primeira atividade de Contas e Leitura): 3 niveis. Sobe com 5 ou 6 acertos de 6 e desce com 2 ou menos. So na pratica livre; a avaliacao guiada nao muda.
+- Apos o primeiro erro em perguntas com 4 opcoes, o app tira uma opcao errada para ajudar.
+- Tela inicial: cartao "Para hoje" com a area em que a crianca mais errou nas ultimas respostas (precisa de pelo menos 4 respostas e menos de 80% de acerto).
+- Mais conteudo: 15 palavras/silabas, 12 frases, 3 historias e 3 temas de ingles (Brinquedos, Profissoes, Natureza).
+- Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
+
+COMEMORACAO DE CONQUISTAS
+- Ao ganhar rodada perfeita, subir de nivel, completar o desafio do dia, atingir sequencias de 3, 5, 7, 10, 14, 21, 30 dias, ganhar figurinha ou acessorio da Capi, aparece uma tela de festa: chuva de confete, fanfarra, voz dando parabens e a Capi pulando.
+- Respeita os ajustes sensoriais: sem confete se desligado, sem som se Sons de efeito estiver desligado, sem animacao no Modo calmo.
+- Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
