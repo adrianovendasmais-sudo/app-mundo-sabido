@@ -655,7 +655,7 @@ function newProfile(o){
   return {id:'p'+Date.now().toString(36)+Math.floor(Math.random()*1000),name:o.name||'Aluno(a)',birth:o.birth||'',grade:o.grade||'',notes:o.notes||'',
     skin:normSkin(o.skin),stars:o.stars||0,rounds:o.rounds||{},
     day:(o.day&&typeof o.day==='object')?o.day:{d:'',m:{}},log:[],sessions:[],rep:{by:'',obs:'',beh:''},
-    prefs:Object.assign({},DEFAULT_PREFS,o.prefs||{}),tokens:{n:0},routine:[],rday:{d:'',done:{}},goals:[],streak:{last:'',n:0},stick:[],chal:'',cap:{eyes:'',neck:'',ear:'',back:''},lvl:{}};
+    band:o.band||'auto',an:o.an||{},prefs:Object.assign({},DEFAULT_PREFS,o.prefs||{}),tokens:{n:0},routine:[],rday:{d:'',done:{}},goals:[],streak:{last:'',n:0},stick:[],chal:'',cap:{eyes:'',neck:'',ear:'',back:''},lvl:{}};
 }
 if(!Array.isArray(S.profiles))S.profiles=[];
 if(!S.profiles.length&&legacy&&(legacy.stars||legacy.skin||(legacy.rounds&&Object.keys(legacy.rounds).length))){
@@ -682,6 +682,8 @@ S.profiles.forEach(p=>{
   if(!p.chal)p.chal='';
   if(!p.cap)p.cap={eyes:'',neck:'',ear:'',back:''};
   if(!p.lvl)p.lvl={};
+  if(!p.band)p.band='auto';
+  if(!p.an)p.an={};
 });
 Object.keys(DEFAULT_PREFS).forEach(k=>{
   Object.defineProperty(S,k,{get(){const o=P?P.prefs:GUEST;return o[k]===undefined?DEFAULT_PREFS[k]:o[k];},set(v){(P?P.prefs:GUEST)[k]=v;}});
@@ -1357,7 +1359,7 @@ screens.achv=m=>{
 screens.menu=(m,k)=>{
   const M=MODS[k];if(!M)return go('home');
   m.innerHTML=`${backBtn('home')}<h2 class="mtitle" style="--c:var(--c-${k})">${M.title}</h2><p class="msub">${esc(M.sub)}</p>
-  <div class="acts" style="--c:var(--c-${k})">${M.acts.map(a=>`<button class="act" data-go="act"${dataArg({m:k,id:a.id})}><span class="glyph sm">${a.g}</span><span><b>${esc(a.t)}</b><small>${esc(a.d)}</small></span></button>`).join('')}</div>`;
+  <div class="acts" style="--c:var(--c-${k})">${actsFor(k).map(a=>`<button class="act" data-go="act"${dataArg({m:k,id:a.id})}><span class="glyph sm">${a.g}</span><span><b>${esc(a.t)}</b><small>${esc(a.d)}</small></span></button>`).join('')}</div>`;
 };
 screens.act=(m,arg)=>{const f=arg&&ACTS[arg.m+':'+arg.id];if(f)f(m,arg);else go('home');};
 
@@ -1592,7 +1594,7 @@ function streakNow(){
 }
 const CHAL_GENS=[qLetraInicial,qLetraNome,qSilabaFalta,qPalavraFigura,qFrase,()=>mathQs(1),()=>mathQs(2),()=>mathQs(3),qAtencao,qPadroes,
   ()=>qIngles(Object.keys(EN).reduce((a,k)=>a.concat(EN[k].items),[])),qRima,qOpostos,qOrdemAlfa,qMaiMin,()=>qFalta(1),qMaior,qDobro,qVizinho,qContar,qIntruso];
-function mixQs(n){return pick(CHAL_GENS,n+4).map(g=>{const a=g();return a&&a.length?pick(a,1)[0]:null;}).filter(Boolean).slice(0,n);}
+function mixQs(n){return pick(chalGens(),n+4).map(g=>{const a=g();return a&&a.length?pick(a,1)[0]:null;}).filter(Boolean).slice(0,n);}
 function challengeHTML(){
   const done=P&&P.chal===today(),n=streakNow();
   return '<div class="chalrow"><button class="chal" data-go="act"'+dataArg({m:'desafio',id:'dia'})+'><span class="ci" aria-hidden="true">🎯</span><span class="ct"><b>Desafio do dia</b><small>'+(done?'Feito hoje! Jogue de novo sem pressa':'6 perguntas surpresa de todas as áreas')+'</small></span>'
@@ -1660,6 +1662,38 @@ MODS.leitura.acts.push({id:'rima',t:'Quem rima?',d:'Palavras com o mesmo final',
 MODS.contas.acts.push({id:'n5',t:'Quanto falta?',d:'3 + ? = 8',g:'+?'},{id:'n6',t:'Maior ou menor?',d:'Compare os números',g:'<>'},{id:'n7',t:'Dobro e metade',d:'Dobrar e dividir ao meio',g:'×2'},
   {id:'n8',t:'Antes e depois',d:'Qual número vem antes ou depois?',g:'1·2'},{id:'n9',t:'Contar figuras',d:'Quantos tem?',g:'🔢'});
 MODS.mente.acts.push({id:'intruso',t:'Qual não combina?',d:'Ache o intruso do grupo',g:'🧐'});
+/* ---- atividades por faixa ---- */
+const MQ=(k,mod,mk)=>{ACTS[mod+':'+k]=m=>quiz(m,{key:mod+':'+k,module:mod,make:mk,back:['menu',mod]});};
+MQ('vogais','letras',qLetraPre);MQ('figura','leitura',qFigura);MQ('numerais','contas',qNumeral);MQ('contar','contas',qContarPre);MQ('formas','mente',qFormas);
+MQ('texto','leitura',qTextoBig);MQ('ortografia','leitura',qOrtografia);MQ('sinonimos','leitura',qSinonimos);
+MQ('dig','contas',()=>qCalcBig(0).slice(0,6));MQ('mult','contas',()=>qCalcBig(1).slice(0,6));MQ('rac','contas',qRacBig);
+MODS.letras.acts.push({id:'vogais',t:'Achar letras fáceis',d:'Vogais e letras que a criança já vê',g:'Aa',only:'pre'});
+MODS.leitura.acts.push({id:'figura',t:'Qual figura?',d:'Ouça a palavra e ache a figura',g:'👂',only:'pre'},
+  {id:'texto',t:'Textos e perguntas',d:'Leia um texto e responda',g:'📰',only:'big'},{id:'ortografia',t:'Escreva certo',d:'Qual palavra está certa?',g:'✅',only:'big'},{id:'sinonimos',t:'Palavras parecidas',d:'Sinônimos e vocabulário',g:'≈',only:'big'});
+MODS.contas.acts.push({id:'numerais',t:'Qual número?',d:'Ouça e ache o número',g:'7',only:'pre'},{id:'contar',t:'Contar até 10',d:'Quantas figuras tem?',g:'🔢',only:'pre'},
+  {id:'dig',t:'Contas maiores',d:'Somar e subtrair com dezenas',g:'48',only:'big'},{id:'mult',t:'Multiplicar e dividir',d:'Tabuada completa e divisão',g:'×÷',only:'big'},{id:'rac',t:'Desafios numéricos',d:'Sequências, números que faltam e problemas',g:'🧮',only:'big'});
+MODS.mente.acts.push({id:'formas',t:'Cores e tamanhos',d:'Ouça e toque na cor ou no tamanho',g:'🎨',only:'pre'});
+const PRE_OK={letras:['explorar','achar','vogais','inicial','tracar'],leitura:['figura'],contas:['contar','numerais','n9','tracar','n6'],mente:['diferente','memoria','padrao','formas','intruso'],puzzle:['p1','p2'],ingles:null};
+const BIG_NO={letras:['explorar','achar','inicial','maiusc','tracar','ordem'],leitura:['meu','palavra'],contas:['n1','n5','n8','n9','tracar'],puzzle:['p1'],mente:[],ingles:[]};
+function actsFor(k){
+  const b=ageBand(),M=MODS[k];
+  return M.acts.filter(a=>{
+    if(a.only&&a.only!==b)return false;
+    if(b==='pre'&&!a.only){const ok=PRE_OK[k];return ok===null||(ok&&ok.indexOf(a.id)>=0);}
+    if(b==='big'&&!a.only){return (BIG_NO[k]||[]).indexOf(a.id)<0;}
+    return true;
+  });
+}
+/* adaptativo para 9 a 12: contas grandes */
+ACTS['contas:meu']=m=>adaptive(m,'contas','contas:meu',l=>ageBand()==='big'?qCalcBig(l).slice(0,6):mathQs(LV_MATH[l]).slice(0,6));
+/* desafio do dia e recomendação por faixa */
+const CHAL_PRE=[qLetraPre,qInicialPre,qFigura,qNumeral,qContarPre,qFormas,qAtencao,qPadroes,qIntruso];
+const CHAL_BIG=[qOrtografia,qSinonimos,qTextoBig,()=>qCalcBig(0),()=>qCalcBig(1),()=>qCalcBig(2),qRacBig,qAtencao,qPadroes,qIntruso,
+  ()=>qIngles(Object.keys(EN).reduce((a,k)=>a.concat(EN[k].items),[])),qOpostos,qRima];
+function chalGens(){const b=ageBand();return b==='pre'?CHAL_PRE:b==='big'?CHAL_BIG:CHAL_GENS;}
+REC.ling={t:'Vocabulário',m:'leitura',id:'figura',ico:'🗣️'};REC.for={t:'Cores e tamanhos',m:'mente',id:'formas',ico:'🎨'};
+REC.ort={t:'Ortografia',m:'leitura',id:'ortografia',ico:'✅'};REC.rac={t:'Desafios numéricos',m:'contas',id:'rac',ico:'🧮'};
+
 ACTS['letras:ordem']=m=>quiz(m,{key:'letras:ordem',module:'letras',make:qOrdemAlfa,back:['menu','letras']});
 ACTS['letras:maiusc']=m=>quiz(m,{key:'letras:maiusc',module:'letras',make:qMaiMin,back:['menu','letras']});
 ACTS['leitura:rima']=m=>quiz(m,{key:'leitura:rima',module:'leitura',make:qRima,back:['menu','leitura']});
@@ -2001,8 +2035,9 @@ actions.pick=b=>{setProfile(b.dataset.id);go('home',undefined,{replace:true});};
 
 screens.pform=(m,arg)=>{
   const ed=arg&&arg.id?S.profiles.find(p=>p.id===arg.id):null;
-  const d=ed||{name:'',birth:'',grade:'',notes:'',skin:'mundo'};
-  const grades=['','Educação infantil','1º ano','2º ano','3º ano','4º ano','5º ano','Outro / EJA / não seriado'];
+  const d=ed||{name:'',birth:'',grade:'',notes:'',skin:'mundo',band:'auto',an:{}};
+  const an=d.an||{};
+  const grades=['','Educação infantil','1º ano','2º ano','3º ano','4º ano','5º ano','6º ano','7º ano','Outro / EJA / não seriado'];
   m.innerHTML=`${backBtn(ed?'parents':'who')}<h2 class="mtitle" style="--c:var(--c-letras)">${ed?'Editar aluno':'Novo aluno'}</h2>
   <div id="pform" data-skin="${d.skin}" data-id="${ed?esc(ed.id):''}">
   <div class="panel">
@@ -2013,10 +2048,17 @@ screens.pform=(m,arg)=>{
     <input id="pf-birth" class="inp" type="date" value="${esc(d.birth)}">
     <label class="fl" for="pf-grade">Ano escolar (opcional)</label>
     <select id="pf-grade" class="inp">${grades.map(g=>`<option value="${esc(g)}"${g===d.grade?' selected':''}>${g||'Não informar'}</option>`).join('')}</select>
+    <label class="fl" for="pf-band">Faixa do conteúdo</label>
+    <select id="pf-band" class="inp"><option value="auto"${d.band==='auto'?' selected':''}>Automática pela idade</option><option value="pre"${d.band==='pre'?' selected':''}>4 a 5 anos (mais simples e visual)</option><option value="mid"${d.band==='mid'?' selected':''}>6 a 8 anos</option><option value="big"${d.band==='big'?' selected':''}>9 a 12 anos</option></select>
+    <p class="hint">Sem data de nascimento, o app usa 6 a 8 anos. Escolha aqui para mudar as atividades, o desafio do dia e a avaliação guiada.</p>
     <label class="fl" for="pf-notes">Anotações (opcional)</label>
     <textarea id="pf-notes" class="inp" rows="3" maxlength="400">${esc(d.notes)}</textarea>
     <p class="hint">Use para registrar o que ajuda a criança (apoios, laudos, combinados). Fica salvo só neste aparelho e aparece no relatório.</p>
   </div>
+  <details class="panel"><summary><h3>Ficha do aluno (anamnese, opcional)</h3></summary>
+    <p class="hint">Para profissionais. O que for preenchido aparece no relatório impresso. Fica salvo só neste aparelho.</p>
+    ${AN_F.map(x=>`<label class="fl" for="an-${x[0]}">${x[1]}</label><textarea id="an-${x[0]}" class="inp" rows="2" maxlength="500">${esc(an[x[0]]||'')}</textarea>`).join('')}
+  </details>
   <div class="panel"><h3>Tema</h3><div class="skins">
 <button class="skincard" data-act="pskin" data-v="mundo" aria-pressed="${d.skin==='mundo'}" style="background:linear-gradient(160deg,#8EC9FF,#3F86F0);color:#0F1F66"><span class="sk-emo" aria-hidden="true">🦫🌎⭐</span><b>Mundo das Descobertas</b><small>Céu azul e a capivara Capi</small></button>
     <button class="skincard" data-act="pskin" data-v="algodao" aria-pressed="${d.skin==='algodao'}" style="background:linear-gradient(135deg,#FFD3E8,#FF9CC9);color:#5A1F42"><span class="sk-emo" aria-hidden="true">🎀🍭🦄</span><b>Algodão-doce</b><small>Tudo em tons de rosa</small></button>
@@ -2033,14 +2075,14 @@ actions.pskin=b=>{const f=$('#pform');f.dataset.skin=b.dataset.v;$$('[data-act="
 actions.psave=()=>{
   const f=$('#pform'),name=$('#pf-name').value.trim();
   if(!name){$('#pf-err').hidden=false;$('#pf-name').focus();return;}
-  const vals={name:name,birth:$('#pf-birth').value,grade:$('#pf-grade').value,notes:$('#pf-notes').value.trim(),skin:normSkin(f.dataset.skin)};
+  const vals={name:name,birth:$('#pf-birth').value,grade:$('#pf-grade').value,notes:$('#pf-notes').value.trim(),skin:normSkin(f.dataset.skin),band:$('#pf-band').value,an:AN_F.reduce((o,x)=>{o[x[0]]=$('#an-'+x[0]).value.trim();return o;},{})};
   const id=f.dataset.id;
   if(id){
     const p=S.profiles.find(x=>x.id===id);Object.assign(p,vals);save();
     if(P&&P.id===id)applySkin();
     backTo('parents');
   }else{
-    const p=newProfile(vals);S.profiles.push(p);setProfile(p.id);go('home',undefined,{replace:true});
+    const p=newProfile(vals);if((vals.band==='pre')||(vals.band==='auto'&&bandFromBirth(vals.birth)==='pre')){p.prefs.fewOpts=true;p.prefs.big=true;}S.profiles.push(p);setProfile(p.id);go('home',undefined,{replace:true});
   }
 };
 let CONFIRM=null;
@@ -2059,6 +2101,172 @@ actions.confirmYes=()=>{
   CONFIRM=null;
 };
 
+/* ========== faixas etárias: 4–5 (pré), 6–8 (padrão), 9–12 (maiores) ========== */
+function ageYears(b){
+  if(!b)return null;const d=new Date(b+'T00:00:00');if(isNaN(d))return null;
+  const n=new Date();let y=n.getFullYear()-d.getFullYear();
+  if(n.getMonth()<d.getMonth()||(n.getMonth()===d.getMonth()&&n.getDate()<d.getDate()))y--;
+  return y;
+}
+function bandFromBirth(b){const y=ageYears(b);return y==null?'mid':y<=5?'pre':y>=9?'big':'mid';}
+function ageBand(){
+  if(!P)return 'mid';
+  if(P.band==='pre'||P.band==='mid'||P.band==='big')return P.band;
+  return bandFromBirth(P.birth);
+}
+const BAND_NAME={pre:'4 a 5 anos',mid:'6 a 8 anos',big:'9 a 12 anos'};
+/* ---- geradores: 4–5 anos ---- */
+const EASY_L=['A','E','I','O','U','B','M','P','S','T','L','V'];
+function qLetraPre(){
+  const pool=LETTERS.filter(L=>EASY_L.indexOf(L[0])>=0);
+  return pick(pool,6).map(L=>{
+    const ls=shuffle([L[0]].concat(pick(pool.filter(x=>x[0]!==L[0]),2).map(x=>x[0])));
+    return {dom:'letra',lab:'Achar a letra '+L[0],ans:L[0],stem:`<span class="bigspk">${ICON.speaker}</span>`,prompt:'Ouça e toque na letra certa.',say:[{t:'Toque na letra '+L[3]}],
+      opts:ls.map(x=>({lab:x,h:`<span class="w">${x}</span>`,ok:x===L[0]})),cols:3,after:[{t:L[0]+', '+L[3]}]};
+  });
+}
+function qInicialPre(){
+  const pool=LETTERS.filter(L=>EASY_L.indexOf(L[0])>=0);
+  return pick(pool,6).map(L=>{
+    const ls=shuffle([L[0]].concat(pick(pool.filter(x=>x[0]!==L[0]),2).map(x=>x[0])));
+    return {dom:'fon',lab:'Letra inicial de '+L[1],ans:L[0],stem:`<span class="emo xl">${L[2]}</span>`,prompt:'Com qual letra começa o nome da figura?',say:[{t:'Com qual letra começa '+L[1]+'?'}],
+      opts:ls.map(x=>({lab:x,h:`<span class="w">${x}</span>`,ok:x===L[0]})),cols:3,after:[{t:L[1]}]};
+  });
+}
+function qFigura(){
+  const base=WORDS.filter(w=>w.w.length<=6);
+  return pick(base,6).map(it=>{
+    const others=pick(base.filter(x=>x.w!==it.w&&x.e!==it.e),2);
+    return {dom:'ling',lab:'Achar a figura: '+it.w,ans:it.w,stem:`<span class="bigspk">${ICON.speaker}</span>`,prompt:'Ouça e toque na figura certa.',say:[{t:'Toque em: '+it.w}],
+      opts:shuffle([it].concat(others)).map(x=>({lab:x.w,h:`<span class="emo">${x.e}</span>`,ok:x===it})),cols:3,after:[{t:it.w}]};
+  });
+}
+function qNumeral(){
+  return pick([1,2,3,4,5,6,7,8,9,10],6).map(n=>{
+    const o=shuffle([n].concat(pick([1,2,3,4,5,6,7,8,9,10].filter(x=>x!==n),2)));
+    return {dom:'calc',lab:'Achar o número '+n,ans:n,stem:`<span class="bigspk">${ICON.speaker}</span>`,prompt:'Ouça e toque no número certo.',say:[{t:'Toque no número '+n}],
+      opts:o.map(x=>({lab:String(x),h:`<span class="num">${x}</span>`,ok:x===n})),cols:3,after:[{t:String(n)}]};
+  });
+}
+function qContarPre(){
+  const E=['🍎','⭐','🐶','🎈','🚗','🌸'];
+  return Array.from({length:6},(_,i)=>{
+    const n=i<3?rand(3)+1:rand(5)+3,e=E[rand(E.length)];
+    const o=shuffle([n].concat(pick([1,2,3,4,5,6,7,8].filter(x=>x!==n&&Math.abs(x-n)<=2),2)));
+    return {dom:'calc',lab:'Contar '+n+' figuras',ans:n,stem:`<div class="dots2">${Array.from({length:n},()=>`<span class="emo sm">${e}</span>`).join('')}</div>`,
+      prompt:'Quantas figuras tem?',say:[{t:'Quantas figuras tem?'}],opts:o.map(x=>({lab:String(x),h:`<span class="num">${x}</span>`,ok:x===n})),cols:3};
+  });
+}
+const COR=[['vermelho','#E03131'],['azul','#1C7ED6'],['amarelo','#FCC419'],['verde','#2F9E44'],['laranja','#F76707'],['roxo','#7048E8'],['rosa','#F783AC']];
+function qFormas(){
+  const out=[];
+  pick(COR,3).forEach(c=>{
+    const o=shuffle([c].concat(pick(COR.filter(x=>x[0]!==c[0]),2)));
+    out.push({dom:'for',lab:'Achar a cor '+c[0],ans:c[0],stem:`<span class="bigspk">${ICON.speaker}</span>`,prompt:'Ouça e toque na cor certa.',say:[{t:'Toque na cor '+c[0]}],
+      opts:o.map(x=>({lab:x[0],h:`<span class="swatch" style="display:block;width:64px;height:64px;border-radius:18px;background:${x[1]};border:2px solid rgba(0,0,0,.15)"></span>`,ok:x[0]===c[0]})),cols:3});
+  });
+  [['maior',[56,34,20]],['menor',[56,34,20]]].forEach(sp=>{
+    const sizes=shuffle(sp[1]),target=sp[0]==='maior'?56:20;
+    out.push({dom:'for',lab:'Achar o '+sp[0],ans:sp[0],stem:`<span class="stemtext">Qual é o ${sp[0]}?</span>`,prompt:'Toque no '+sp[0]+'.',say:[{t:'Toque no '+sp[0]+'.'}],
+      opts:sizes.map(s=>({lab:String(s),h:`<span style="font-size:${s}px;line-height:1.1">🐻</span>`,ok:s===target})),cols:3});
+  });
+  return out;
+}
+/* ---- geradores: 9–12 anos ---- */
+const ORT=[['exceção','esseção','excessão'],['excursão','escursão','excurção'],['berinjela','beringela','berinjéla'],['pesquisa','pesquiza','pesqisa'],['analisar','analizar','analissar'],
+ ['aterrissar','aterisar','aterrizar'],['cidadão','cidadam','sidadão'],['previsão','previzão','previção'],['hospital','ospital','hospitau'],['exemplo','ezemplo','exenplo'],
+ ['homem','omem','homen'],['humor','umor','humôr'],['vizinho','vesinho','vezinho'],['atrás','atraz','atrais'],['girafa','jirafa','girafá'],['coelho','coelio','quoelho'],
+ ['açúcar','assucar','açucar'],['chuveiro','xuveiro','chuvero'],['assustado','asustado','assustádo'],['correto','corréto','coreto'],['gente','jente','gentee'],['quilômetro','kilômetro','quilomêtro']];
+function qOrtografia(){
+  return pick(ORT,6).map(it=>({dom:'ort',lab:'Escrita correta de “'+it[0]+'”',ans:it[0],stem:`<span class="bigspk">${ICON.speaker}</span>`,prompt:'Ouça a palavra e toque na que está escrita certa.',say:[{t:it[0]}],noauto:false,
+    opts:shuffle(it.slice()).map(x=>({lab:x,h:`<span class="otext">${esc(x)}</span>`,ok:x===it[0]})),cols:1,after:[{t:it[0]}]}));
+}
+const OPW={'+':'mais','−':'menos','×':'vezes','÷':'dividido por'};
+function bigOpts(ans){
+  const set=new Set([ans]),cand=shuffle([ans+1,ans-1,ans+10,ans-10,ans+2,ans-2,ans+100,ans*2,Math.max(1,ans-5),ans+5].filter(x=>x>0&&x!==ans));
+  for(const x of cand){if(set.size>=4)break;set.add(x);}
+  return shuffle(Array.from(set)).map(n=>({lab:String(n),h:`<span class="num">${n}</span>`,ok:n===ans}));
+}
+function qCalcBig(level){
+  const out=[],seen=new Set();let g=0;
+  while(out.length<8&&g++<300){
+    let a,b,op,ans;
+    if(level===0){
+      if(rand(2)){op='+';a=rand(60)+15;b=rand(60)+15;ans=a+b;}else{op='−';a=rand(70)+30;b=rand(a-10)+8;ans=a-b;}
+    }else if(level===1){
+      const t=rand(3);
+      if(t===0){op='×';a=rand(5)+6;b=rand(5)+6;ans=a*b;}
+      else if(t===1){op='÷';b=rand(8)+2;ans=rand(9)+2;a=b*ans;}
+      else{op='×';a=rand(9)+2;b=rand(10)+2;ans=a*b;}
+    }else{
+      const t=rand(4);
+      if(t===0){op='×';a=rand(20)+12;b=rand(8)+3;ans=a*b;}
+      else if(t===1){op='÷';b=rand(9)+3;ans=rand(15)+8;a=b*ans;}
+      else if(t===2){op='+';a=rand(500)+120;b=rand(400)+120;ans=a+b;}
+      else{op='−';a=rand(600)+300;b=rand(250)+60;ans=a-b;}
+    }
+    const key=a+op+b;if(seen.has(key))continue;seen.add(key);
+    out.push({dom:'calc',lab:a+' '+op+' '+b,ans:ans,stem:`<span class="eq">${a} ${op} ${b} = ?</span>`,prompt:'Quanto é?',say:[{t:a+' '+OPW[op]+' '+b+'?'}],opts:bigOpts(ans),cols:2});
+  }
+  return out;
+}
+function qRacBig(){
+  const L=[
+   {t:'2, 4, 8, 16, ?',a:32,l:'Dobro a cada passo'},{t:'1, 4, 9, 16, ?',a:25,l:'Quadrados'},{t:'100, 90, 80, 70, ?',a:60,l:'Sequência decrescente'},
+   {t:'2, 3, 5, 8, 12, ?',a:17,l:'Soma crescente'},{t:'3, 6, 12, 24, ?',a:48,l:'Dobro a cada passo'},{t:'1, 2, 4, 7, 11, ?',a:16,l:'Soma crescente'},
+   {t:'? + 18 = 45',a:27,l:'Número que falta'},{t:'6 × ? = 54',a:9,l:'Número que falta'},{t:'? − 14 = 29',a:43,l:'Número que falta'},{t:'72 ÷ ? = 8',a:9,l:'Número que falta'},
+   {t:'Se 5 canetas custam 15 reais, quanto custam 8 canetas?',a:24,l:'Problema de proporção'},{t:'Ana tem 36 figurinhas e dá metade para Lia. Com quantas Ana fica?',a:18,l:'Problema de metade'},
+   {t:'Um filme começou às 14h e durou 2 horas e meia. Que horas terminou? (em minutos após as 14h)',a:150,l:'Problema de tempo'}];
+  return pick(L.filter(x=>x.a!==150),6).map(it=>({dom:'rac',lab:it.l+': '+it.t,ans:it.a,stem:`<span class="stemtext">${esc(it.t)}</span>`,prompt:'Descubra o número certo.',say:[{t:it.t.replace(/\?/g,'qual número').replace('×','vezes').replace('÷','dividido por').replace('−','menos').replace('+','mais')}],noauto:true,
+    opts:bigOpts(it.a),cols:2}));
+}
+const TXT=[
+ {p:'Todas as manhãs, Rita leva o cachorro para passear na praça. Hoje, porém, ela esqueceu a guia em casa e teve de voltar correndo. Quando chegou de novo, o cachorro já estava esperando na porta, balançando o rabo.',
+  q:[{q:'Por que Rita voltou para casa?',o:['Esqueceu a guia','Perdeu o cachorro','Estava com frio'],a:'Esqueceu a guia'},{q:'Como o cachorro estava quando ela chegou?',o:['Animado, esperando na porta','Dormindo no sofá','Escondido no quintal'],a:'Animado, esperando na porta'}]},
+ {p:'O professor levou a turma ao museu de ciências. Lá, os alunos viram o esqueleto de um dinossauro e aprenderam que ele viveu há milhões de anos. Mateus ficou tão curioso que fez dez perguntas ao guia.',
+  q:[{q:'O que os alunos viram no museu?',o:['Um esqueleto de dinossauro','Um foguete de verdade','Uma pintura antiga'],a:'Um esqueleto de dinossauro'},{q:'Por que dá para dizer que Mateus ficou curioso?',o:['Fez muitas perguntas','Saiu mais cedo','Ficou calado'],a:'Fez muitas perguntas'}]},
+ {p:'A professora pediu que cada aluno plantasse um feijão em um copo com algodão. Depois de uma semana, o feijão de Clara já tinha raiz e um pequeno broto. O de Bruno não nasceu, porque ele esqueceu de molhar o algodão.',
+  q:[{q:'Por que o feijão de Bruno não nasceu?',o:['Faltou água','Faltou sol','O copo era grande'],a:'Faltou água'},{q:'O que o feijão de Clara tinha depois de uma semana?',o:['Raiz e broto','Só o algodão','Flores'],a:'Raiz e broto'}]},
+ {p:'Lucas queria comprar uma bicicleta nova. Ele juntou as moedas do cofrinho por seis meses e ainda fez pequenos trabalhos, como lavar o carro do avô. No aniversário, finalmente tinha o suficiente.',
+  q:[{q:'Como Lucas conseguiu o dinheiro?',o:['Juntou moedas e fez trabalhos','Ganhou na loteria','Vendeu a bicicleta velha'],a:'Juntou moedas e fez trabalhos'},{q:'Quanto tempo ele juntou moedas?',o:['Seis meses','Uma semana','Dois anos'],a:'Seis meses'}]}];
+function qTextoBig(){
+  const out=[];
+  pick(TXT,3).forEach(t=>t.q.forEach(q=>out.push({dom:'comp',lab:q.q,ans:q.a,stem:`<span class="stemtext" style="font-size:.95em;text-align:left;display:block">${esc(t.p)}</span>`,prompt:q.q,say:[{t:t.p},{t:q.q}],noauto:true,
+    opts:shuffle(q.o).map(o=>({h:`<span class="otext">${esc(o)}</span>`,ok:o===q.a})),cols:1})));
+  return out;
+}
+const SIN=[['feliz','contente',['triste','bravo']],['rápido','veloz',['lento','pesado']],['enorme','gigante',['minúsculo','estreito']],['bonito','belo',['feio','velho']],['começar','iniciar',['terminar','parar']],
+ ['pequeno','miúdo',['grande','alto']],['conversar','falar',['calar','ouvir']],['assustado','amedrontado',['corajoso','sonolento']],['esperto','inteligente',['bobo','cansado']],['antigo','velho',['novo','recente']],
+ ['fácil','simples',['difícil','complicado']],['silêncio','quietude',['barulho','música']]];
+function qSinonimos(){
+  return pick(SIN,6).map(it=>({dom:'ling',lab:'Sinônimo de '+it[0],ans:it[1],stem:`<span class="stemtext">Qual palavra tem significado parecido com <b>${esc(it[0])}</b>?</span>`,prompt:'Toque na palavra com sentido parecido.',say:[{t:'Qual palavra tem significado parecido com '+it[0]+'?'}],noauto:true,
+    opts:shuffle([it[1]].concat(it[2].concat(pick(SIN.filter(x=>x[0]!==it[0]).map(x=>x[1]),1))).slice(0,4)).map(o=>({h:`<span class="otext">${esc(o)}</span>`,ok:o===it[1]})),cols:2}));
+}
+/* ---- blocos de avaliação por faixa ---- */
+const BLOCKS_PRE=[
+ {k:'letra',n:5,min:2,mod:'letras',t:'Reconhecimento de letras (vogais e letras fáceis)',intro:'Vamos achar letras!',mk:()=>qLetraPre().slice(0,5)},
+ {k:'fon',n:5,min:2,mod:'letras',t:'Consciência fonológica (som inicial)',intro:'Vamos descobrir como as palavras começam!',mk:()=>qInicialPre().slice(0,5)},
+ {k:'ling',n:5,min:2,mod:'leitura',t:'Linguagem oral (vocabulário)',intro:'Vamos achar as figuras!',mk:()=>qFigura().slice(0,5)},
+ {k:'for',n:5,min:2,mod:'mente',t:'Cores, formas e tamanhos',intro:'Vamos achar cores e tamanhos!',mk:()=>qFormas().slice(0,5)},
+ {k:'calc',n:6,min:3,mod:'contas',t:'Numerais e contagem até 10',intro:'Vamos contar!',mk:()=>qNumeral().slice(0,3).concat(qContarPre().slice(0,3))},
+ {k:'aten',n:4,min:2,mod:'mente',t:'Atenção visual',intro:'Vamos achar o que é diferente!',mk:()=>qAtencao().slice(0,4)},
+ {k:'mem',n:4,min:2,mod:'mente',t:'Memória de trabalho visual',intro:'Vamos treinar a memória!',mk:()=>qMemoria().slice(0,4)},
+ {k:'log',n:3,min:2,mod:'mente',t:'Padrões simples',intro:'Vamos descobrir o que vem depois!',mk:()=>qPadroes().slice(0,3)},
+ {k:'viso',n:1,min:3,mod:'puzzle',t:'Quebra-cabeça de 4 peças',intro:'Vamos montar um quebra-cabeça!',puzzle:2}
+];
+const BLOCKS_BIG=[
+ {k:'ort',n:6,min:2,mod:'leitura',t:'Ortografia',intro:'Vamos ver como se escreve!',mk:()=>qOrtografia()},
+ {k:'ling',n:5,min:2,mod:'leitura',t:'Vocabulário (sinônimos)',intro:'Vamos pensar nas palavras!',mk:()=>qSinonimos().slice(0,5)},
+ {k:'comp',n:6,min:4,mod:'leitura',t:'Interpretação de textos',intro:'Vamos ler textos e responder!',mk:()=>qTextoBig()},
+ {k:'calc',n:8,min:4,mod:'contas',t:'Cálculo (contas de 2 algarismos, tabuada e divisão)',intro:'Vamos fazer contas!',mk:()=>qCalcBig(0).slice(0,3).concat(qCalcBig(1).slice(0,3),qCalcBig(2).slice(0,2))},
+ {k:'rac',n:6,min:4,mod:'contas',t:'Raciocínio lógico-matemático',intro:'Vamos descobrir os números!',mk:()=>qRacBig()},
+ {k:'aten',n:6,min:3,mod:'mente',t:'Atenção visual',intro:'Vamos achar o que é diferente!',mk:()=>qAtencao()},
+ {k:'mem',n:6,min:3,mod:'mente',t:'Memória de trabalho visual',intro:'Vamos treinar a memória!',mk:()=>qMemoria()},
+ {k:'log',n:6,min:3,mod:'mente',t:'Padrões e raciocínio lógico',intro:'Vamos descobrir o que vem depois!',mk:()=>qPadroes()},
+ {k:'viso',n:1,min:4,mod:'puzzle',t:'Quebra-cabeça de 9 peças',intro:'Vamos montar um quebra-cabeça!',puzzle:3}
+];
+function blocksFor(b){return b==='pre'?BLOCKS_PRE:b==='big'?BLOCKS_BIG:BLOCKS;}
+
 /* ========== avaliação guiada ========== */
 const BLOCKS=[
  {k:'letra',n:5,min:2,mod:'letras',t:'Reconhecimento de letras',intro:'Vamos achar letras!',mk:()=>qLetraNome().slice(0,5)},
@@ -2072,14 +2280,15 @@ const BLOCKS=[
  {k:'log',n:6,min:3,mod:'mente',t:'Padrões e raciocínio lógico',intro:'Vamos descobrir o que vem depois!',mk:()=>qPadroes()},
  {k:'viso',n:1,min:3,mod:'puzzle',t:'Quebra-cabeça de 4 peças',intro:'Vamos montar um quebra-cabeça!',puzzle:true}
 ];
-const AV={form:'A'};
-function seedFor(k){return (SESS&&SESS.form==='B'?7000:3000)+BLOCKS.findIndex(b=>b.k===k)*97;}
+const AV={form:'A',band:'mid'};
+function seedFor(k){const bd=SESS&&SESS.band||'mid';return (SESS&&SESS.form==='B'?7000:3000)+(bd==='pre'?20000:bd==='big'?40000:0)+blocksFor(bd).findIndex(b=>b.k===k)*97;}
 
-screens.aval=m=>{
+screens.aval=(m,arg)=>{
   if(!P)return go('who');
   const done=P.sessions.filter(s=>s.done),last=done[done.length-1];
-  AV.form=last&&last.form==='A'?'B':'A';
-  const tot=BLOCKS.reduce((a,b)=>a+b.n,0),mins=BLOCKS.reduce((a,b)=>a+b.min,0);
+  if(!(arg&&arg.keep)){AV.form=last&&last.form==='A'?'B':'A';AV.band=ageBand();}
+  const BL=blocksFor(AV.band);
+  const tot=BL.reduce((a,b)=>a+b.n,0),mins=BL.reduce((a,b)=>a+b.min,0);
   m.innerHTML=`${backBtn('parents')}<h2 class="mtitle" style="--c:var(--c-letras)">Avaliação guiada</h2>
   <p class="msub">Aluno: <b>${esc(P.name)}</b>. Os itens são sempre os mesmos em cada forma, para poder comparar uma aplicação com outra.</p>
   <div class="panel"><h3>Como aplicar</h3><ul class="plist">
@@ -2089,20 +2298,23 @@ screens.aval=m=>{
     <li>A criança pode usar o botão Ouvir. O aplicativo registra quantas vezes ela usou.</li>
     <li>Dá para parar quando a criança cansar. O relatório mostra só as partes feitas.</li>
   </ul></div>
+  <div class="panel"><h3>Faixa etária da prova</h3><div class="seg">${['pre','mid','big'].map(b=>`<button data-act="avband" data-v="${b}" aria-pressed="${AV.band===b}">${BAND_NAME[b]}</button>`).join('')}</div>
+  <p>${ageText(P.birth)?'Idade cadastrada: '+ageText(P.birth)+'. ':''}Cada faixa tem itens próprios (4 a 5: mais visual e com 3 opções; 6 a 8: versão original; 9 a 12: ortografia, textos, contas maiores e raciocínio). Só compare aplicações da mesma faixa.</p></div>
   <div class="panel"><h3>Forma da prova</h3><div class="seg">
     <button data-act="avform" data-v="A" aria-pressed="${AV.form==='A'}">Forma A</button>
     <button data-act="avform" data-v="B" aria-pressed="${AV.form==='B'}">Forma B</button></div>
     <p>${last?`A última avaliação completa foi a Forma ${last.form}. Alterne as formas ao repetir, para a criança não decorar as respostas.`:'Use a Forma A na primeira aplicação e a Forma B nas seguintes.'}</p></div>
   <div class="panel"><h3>Partes (${tot} itens, cerca de ${mins} a ${mins+8} minutos)</h3>
-    ${BLOCKS.map(b=>`<label class="chk"><input type="checkbox" id="b-${b.k}" checked><span>${esc(b.t)}<small>${b.n} ${b.n===1?'item':'itens'}</small></span></label>`).join('')}
+    ${BL.map(b=>`<label class="chk"><input type="checkbox" id="b-${b.k}" checked><span>${esc(b.t)}<small>${b.n} ${b.n===1?'item':'itens'}</small></span></label>`).join('')}
     <p class="warn" id="avErr" hidden>Marque pelo menos uma parte.</p></div>
   <div class="row"><button class="btn primary" data-act="avstart" style="--c:var(--c-letras)">Começar avaliação</button></div>`;
 };
+actions.avband=b=>{AV.band=b.dataset.v;screens.aval($('#main'),{keep:true});};
 actions.avform=b=>{AV.form=b.dataset.v;$$('[data-act="avform"]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));};
 actions.avstart=()=>{
-  const keys=BLOCKS.filter(b=>{const c=$('#b-'+b.k);return c&&c.checked;}).map(b=>b.k);
+  const keys=blocksFor(AV.band).filter(b=>{const c=$('#b-'+b.k);return c&&c.checked;}).map(b=>b.k);
   if(!keys.length){$('#avErr').hidden=false;return;}
-  const sess={id:'s'+Date.now().toString(36),ts:Date.now(),form:AV.form,blocks:keys,done:false};
+  const sess={id:'s'+Date.now().toString(36),ts:Date.now(),form:AV.form,band:AV.band,blocks:keys,done:false,note:''};
   P.sessions.push(sess);save();SESS=sess;go('avalrun',{i:0});
 };
 screens.avalrun=(m,arg)=>{
@@ -2112,13 +2324,15 @@ screens.avalrun=(m,arg)=>{
     SESS.done=true;save();
     m.innerHTML=`<section class="result" style="--c:var(--c-letras)"><div class="medal">${mascot('cheer')}</div><h2>Terminamos! Muito obrigado!</h2>
     <p class="score">A avaliação foi registrada.</p>
+    <div class="noprint" style="width:100%;max-width:420px;text-align:left"><label class="fl" for="sn">Observações desta aplicação (para o adulto)</label><textarea id="sn" class="inp" rows="3" maxlength="600" placeholder="Atenção, cansaço, frustração, apoios, ambiente...">${esc(SESS.note||'')}</textarea></div>
     <div class="row"><button class="btn primary" id="vr">Ver relatório</button><button class="btn" id="vh">Voltar ao início</button></div></section>`;
+    $('#sn',m).oninput=e=>{SESS.note=e.target.value;save();};
     $('#vr',m).onclick=()=>go('report',{sel:SESS.id});
     $('#vh',m).onclick=()=>go('home');
     say({t:'Terminamos! Muito obrigado!'});
     return;
   }
-  const B=BLOCKS.find(b=>b.k===keys[i]);
+  const B=blocksFor(SESS.band||'mid').find(b=>b.k===keys[i]);
   m.innerHTML=`<section class="result" style="--c:var(--c-${B.mod})"><p class="score">Parte ${i+1} de ${keys.length}</p><h2>${esc(B.intro)}</h2>
   <p class="msub" style="text-align:center">${esc(B.t)}</p>
   <div class="row"><button class="btn primary" id="go1">Começar</button><button class="btn" id="stop1">Parar por hoje</button></div></section>`;
@@ -2127,7 +2341,7 @@ screens.avalrun=(m,arg)=>{
   $('#go1',m).onclick=()=>{
     sfx.tap();stopSpeech();
     const onDone=()=>go('avalrun',{i:i+1},{replace:true});
-    if(B.puzzle)puzzle(m,2,2,'aval:'+B.k,{assess:true,scene:SCENES[0],onDone:onDone});
+    if(B.puzzle)puzzle(m,B.puzzle===true?2:B.puzzle,B.puzzle===true?2:B.puzzle,'aval:'+B.k,{assess:true,scene:SCENES[0],onDone:onDone});
     else quiz(m,{key:'aval:'+B.k,module:B.mod,assess:true,make:()=>seeded(seedFor(B.k),B.mk),back:['aval'],onDone:onDone});
   };
 };
@@ -2135,7 +2349,7 @@ screens.avalrun=(m,arg)=>{
 /* ========== relatório ========== */
 const DOMS=[['letra','Reconhecimento de letras'],['fon','Consciência fonológica (letra inicial)'],['silc','Consciência silábica'],['ler','Leitura de palavras'],
   ['comp','Compreensão de frases e histórias'],['calc','Cálculo'],['aten','Atenção visual'],['mem','Memória de trabalho visual'],
-  ['log','Padrões e raciocínio lógico'],['viso','Quebra-cabeça (visuoespacial)'],['ing','Inglês (vocabulário)']];
+  ['log','Padrões e raciocínio lógico'],['viso','Quebra-cabeça (visuoespacial)'],['ling','Linguagem e vocabulário'],['for','Cores, formas e tamanhos'],['ort','Ortografia'],['rac','Raciocínio lógico-matemático'],['ing','Inglês (vocabulário)']];
 const BAND={insuf:'Poucos itens',aut:'Com autonomia',des:'Em desenvolvimento',apo:'Precisa de apoio'};
 const band=(n,p)=>n<3?'insuf':p>=80?'aut':p>=50?'des':'apo';
 const median=a=>{if(!a.length)return null;const s=a.slice().sort((x,y)=>x-y),h=Math.floor(s.length/2);return s.length%2?s[h]:(s[h-1]+s[h])/2;};
@@ -2231,14 +2445,20 @@ function buildReport(sel){
     from:ts.length?Math.min.apply(null,ts):null,to:ts.length?Math.max.apply(null,ts):null,total:E.filter(isItem).length};
 }
 function modeText(R){
-  if(R.sess)return 'Avaliação guiada, Forma '+R.sess.form+', de '+fmtDate(R.sess.ts)+'. Uma tentativa por item e sem informar acerto ou erro à criança.'+(R.sess.done?'':' Aplicação parcial.');
+  if(R.sess)return 'Avaliação guiada, Forma '+R.sess.form+' (faixa '+BAND_NAME[R.sess.band||'mid']+'), de '+fmtDate(R.sess.ts)+'. Uma tentativa por item e sem informar acerto ou erro à criança.'+(R.sess.done?'':' Aplicação parcial.');
   if(R.sel==='free')return 'Prática livre. A criança pode tentar de novo até acertar; o relatório considera só a 1ª tentativa.';
   return 'Todos os registros (avaliações guiadas e prática livre). A prática livre permite novas tentativas; o relatório considera só a 1ª tentativa.';
 }
 function sessionRows(){
   return P.sessions.filter(s=>P.log.some(e=>e.sid===s.id)).map(s=>({
-    date:fmtDate(s.ts),form:s.form,parts:s.blocks.map(k=>(BLOCKS.find(b=>b.k===k)||{t:k}).t).join(', '),
+    date:fmtDate(s.ts),form:s.form,band:BAND_NAME[s.band||'mid'],note:s.note||'',parts:s.blocks.map(k=>(blocksFor(s.band||'mid').find(b=>b.k===k)||{t:k}).t).join(', '),
     n:P.log.filter(e=>e.sid===s.id&&isItem(e)).length,done:s.done}));
+}
+const AN_F=[['queixa','Motivo da avaliação / queixa'],['escola','Escola e situação escolar'],['saude','Saúde, audição, visão e desenvolvimento'],['hist','Histórico familiar e de aprendizagem'],['apoio','Acompanhamentos e apoios (terapias, laudos)'],['obj','Objetivos e expectativas']];
+function anamneseHTML(){
+  const a=P.an||{},f=AN_F.filter(x=>a[x[0]]&&a[x[0]].trim());
+  if(!f.length)return '';
+  return '<h3>Dados e histórico do aluno (anamnese resumida)</h3><ul>'+f.map(x=>'<li><b>'+x[1]+':</b> '+esc(a[x[0]])+'</li>').join('')+'</ul>';
 }
 function sheetHTML(R){
   const age=ageText(P.birth),rows=R.st,hasSup=rows.some(s=>s.supN>0);
@@ -2254,8 +2474,8 @@ function sheetHTML(R){
     ${ev.rows.map(r=>`<tr><td>${esc(r.name)}</td>${r.v.map((x,i)=>{if(!x)return '<td>–</td>';const pv=i>0?r.v[i-1]:null,ar=pv?(x.p>pv.p?' ▲':x.p<pv.p?' ▼':' ='):'';return `<td>${x.p}%${ar}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div>`:'';
   const goals=P.goals.length?`<h3>Metas individuais</h3><div class="tw"><table><thead><tr><th>Meta</th><th>Área</th><th>Meta</th><th>Resultados (sozinha/o)</th><th>Situação</th></tr></thead><tbody>
     ${P.goals.map(g=>{const sr=goalSeries(g);return `<tr><td>${esc(g.text)}</td><td>${g.dom?esc(domName(g.dom)):'Acompanhamento manual'}</td><td>${g.dom?g.target+'%':'–'}</td><td>${g.dom?(sr.length?sr.slice(-4).map(x=>fmtDate(x.ts)+': '+x.p+'%').join('<br>'):'–'):'–'}</td><td>${esc(goalStatus(g))}</td></tr>`;}).join('')}</tbody></table></div>`:'';
-  const ses=sessionRows(),sesT=ses.length?`<h3>Aplicações guiadas já feitas</h3><div class="tw"><table><thead><tr><th>Data</th><th>Forma</th><th>Partes</th><th>Itens</th><th>Situação</th></tr></thead><tbody>
-    ${ses.map(s=>`<tr><td>${s.date}</td><td>${s.form}</td><td>${esc(s.parts)}</td><td>${s.n}</td><td>${s.done?'Completa':'Parcial'}</td></tr>`).join('')}</tbody></table></div>`:'';
+  const ses=sessionRows(),sesT=ses.length?`<h3>Aplicações guiadas já feitas</h3><div class="tw"><table><thead><tr><th>Data</th><th>Forma</th><th>Faixa</th><th>Partes</th><th>Itens</th><th>Situação</th></tr></thead><tbody>
+    ${ses.map(s=>`<tr><td>${s.date}</td><td>${s.form}</td><td>${s.band}</td><td>${esc(s.parts)}</td><td>${s.n}</td><td>${s.done?'Completa':'Parcial'}</td></tr>`).join('')}</tbody></table></div>${ses.some(s=>s.note)?'<p><b>Observações por aplicação:</b></p><ul>'+ses.filter(s=>s.note).map(s=>'<li>'+s.date+' (Forma '+s.form+'): '+esc(s.note)+'</li>').join('')+'</ul>':''}`:'';
   return `<article class="sheet" id="sheet">
   <h2>Relatório de observação pedagógica</h2><p class="foot" style="margin:0">Mundo das Descobertas · registro de apoio à avaliação psicopedagógica</p>
   <div class="meta"><div><span>Aluno(a)</span>${esc(P.name)}</div><div><span>Idade</span>${age||'não informada'}</div><div><span>Ano escolar</span>${esc(P.grade)||'não informado'}</div>
@@ -2263,6 +2483,7 @@ function sheetHTML(R){
   <div><span>Pausas pedidas</span>${R.pauses.length?R.pauses.length+' ('+fmtMin(R.pauses.reduce((a,e)=>a+(e.ms||0),0))+')':'nenhuma'}</div></div>
   <p><b>Tipo de registro:</b> ${esc(modeText(R))}</p>
   ${P.notes?`<p><b>Anotações sobre o aluno:</b> ${esc(P.notes)}</p>`:''}
+  ${anamneseHTML()}
   <h3>Desempenho por área</h3>${tbl}${errs}${puz}${evT}${goals}
   ${R.obs.length?`<h3>Indicativos automáticos</h3><ul>${R.obs.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
   ${sesT}

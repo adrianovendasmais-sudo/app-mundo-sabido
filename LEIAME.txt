@@ -79,3 +79,11 @@ COMEMORACAO DE CONQUISTAS
 - Ao ganhar rodada perfeita, subir de nivel, completar o desafio do dia, atingir sequencias de 3, 5, 7, 10, 14, 21, 30 dias, ganhar figurinha ou acessorio da Capi, aparece uma tela de festa: chuva de confete, fanfarra, voz dando parabens e a Capi pulando.
 - Respeita os ajustes sensoriais: sem confete se desligado, sem som se Sons de efeito estiver desligado, sem animacao no Modo calmo.
 - Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
+
+FAIXAS DE 4 A 12 ANOS E REGISTRO DO PROFISSIONAL
+- Cada aluno tem uma faixa: 4 a 5 anos (mais visual, 3 opcoes, letras e numeros faceis, cores e tamanhos, vocabulario), 6 a 8 anos (como antes) e 9 a 12 anos (ortografia, textos, contas maiores, multiplicacao e divisao, desafios numericos). A faixa e escolhida pela data de nascimento e pode ser trocada em Editar aluno ("Faixa do conteudo").
+- As atividades, o desafio do dia, o "Para hoje" e o nivel adaptativo mudam conforme a faixa. Para 4 a 5 anos o app liga "Tudo maior" e menos opcoes ao cadastrar.
+- Avaliacao guiada: a faixa da prova pode ser escolhida na tela de avaliacao. Cada faixa tem itens proprios e formas A/B. A avaliacao de 6 a 8 anos nao mudou. Compare so aplicacoes da mesma faixa.
+- Novas areas no relatorio: Linguagem e vocabulario, Cores/formas/tamanhos, Ortografia e Raciocinio logico-matematico.
+- Registro do profissional: ficha do aluno (anamnese) em Editar aluno, observacoes por aplicacao ao final da avaliacao, e tudo sai no relatorio impresso, junto com a faixa de cada aplicacao.
+- Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
