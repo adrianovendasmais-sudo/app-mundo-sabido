@@ -612,6 +612,61 @@ body.no-masc .capi{display:none}
 }
 @media (max-width:360px){.brand{font-size:15px}.tools{gap:4px!important}.iconbtn{width:34px;height:34px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== v5: acabamento moderno (mesmas cores e layout) ===== */
+:root{--ease:cubic-bezier(.2,.8,.2,1);--glass:color-mix(in srgb,var(--surface) 88%,transparent);--shine:inset 0 1.5px 0 rgba(255,255,255,.75);--lift:0 14px 28px -16px rgba(30,60,140,.45)}
+button,.btn,.chip,.opt,.act,.mtile,.chal,.pcard,.skincard,.armitem,.iconbtn{-webkit-tap-highlight-color:transparent;transition:transform .16s var(--ease),box-shadow .22s var(--ease),filter .2s,background-color .2s,border-color .2s}
+@media (hover:hover){.opt:not(:disabled):hover,.act:hover,.mtile:hover,.chal:hover,.pcard:hover,.armitem:not(:disabled):hover,.btn:hover,.chip:hover{transform:translateY(-3px);filter:brightness(1.03)}}
+.opt:not(:disabled):active,.act:active,.mtile:active,.chal:active,.pcard:active,.btn:active,.chip:active,.iconbtn:active,.armitem:active{transform:translateY(2px) scale(.975)}
+/* cartões com vidro e brilho suave */
+.panel,.qcard,.bubble,.act,.opt,.starpill,.iconbtn,.chip,.pcard,.armitem{background-image:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0) 60%)}
+.panel,.qcard,.bubble,.act{box-shadow:var(--shine),var(--lift)}
+.opt{box-shadow:var(--shine),0 10px 16px -12px color-mix(in srgb,var(--ink) 55%,transparent)}
+.opt{position:relative}
+.opt.right{background-image:none;box-shadow:0 0 0 6px color-mix(in srgb,var(--good) 28%,transparent),0 0 30px color-mix(in srgb,var(--good) 40%,transparent)}
+.opt.right::after{content:"✓";position:absolute;top:8px;right:10px;width:28px;height:28px;border-radius:50%;background:var(--good);color:#fff;font:800 17px/28px system-ui,sans-serif;text-align:center;animation:pop .35s var(--ease)}
+.opt.wrong::after{content:"✕";position:absolute;top:8px;right:10px;width:28px;height:28px;border-radius:50%;background:var(--bad);color:#fff;font:800 15px/28px system-ui,sans-serif;text-align:center}
+/* tiles com brilho de vidro */
+.mtile::before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0) 48%);pointer-events:none}
+.mtile{box-shadow:0 6px 0 rgba(20,36,80,.2),0 16px 22px -14px rgba(20,36,80,.5)}
+.chal{box-shadow:0 6px 0 rgba(120,40,20,.22),0 16px 24px -14px rgba(120,40,20,.55)}
+/* entrada suave das telas */
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+#main>section:not(.play):not(.result),#main>.panel,#main>.acts,#main>.mtiles,#main>.chalrow,#main>h2,#main>.msub{animation:rise .5s var(--ease) both}
+.mtiles .mtile,.acts .act,.skins>*,.armlist>*{animation:rise .5s var(--ease) both}
+.mtiles .mtile:nth-child(1),.acts .act:nth-child(1){animation-delay:.04s}.mtiles .mtile:nth-child(2),.acts .act:nth-child(2){animation-delay:.08s}
+.mtiles .mtile:nth-child(3),.acts .act:nth-child(3){animation-delay:.12s}.mtiles .mtile:nth-child(4),.acts .act:nth-child(4){animation-delay:.16s}
+.mtiles .mtile:nth-child(5),.acts .act:nth-child(5){animation-delay:.2s}.mtiles .mtile:nth-child(6),.acts .act:nth-child(6){animation-delay:.24s}
+.mtiles .mtile:nth-child(n+7),.acts .act:nth-child(n+7){animation-delay:.28s}
+.play .qcard{animation:fadein .3s ease both}
+.result .medal{animation:pbounce .8s cubic-bezier(.3,1.5,.5,1) both}
+/* Capi no jogo: avatar redondo */
+.capi .cfig{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#fff,#cfe8ff 75%);border:3px solid #fff;box-shadow:0 8px 16px -8px rgba(30,60,140,.5)}
+.capi .cfig .mascot{width:112%;max-width:none;margin:-6% 0 0 -8%}
+.capi[data-st=idle] .cemo{display:none}
+.cbub{box-shadow:var(--shine),0 8px 16px -12px rgba(30,60,140,.5)}
+/* barra inferior com pílula */
+.bnav{background:color-mix(in srgb,#fff 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.7)}
+.bnav button{border-radius:18px;margin:0 1px;padding:4px 0;white-space:nowrap;font-size:11.5px;min-height:52px}
+.bnav button[aria-current="page"]{background:color-mix(in srgb,var(--c-letras) 13%,transparent)}
+.bnav button[aria-current="page"]::after{display:none}
+.bnav button[aria-current="page"] svg{transform:translateY(-2px) scale(1.12);transition:transform .25s var(--ease)}
+/* desafio do dia mais enxuto no celular */
+.chalrow{grid-template-columns:minmax(0,1fr) 92px}
+.chal.sm{flex-direction:column;justify-content:center;gap:2px;text-align:center;padding:8px 6px}
+.chal .ci{flex:none}
+@media (max-width:440px){.chal:not(.sm):not(.rec) .ct small{display:none}.chal b{font-size:16px}}
+/* nuvens suaves no tema mundo */
+:root[data-skin="mundo"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.7;
+  background:radial-gradient(ellipse 120px 34px at 20% 16%,rgba(255,255,255,.9),transparent 70%),radial-gradient(ellipse 160px 40px at 78% 28%,rgba(255,255,255,.8),transparent 70%),radial-gradient(ellipse 110px 30px at 52% 8%,rgba(255,255,255,.7),transparent 70%);
+  background-repeat:no-repeat;animation:drift 50s linear infinite alternate}
+@keyframes drift{from{background-position:-30px 0,20px 0,0 0}to{background-position:60px 0,-50px 0,40px 0}}
+/* detalhes */
+.starpill,.iconbtn{box-shadow:var(--shine),0 6px 12px -8px rgba(20,50,140,.45)}
+.playbar .back{font-weight:800}
+::selection{background:color-mix(in srgb,var(--c-letras) 28%,transparent)}
+@media (max-width:520px){.acts{gap:10px;margin-top:12px}.act{padding:10px 12px;border-radius:24px;gap:12px;border-bottom-width:6px;min-height:78px}.act b{font-size:19px}.act small{font-size:14px}.glyph.sm{width:50px;height:50px;font-size:21px}}
+@media print{#main>*,.mtile,.act{animation:none!important}}
 </style>
 
 <div id="app"></div>

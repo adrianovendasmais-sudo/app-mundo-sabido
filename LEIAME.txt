@@ -87,3 +87,8 @@ FAIXAS DE 4 A 12 ANOS E REGISTRO DO PROFISSIONAL
 - Novas areas no relatorio: Linguagem e vocabulario, Cores/formas/tamanhos, Ortografia e Raciocinio logico-matematico.
 - Registro do profissional: ficha do aluno (anamnese) em Editar aluno, observacoes por aplicacao ao final da avaliacao, e tudo sai no relatorio impresso, junto com a faixa de cada aplicacao.
 - Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
+
+VISUAL MAIS MODERNO
+- Cartoes e botoes com brilho de vidro e sombras suaves, animacao de entrada nas telas, resposta com marca de certo/errado (nao depende so da cor), Capi redonda nos jogos, barra inferior em formato de pilula, nuvens suaves no tema Mundo e lista de atividades mais compacta no celular.
+- As animacoes respeitam o Modo calmo e a preferencia de movimento reduzido do aparelho.
+- Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
