@@ -21,7 +21,7 @@
 :root{
   --bg:#EEF2FF; --surface:#FFFFFF; --ink:#1B2447; --muted:#56608E; --line:#D0D8F4; --soft:#E4EAFF;
   --on-c:#FFFFFF;
-  --c-letras:#3B5BDB; --c-leitura:#7048E8; --c-contas:#D6336C; --c-puzzle:#0B8F68; --c-ingles:#D9480F; --c-mente:#0C8599;
+  --c-letras:#3B5BDB; --c-leitura:#7048E8; --c-contas:#D6336C; --c-puzzle:#0B8F68; --c-ingles:#D9480F; --c-mente:#0C8599; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
   --good:#2B9348; --bad:#C2255C; --ok-bg:#D3F9D8; --no-bg:#FFDEEB; --star:#FFC21A;
   --paper:#FFFFFF; --paper-ink:#1D2433; --paper-mute:#5B6478; --paper-line:#CBD2E0; --paper-soft:#F1F4FA; --paper-bar:#3B5BDB; --paper-good:#1E7B3A; --paper-mid:#8A5A00; --paper-low:#B42343;
   --f-display:'Fredoka','Trebuchet MS',system-ui,sans-serif;
@@ -31,7 +31,7 @@
   :root:not([data-theme="light"]){
     --bg:#11173A; --surface:#1C2557; --ink:#EDF0FF; --muted:#A9B3E6; --line:#33408A; --soft:#26316F;
     --on-c:#10163A;
-    --c-letras:#8EA2FF; --c-leitura:#B197FF; --c-contas:#FF8AB4; --c-puzzle:#38D9A9; --c-ingles:#FFA94D; --c-mente:#3BC9DB;
+    --c-letras:#8EA2FF; --c-leitura:#B197FF; --c-contas:#FF8AB4; --c-puzzle:#38D9A9; --c-ingles:#FFA94D; --c-mente:#3BC9DB; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
     --good:#69DB7C; --bad:#FF8AB4; --ok-bg:#17422E; --no-bg:#51213A;
     color-scheme:dark;
   }
@@ -39,7 +39,7 @@
 :root[data-theme="dark"]{
   --bg:#11173A; --surface:#1C2557; --ink:#EDF0FF; --muted:#A9B3E6; --line:#33408A; --soft:#26316F;
   --on-c:#10163A;
-  --c-letras:#8EA2FF; --c-leitura:#B197FF; --c-contas:#FF8AB4; --c-puzzle:#38D9A9; --c-ingles:#FFA94D; --c-mente:#3BC9DB;
+  --c-letras:#8EA2FF; --c-leitura:#B197FF; --c-contas:#FF8AB4; --c-puzzle:#38D9A9; --c-ingles:#FFA94D; --c-mente:#3BC9DB; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
   --good:#69DB7C; --bad:#FF8AB4; --ok-bg:#17422E; --no-bg:#51213A;
   color-scheme:dark;
 }
@@ -47,32 +47,32 @@
 :root[data-skin="algodao"]{
   --bg:#FFE4F0; --bg2:#FFD0E4; --bg-img:linear-gradient(180deg,var(--bg),var(--bg2));
   --surface:#FFF8FB; --ink:#5A1F42; --muted:#98587A; --line:#F6BFD8; --soft:#FFD6E8;
-  --c-letras:#D6408F; --c-leitura:#A83FB5; --c-contas:#E8606E; --c-puzzle:#BE2A6E; --c-ingles:#EE5C98; --c-mente:#D9437E;
+  --c-letras:#D6408F; --c-leitura:#A83FB5; --c-contas:#E8606E; --c-puzzle:#BE2A6E; --c-ingles:#EE5C98; --c-mente:#D9437E; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
   --glyph-r:50%; --r:30px;
 }
 :root[data-skin="aventura"]{
   --bg:#E1F0FF; --bg2:#F1F7FF; --bg-img:linear-gradient(180deg,var(--bg),var(--bg2));
   --ink:#0B2545; --muted:#486485; --line:#BCD5F0; --soft:#D2E6FA;
-  --c-letras:#1864AB; --c-leitura:#5F3DC4; --c-contas:#E03131; --c-puzzle:#2B8A3E; --c-ingles:#D9480F; --c-mente:#0C8599;
+  --c-letras:#1864AB; --c-leitura:#5F3DC4; --c-contas:#E03131; --c-puzzle:#2B8A3E; --c-ingles:#D9480F; --c-mente:#0C8599; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
   --glyph-r:14px; --r:16px;
 }
 @media (prefers-color-scheme: dark){
   :root[data-skin="algodao"]:not([data-theme="light"]){
     --bg:#3B1430; --bg2:#2C0F2A; --surface:#4E1E40; --ink:#FFE6F2; --muted:#E6B0CB; --line:#7A3A63; --soft:#5C2548; --on-c:#3B1430;
-    --c-letras:#FF8FC3; --c-leitura:#E3A6F2; --c-contas:#FF9AA5; --c-puzzle:#FF86B4; --c-ingles:#FFB3D1; --c-mente:#FF9EC4;
+    --c-letras:#FF8FC3; --c-leitura:#E3A6F2; --c-contas:#FF9AA5; --c-puzzle:#FF86B4; --c-ingles:#FFB3D1; --c-mente:#FF9EC4; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
   }
   :root[data-skin="aventura"]:not([data-theme="light"]){
     --bg:#0E1B3D; --bg2:#0B2B3B; --surface:#17285A; --ink:#EAF2FF; --muted:#A6B8E0; --line:#2C4380; --soft:#1F3270; --on-c:#0E1B3D;
-    --c-letras:#74A8FF; --c-leitura:#B197FF; --c-contas:#FF8787; --c-puzzle:#69DB7C; --c-ingles:#FFA94D; --c-mente:#3BC9DB;
+    --c-letras:#74A8FF; --c-leitura:#B197FF; --c-contas:#FF8787; --c-puzzle:#69DB7C; --c-ingles:#FFA94D; --c-mente:#3BC9DB; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
   }
 }
 :root[data-skin="algodao"][data-theme="dark"]{
   --bg:#3B1430; --bg2:#2C0F2A; --surface:#4E1E40; --ink:#FFE6F2; --muted:#E6B0CB; --line:#7A3A63; --soft:#5C2548; --on-c:#3B1430;
-  --c-letras:#FF8FC3; --c-leitura:#E3A6F2; --c-contas:#FF9AA5; --c-puzzle:#FF86B4; --c-ingles:#FFB3D1; --c-mente:#FF9EC4;
+  --c-letras:#FF8FC3; --c-leitura:#E3A6F2; --c-contas:#FF9AA5; --c-puzzle:#FF86B4; --c-ingles:#FFB3D1; --c-mente:#FF9EC4; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
 }
 :root[data-skin="aventura"][data-theme="dark"]{
   --bg:#0E1B3D; --bg2:#0B2B3B; --surface:#17285A; --ink:#EAF2FF; --muted:#A6B8E0; --line:#2C4380; --soft:#1F3270; --on-c:#0E1B3D;
-  --c-letras:#74A8FF; --c-leitura:#B197FF; --c-contas:#FF8787; --c-puzzle:#69DB7C; --c-ingles:#FFA94D; --c-mente:#3BC9DB;
+  --c-letras:#74A8FF; --c-leitura:#B197FF; --c-contas:#FF8787; --c-puzzle:#69DB7C; --c-ingles:#FFA94D; --c-mente:#3BC9DB; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
 }
 *{box-sizing:border-box}
 body{
@@ -455,7 +455,7 @@ details.panel>:not(summary){margin-top:0}
 :root[data-skin="mundo"]{
   --bg:#CFE8FF; --bg2:#EEF5FF; --surface:#FFFFFF; --ink:#14246B; --muted:#5A6BA3; --line:#D2E2F8; --soft:#E3EEFF;
   --bg-img:linear-gradient(180deg,#8FCBFF 0,#BFE2FF 260px,#E4F1FF 520px,#F1EEFF 100%);
-  --c-letras:#2F78E6; --c-leitura:#12998A; --c-contas:#3E9A22; --c-puzzle:#9446C9; --c-ingles:#E06F0B; --c-mente:#8F5BD6;
+  --c-letras:#2F78E6; --c-leitura:#12998A; --c-contas:#3E9A22; --c-puzzle:#9446C9; --c-ingles:#E06F0B; --c-mente:#8F5BD6; --c-relogio:var(--c-leitura); --c-dinheiro:var(--c-puzzle); --c-formas:var(--c-ingles);
   --glyph-r:50%; --r:26px; --good:#2B9348; --ok-bg:#D8F6DD; --no-bg:#FFE0EC; --shadow:0 8px 18px -10px rgba(40,70,160,.45);
   color-scheme:light;
 }
@@ -710,7 +710,7 @@ function newProfile(o){
   return {id:'p'+Date.now().toString(36)+Math.floor(Math.random()*1000),name:o.name||'Aluno(a)',birth:o.birth||'',grade:o.grade||'',notes:o.notes||'',
     skin:normSkin(o.skin),stars:o.stars||0,rounds:o.rounds||{},
     day:(o.day&&typeof o.day==='object')?o.day:{d:'',m:{}},log:[],sessions:[],rep:{by:'',obs:'',beh:''},
-    band:o.band||'auto',an:o.an||{},prefs:Object.assign({},DEFAULT_PREFS,o.prefs||{}),tokens:{n:0},routine:[],rday:{d:'',done:{}},goals:[],streak:{last:'',n:0},stick:[],chal:'',cap:{eyes:'',neck:'',ear:'',back:''},lvl:{}};
+    band:o.band||'auto',worlds:o.worlds||null,an:o.an||{},prefs:Object.assign({},DEFAULT_PREFS,o.prefs||{}),tokens:{n:0},routine:[],rday:{d:'',done:{}},goals:[],streak:{last:'',n:0},stick:[],chal:'',cap:{eyes:'',neck:'',ear:'',back:''},lvl:{}};
 }
 if(!Array.isArray(S.profiles))S.profiles=[];
 if(!S.profiles.length&&legacy&&(legacy.stars||legacy.skin||(legacy.rounds&&Object.keys(legacy.rounds).length))){
@@ -738,6 +738,7 @@ S.profiles.forEach(p=>{
   if(!p.cap)p.cap={eyes:'',neck:'',ear:'',back:''};
   if(!p.lvl)p.lvl={};
   if(!p.band)p.band='auto';
+  if(!Array.isArray(p.worlds)||!p.worlds.length)p.worlds=null;
   if(!p.an)p.an={};
 });
 Object.keys(DEFAULT_PREFS).forEach(k=>{
@@ -1372,14 +1373,14 @@ app.addEventListener('click',e=>{
 /* ========== telas ========== */
 screens.home=m=>{
   const d=S.day.d===today()?S.day.m:{};
-  const done=Object.keys(MNAME).filter(k=>d[k]).length;
+  const done=worlds().filter(k=>d[k]).length;
   const ri=rankInfo();
   if(S.skin==='mundo')return homeMundo(m,d,done,ri);
   m.innerHTML=`<section class="hero2"><div>${S.masc?mascot('happy'):''}</div><div class="bubble"><h1>Olá, ${esc(P?P.name.split(' ')[0]:'')}!</h1><p>O que vamos aprender hoje?</p></div></section>
   ${routineHTML()}${progressHTML(ri)}${recHTML()}${challengeHTML()}
-  <div class="xp"><div class="rx"><span>Missão de hoje</span><span>${done}/${Object.keys(MNAME).length}</span></div>
-  <div class="badges">${Object.keys(MNAME).map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div></div>
-  <div class="tiles">${Object.keys(MODS).map(k=>{const M=MODS[k],n=roundsOf(k);
+  <div class="xp"><div class="rx"><span>Missão de hoje</span><span>${done}/${worlds().length}</span></div>
+  <div class="badges">${worlds().map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div></div>
+  <div class="tiles">${worlds().map(k=>{const M=MODS[k],n=roundsOf(k);
     return `<button class="tile" style="--c:var(--c-${k})" data-go="menu"${dataArg(k)}><span class="glyph">${M.glyph}</span><span class="ttl">${TILE[k]||M.title}</span><span class="dsc">${esc(SHORT[k])}</span><span class="cnt">${n?n+(n===1?' rodada completa':' rodadas completas'):'Comece por aqui'}</span></button>`;}).join('')}</div>`;
   m.insertAdjacentHTML('beforeend','<div class="row"><button class="chip" data-act="skinpick">Trocar tema</button><button class="chip" data-go="who">Trocar aluno</button><button class="chip" data-go="achv">Conquistas</button><button class="chip" data-go="armario">Armário da Capi</button></div>');
 };
@@ -1391,24 +1392,24 @@ function homeMundo(m,d,done,ri){
   m.innerHTML=`<section class="mhero"><div class="mcap">${S.masc?mascot('happy','big'):''}</div>
   <div class="mside"><div class="bubble"><h1>Olá, ${esc(P?P.name.split(' ')[0]:'')}!</h1><p>O que vamos aprender hoje?</p></div>${progressHTML(ri)}</div></section>
   ${routineHTML()}${recHTML()}${challengeHTML()}
-  <div class="xp"><div class="rx"><span>🎯 Minha Missão de Hoje</span><span class="pillc">${done}/${Object.keys(MNAME).length}</span></div>
-  <div class="badges">${Object.keys(MNAME).map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div></div>
-  <div class="mtiles">${MT.map(t=>`<button class="mtile" style="--bg-t:${t[3]};--tc:${t[4]}" data-go="menu"${dataArg(t[0])}><img src="${MIMG[t[2]]}" alt="" aria-hidden="true"><span class="mt">${t[1]}</span><i class="chev" aria-hidden="true">›</i></button>`).join('')}</div>
+  <div class="xp"><div class="rx"><span>🎯 Minha Missão de Hoje</span><span class="pillc">${done}/${worlds().length}</span></div>
+  <div class="badges">${worlds().map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div></div>
+  <div class="mtiles">${worlds().map(k=>MT.find(t=>t[0]===k)).filter(Boolean).map(t=>`<button class="mtile" style="--bg-t:${t[3]};--tc:${t[4]}" data-go="menu"${dataArg(t[0])}><img src="${MIMG[t[2]]}" alt="" aria-hidden="true"><span class="mt">${t[1]}</span><i class="chev" aria-hidden="true">›</i></button>`).join('')}</div>
   <div class="row"><button class="chip" data-act="skinpick">Trocar tema</button><button class="chip" data-go="armario">👕 Armário da Capi</button></div>`;
 }
 screens.progress=m=>{
-  const ri=rankInfo(),d=S.day.d===today()?S.day.m:{},done=Object.keys(MNAME).filter(k=>d[k]).length;
-  const tot=Object.keys(MODS).reduce((a,k)=>a+roundsOf(k),0),mx=Math.max(1,...Object.keys(MODS).map(k=>roundsOf(k)));
+  const ri=rankInfo(),d=S.day.d===today()?S.day.m:{},done=worlds().filter(k=>d[k]).length;
+  const tot=worlds().reduce((a,k)=>a+roundsOf(k),0),mx=Math.max(1,...worlds().map(k=>roundsOf(k)));
   m.innerHTML=`${S.skin==='mundo'?'':backBtn('home')}<h2 class="mtitle" style="--c:var(--c-letras)">Meu Progresso</h2>
   <div class="xp" style="margin-top:12px"><div class="rx"><span>⭐ ${S.stars} ${S.stars===1?'estrela':'estrelas'}</span><span>${esc(ri.name)}</span></div><div class="xpbar"><i style="width:${ri.pct}%"></i></div>
   <div class="rx"><small>${ri.next?'Faltam '+(ri.next[0]-S.stars)+' estrelas para '+esc(ri.next[1]):'Você chegou ao nível mais alto!'}</small></div></div>
-  <div class="xp"><div class="rx"><span>Hoje</span><span>${done}/${Object.keys(MNAME).length} missões</span></div><div class="rx"><span>🔥 Dias seguidos</span><span>${streakNow()} (recorde ${(P.streak&&P.streak.best)||0})</span></div></div>
+  <div class="xp"><div class="rx"><span>Hoje</span><span>${done}/${worlds().length} missões</span></div><div class="rx"><span>🔥 Dias seguidos</span><span>${streakNow()} (recorde ${(P.streak&&P.streak.best)||0})</span></div></div>
   <div class="xp"><div class="rx"><span>Rodadas por área</span><span>${tot} no total</span></div>
-  ${Object.keys(MODS).map(k=>{const n=roundsOf(k);return `<div class="prow" style="--c:var(--c-${k})"><span>${esc(TILE[k])}</span><div class="pbar2" role="img" aria-label="${n} rodadas"><i style="width:${Math.round(100*n/mx)}%"></i></div><b>${n}</b></div>`;}).join('')}</div>`;
+  ${worlds().map(k=>{const n=roundsOf(k);return `<div class="prow" style="--c:var(--c-${k})"><span>${esc(TILE[k])}</span><div class="pbar2" role="img" aria-label="${n} rodadas"><i style="width:${Math.round(100*n/mx)}%"></i></div><b>${n}</b></div>`;}).join('')}</div>`;
 };
 screens.achv=m=>{
   const trophies=RANKS.map(r=>{const ok=S.stars>=r[0];return `<div class="trophy${ok?' on':''}"><span aria-hidden="true">${ok?'🏆':'🔒'}</span><b>${esc(r[1])}</b><small>${r[0]} estrelas</small></div>`;}).join('');
-  const meds=Object.keys(MODS).map(k=>{const n=roundsOf(k),lv=n>=10?3:n>=5?2:n>=1?1:0;return `<div class="trophy${lv?' on':''}" style="--c:var(--c-${k})"><span aria-hidden="true">${['🔒','🥉','🥈','🥇'][lv]}</span><b>${esc(TILE[k])}</b><small>${lv===3?'Ouro!':lv===2?'Prata · 10 rodadas = ouro':lv===1?'Bronze · 5 rodadas = prata':'1 rodada = bronze'}</small></div>`;}).join('');
+  const meds=worlds().map(k=>{const n=roundsOf(k),lv=n>=10?3:n>=5?2:n>=1?1:0;return `<div class="trophy${lv?' on':''}" style="--c:var(--c-${k})"><span aria-hidden="true">${['🔒','🥉','🥈','🥇'][lv]}</span><b>${esc(TILE[k])}</b><small>${lv===3?'Ouro!':lv===2?'Prata · 10 rodadas = ouro':lv===1?'Bronze · 5 rodadas = prata':'1 rodada = bronze'}</small></div>`;}).join('');
   m.innerHTML=`${S.skin==='mundo'?'':backBtn('home')}<h2 class="mtitle" style="--c:var(--c-puzzle)">Conquistas</h2><div class="row" style="margin:6px 0"><button class="chip" data-go="armario">👕 Armário da Capi</button></div><h3 class="sech">Minhas figurinhas</h3>${stickersHTML()}<h3 class="sech">Níveis</h3><div class="trophies">${trophies}</div><h3 class="sech">Medalhas</h3><div class="trophies">${meds}</div>`;
 };
 screens.menu=(m,k)=>{
@@ -1594,8 +1595,6 @@ function quiz(m,cfg){
       locked=true;b.classList.add('picked');$$('.opt',m).forEach(x=>{x.disabled=true;});
       sfx.tap();if(o.ok)earned++;
       entry(q,!!o.ok,1,o.ok?[]:[olab]);
-      const msg='Muito bem! Vamos continuar.';
-      fb.textContent=msg;fb.className='fb good';say({t:msg});
       setTimeout(next,S.mediated?3600:1400);return;
     }
     if(o.ok){
@@ -1705,7 +1704,7 @@ function recommend(){
   let best=null;
   Object.keys(by).forEach(d=>{const a=by[d];if(a.n<4)return;const r=a.ok/a.n;if(r<0.8&&(!best||r<best.r))best={d:d,r:r,n:a.n};});
   if(!best)return null;
-  const R=REC[best.d];return {t:R.t,m:R.m,id:R.id,ico:R.ico,pct:Math.round(best.r*100)};
+  let R=REC[best.d];if(best.d==='ling'&&ageBand()==='big')R={t:'Vocabulário',m:'leitura',id:'sinonimos',ico:'🗣️'};return {t:R.t,m:R.m,id:R.id,ico:R.ico,pct:Math.round(best.r*100)};
 }
 function recHTML(){
   const r=recommend();if(!r)return '';
@@ -1734,8 +1733,9 @@ function actsFor(k){
   const b=ageBand(),M=MODS[k];
   return M.acts.filter(a=>{
     if(a.only&&a.only!==b)return false;
-    if(b==='pre'&&!a.only){const ok=PRE_OK[k];return ok===null||(ok&&ok.indexOf(a.id)>=0);}
-    if(b==='big'&&!a.only){return (BIG_NO[k]||[]).indexOf(a.id)<0;}
+    const custom=!!(P&&Array.isArray(P.worlds)&&P.worlds.length);
+    if(b==='pre'&&!a.only&&!custom){const ok=PRE_OK[k];return ok===null||(ok&&ok.indexOf(a.id)>=0);}
+    if(b==='big'&&!a.only&&!custom){return (BIG_NO[k]||[]).indexOf(a.id)<0;}
     return true;
   });
 }
@@ -1745,9 +1745,233 @@ ACTS['contas:meu']=m=>adaptive(m,'contas','contas:meu',l=>ageBand()==='big'?qCal
 const CHAL_PRE=[qLetraPre,qInicialPre,qFigura,qNumeral,qContarPre,qFormas,qAtencao,qPadroes,qIntruso];
 const CHAL_BIG=[qOrtografia,qSinonimos,qTextoBig,()=>qCalcBig(0),()=>qCalcBig(1),()=>qCalcBig(2),qRacBig,qAtencao,qPadroes,qIntruso,
   ()=>qIngles(Object.keys(EN).reduce((a,k)=>a.concat(EN[k].items),[])),qOpostos,qRima];
-function chalGens(){const b=ageBand();return b==='pre'?CHAL_PRE:b==='big'?CHAL_BIG:CHAL_GENS;}
+function chalGens(){const b=ageBand();return b==='pre'?CHAL_PRE:b==='big'?CHAL_BIG:CHAL_MID;}
 REC.ling={t:'Vocabulário',m:'leitura',id:'figura',ico:'🗣️'};REC.for={t:'Cores e tamanhos',m:'mente',id:'formas',ico:'🎨'};
 REC.ort={t:'Ortografia',m:'leitura',id:'ortografia',ico:'✅'};REC.rac={t:'Desafios numéricos',m:'contas',id:'rac',ico:'🧮'};
+/* ========== mundos por idade: relógios, dinheiro, cores e formas ========== */
+const ALLW=['letras','leitura','contas','relogio','dinheiro','formas','mente','puzzle','ingles'];
+const WNAME={letras:'Letras',leitura:'Leitura',contas:'Números',relogio:'Relógios',dinheiro:'Dinheiro',formas:'Cores e formas',mente:'Mente',puzzle:'Quebra-cabeças',ingles:'Inglês'};
+function worldsFor(b){return b==='pre'?['letras','contas','formas','mente','puzzle','ingles']:b==='big'?['leitura','contas','dinheiro','relogio','mente','puzzle','ingles']:['letras','leitura','contas','relogio','dinheiro','mente','puzzle','ingles'];}
+function worlds(){
+  const d=worldsFor(ageBand());
+  if(P&&Array.isArray(P.worlds)&&P.worlds.length)return ALLW.filter(k=>P.worlds.indexOf(k)>=0);
+  return d;
+}
+MNAME.relogio='Relógios';MNAME.dinheiro='Dinheiro';MNAME.formas='Cores e formas';
+TILE.relogio='Mundo dos Relógios';TILE.dinheiro='Mundo do Dinheiro';TILE.formas='Mundo das Cores e Formas';
+SHORT.relogio='Horas, tempo e calendário';SHORT.dinheiro='Moedas, notas e trocos';SHORT.formas='Cores, formas e tamanhos';
+BADGE.relogio=['🕒','Horas'];BADGE.dinheiro=['💰','Dinheiro'];BADGE.formas=['🎨','Formas'];
+ROUTINE_STEPS.relogio=['🕒','Relógios'];ROUTINE_STEPS.dinheiro=['💰','Dinheiro'];ROUTINE_STEPS.formas=['🎨','Cores e formas'];
+/* ícones desenhados (SVG) para o tema Mundo */
+const svgU=s=>'data:image/svg+xml;utf8,'+encodeURIComponent(s);
+MIMG.clock=svgU('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="30" cy="16" r="10" fill="#E8A010"/><circle cx="70" cy="16" r="10" fill="#E8A010"/><circle cx="50" cy="56" r="38" fill="#F2B632"/><circle cx="50" cy="56" r="31" fill="#fff"/><g stroke="#27407A" stroke-width="3" stroke-linecap="round"><path d="M50 30v6M50 76v6M24 56h6M70 56h6"/><path d="M50 56V40" stroke-width="5"/><path d="M50 56l13 8" stroke-width="4"/></g><circle cx="50" cy="56" r="4" fill="#E03131"/></svg>');
+MIMG.coins=svgU('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><ellipse cx="38" cy="78" rx="26" ry="9" fill="#C98A0B"/><rect x="12" y="62" width="52" height="16" fill="#E8A010"/><ellipse cx="38" cy="62" rx="26" ry="9" fill="#FFD43B"/><ellipse cx="62" cy="52" rx="26" ry="9" fill="#C98A0B"/><rect x="36" y="36" width="52" height="16" fill="#E8A010"/><ellipse cx="62" cy="36" rx="26" ry="9" fill="#FFD43B"/><text x="62" y="41" font-size="14" font-weight="800" text-anchor="middle" fill="#9A6700" font-family="Arial">R$</text></svg>');
+MIMG.shapes=svgU('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="30" cy="32" r="22" fill="#FF6B6B"/><rect x="54" y="12" width="36" height="36" rx="5" fill="#4DABF7"/><path d="M30 92 L52 52 L74 92Z" fill="#FFD43B"/><rect x="62" y="58" width="28" height="30" rx="14" fill="#51CF66"/></svg>');
+MT.push(['relogio','Mundo dos Relógios','clock','linear-gradient(160deg,#FFE08A,#FFB938)','#4A2A00'],['dinheiro','Mundo do Dinheiro','coins','linear-gradient(160deg,#8DE8B0,#34C77B)','#06361F'],['formas','Mundo das Cores e Formas','shapes','linear-gradient(160deg,#FFA9CB,#F5679F)','#5A0F32']);
+/* ---- relógio analógico em SVG ---- */
+function clockSVG(h,m,size){
+  const ah=((h%12)+m/60)*30,am=m*6,r=(a,l)=>{const t=a*Math.PI/180;return [(50+Math.sin(t)*l).toFixed(1),(50-Math.cos(t)*l).toFixed(1)];};
+  const H=r(ah,24),M=r(am,35);
+  let n='';for(let i=1;i<=12;i++){const p=r(i*30,38);n+=`<text x="${p[0]}" y="${(+p[1]+3.4).toFixed(1)}" font-size="9.5" font-weight="800" text-anchor="middle" fill="#27407A" font-family="Arial,sans-serif">${i}</text>`;}
+  for(let i=0;i<60;i++){if(i%5===0)continue;const a=r(i*6,46),b=r(i*6,48);n+=`<path d="M${a[0]} ${a[1]}L${b[0]} ${b[1]}" stroke="#9AA9D6" stroke-width=".8"/>`;}
+  return `<svg class="clk" viewBox="0 0 100 100" width="${size||150}" height="${size||150}" role="img" aria-label="Relógio"><circle cx="50" cy="50" r="49" fill="#fff" stroke="#3B5BDB" stroke-width="3.5"/>${n}<path d="M50 50L${H[0]} ${H[1]}" stroke="#27407A" stroke-width="5" stroke-linecap="round"/><path d="M50 50L${M[0]} ${M[1]}" stroke="#E03131" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="50" r="3.5" fill="#27407A"/></svg>`;
+}
+const p2=n=>(n<10?'0':'')+n;
+const tStr=(h,m)=>h+':'+p2(m);
+function timeOpts(h,m,level){
+  const set=new Set([tStr(h,m)]);
+  const cand=shuffle([tStr(m===0?12:Math.round(m/5)||12,h*5%60),tStr(h,(m+30)%60),tStr(h%12+1,m),tStr((h+10)%12+1,m),tStr(h,(m+15)%60),tStr(h,(m+45)%60),tStr((h%12)+1,(m+30)%60)]);
+  for(const c of cand){if(set.size>=4)break;set.add(c);}
+  let k=1;while(set.size<4){set.add(tStr((h+k)%12+1,m));k++;}
+  return shuffle(Array.from(set)).map(x=>({lab:x,h:`<span class="num" style="font-size:34px">${x}</span>`,ok:x===tStr(h,m)}));
+}
+function rndTime(level){
+  const h=rand(12)+1;let m;
+  if(level===0)m=rand(2)?0:30;else m=rand(12)*5;
+  return [h,m];
+}
+function qHoras(level){
+  const seen=new Set(),out=[];let g=0;
+  while(out.length<6&&g++<80){
+    const t=rndTime(level),k=t.join(':');if(seen.has(k))continue;seen.add(k);
+    out.push({dom:'hora',lab:'Ler o relógio: '+tStr(t[0],t[1]),ans:tStr(t[0],t[1]),stem:clockSVG(t[0],t[1],150),prompt:'Que horas o relógio marca?',say:[{t:'Que horas o relógio marca?'}],opts:timeOpts(t[0],t[1],level),cols:2});
+  }
+  return out;
+}
+function qHoraDigital(level){
+  const seen=new Set(),out=[];let g=0;
+  while(out.length<6&&g++<80){
+    const t=rndTime(level),k=t.join(':');if(seen.has(k))continue;seen.add(k);
+    const alts=[[t[0],(t[1]+30)%60],[t[0]%12+1,t[1]],[(t[0]+10)%12+1,t[1]],[t[0],(t[1]+15)%60],[t[1]/5||12,t[0]*5%60]].filter(a=>!(a[0]===t[0]&&a[1]===t[1])&&a[1]>=0);
+    const uniq=[];alts.forEach(a=>{if(!uniq.some(u=>u[0]===a[0]&&u[1]===a[1]))uniq.push(a);});
+    const wrong=shuffle(uniq).slice(0,3);
+    out.push({dom:'hora',lab:'Achar o relógio das '+tStr(t[0],t[1]),ans:tStr(t[0],t[1]),stem:`<span class="eq">${tStr(t[0],t[1])}</span>`,prompt:'Qual relógio mostra essa hora?',say:[{t:'Qual relógio mostra '+t[0]+(t[1]?' e '+(t[1]===30?'meia':t[1]):' horas')+'?'}],
+      opts:shuffle([[t[0],t[1],true]].concat(wrong.map(a=>[a[0],a[1],false]))).map(a=>({lab:tStr(a[0],a[1]),h:clockSVG(a[0],a[1],84),ok:a[2]})),cols:2});
+  }
+  return out;
+}
+function qDuracao(){
+  const out=[];
+  for(let i=0;i<6;i++){
+    const h=rand(9)+7,m=rand(12)*5,d=[15,20,25,30,40,45,50,60,75,90,105,120][rand(12)];
+    const tot=h*60+m+d,h2=Math.floor(tot/60),m2=tot%60;
+    if(i%2===0){
+      out.push({dom:'hora',lab:'Hora final: '+tStr(h,m)+' + '+d+' min',ans:tStr(h2,m2),stem:`<span class="stemtext">São ${tStr(h,m)}. Que horas serão daqui a <b>${d} minutos</b>?</span>`,prompt:'Calcule a nova hora.',say:[{t:'São '+h+' horas e '+m+' minutos. Que horas serão daqui a '+d+' minutos?'}],noauto:true,
+        opts:(()=>{const s=new Set([tStr(h2,m2)]);[tStr(h2,(m2+10)%60),tStr(h2+1,m2),tStr(h2,(m2+50)%60),tStr(h2-1,m2),tStr(h,(m+d)%60)].forEach(x=>{if(s.size<4)s.add(x);});return shuffle(Array.from(s)).map(x=>({lab:x,h:`<span class="num" style="font-size:34px">${x}</span>`,ok:x===tStr(h2,m2)}));})(),cols:2});
+    }else{
+      const fm=x=>x<60?x+' min':(x%60?Math.floor(x/60)+' h '+x%60+' min':Math.floor(x/60)+' h');
+      const set=new Set([fm(d)]);[d+10,d-10,d+15,d-5,d+20].forEach(x=>{if(x>0&&set.size<4)set.add(fm(x));});
+      out.push({dom:'hora',lab:'Duração de '+tStr(h,m)+' até '+tStr(h2,m2),ans:fm(d),stem:`<span class="stemtext">A aula começou às ${tStr(h,m)} e terminou às ${tStr(h2,m2)}. Quanto tempo durou?</span>`,prompt:'Quanto tempo passou?',say:[{t:'A aula começou às '+h+' horas e '+m+' minutos e terminou às '+h2+' horas e '+m2+' minutos. Quanto tempo durou?'}],noauto:true,
+        opts:shuffle(Array.from(set)).map(x=>({lab:x,h:`<span class="otext">${x}</span>`,ok:x===fm(d)})),cols:2});
+    }
+  }
+  return out;
+}
+const DIAS=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+function textOpts(ans,pool){const s=new Set([ans]);shuffle(pool.filter(x=>x!==ans)).forEach(x=>{if(s.size<4)s.add(x);});return shuffle(Array.from(s)).map(x=>({lab:String(x),h:`<span class="otext">${esc(String(x))}</span>`,ok:x===ans}));}
+function qCalendario(level){
+  const out=[];
+  const FACT0=[['Quantos dias tem uma semana?','7',['5','6','8','10']],['Quantos meses tem um ano?','12',['10','11','13','52']],['Qual mês vem depois de dezembro?','janeiro',['fevereiro','novembro','março']],
+    ['Qual dia vem antes de domingo?','sábado',['segunda-feira','sexta-feira','quarta-feira']],['Em qual estação as folhas costumam cair?','outono',['verão','primavera','inverno']]];
+  const FACT1=[['Quantos dias tem um ano comum?','365',['360','364','366','300']],['Quantos dias tem fevereiro em ano bissexto?','29',['28','30','31','27']],['Quantos minutos tem uma hora?','60',['30','100','120','45']],
+    ['Quantos anos tem uma década?','10',['5','100','20','12']],['Quantos meses têm 30 dias?','4',['3','5','6','7']],['Quantos segundos tem um minuto?','60',['30','100','120','50']],['Quantas horas tem um dia?','24',['12','20','48','60']]];
+  const FACT=level===0?FACT0:FACT1;
+  const pool=shuffle(['a','b','c','d','e','f']);
+  for(let i=0;i<6;i++){
+    const t=i%3;
+    if(t===0){const d=rand(7),a=DIAS[(d+1)%7];out.push({dom:'hora',lab:'Dia depois de '+DIAS[d],ans:a,stem:`<span class="stemtext">Qual dia vem depois de <b>${DIAS[d]}</b>?</span>`,prompt:'Pense na ordem da semana.',say:[{t:'Qual dia vem depois de '+DIAS[d]+'?'}],noauto:true,opts:textOpts(a,DIAS),cols:2});}
+    else if(t===1){const mm=rand(12),a=MESES[(mm+(level?2:1))%12];out.push({dom:'hora',lab:'Mês '+(level?'dois meses depois':'depois')+' de '+MESES[mm],ans:a,stem:`<span class="stemtext">${level?'Dois meses depois de':'Qual mês vem depois de'} <b>${MESES[mm]}</b>${level?'?':'?'}</span>`,prompt:'Pense na ordem dos meses.',say:[{t:(level?'Dois meses depois de ':'Qual mês vem depois de ')+MESES[mm]+'?'}],noauto:true,opts:textOpts(a,MESES),cols:2});}
+    else{const f=FACT[rand(FACT.length)];out.push({dom:'hora',lab:f[0],ans:f[1],stem:`<span class="stemtext">${f[0]}</span>`,prompt:'Escolha a resposta.',say:[{t:f[0]}],noauto:true,opts:textOpts(f[1],f[2]),cols:2});}
+  }
+  return out;
+}
+/* ---- dinheiro ---- */
+const BRL=c=>'R$ '+(c/100).toFixed(2).replace('.',',');
+const COINS={5:['0,05','#B87333'],10:['0,10','#C98A3B'],25:['0,25','#D8A93B'],50:['0,50','#C0C4CC'],100:['1,00','#F2C230']};
+const BILLS={2:['#8FA1B3','#fff'],5:['#8E5BD6','#fff'],10:['#E8505B','#fff'],20:['#F2B632','#4A2A00'],50:['#C98A3B','#fff'],100:['#3FA3E0','#fff']};
+const coinH=v=>`<span style="display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;background:${COINS[v][1]};border:3px solid rgba(0,0,0,.18);font:800 13px Arial,sans-serif;color:#3a2a00;margin:2px">${COINS[v][0]}</span>`;
+const billH=v=>`<span style="display:inline-grid;place-items:center;width:74px;height:40px;border-radius:7px;background:${BILLS[v][0]};border:2px solid rgba(0,0,0,.2);font:800 15px Arial,sans-serif;color:${BILLS[v][1]};margin:2px">R$ ${v}</span>`;
+function moneyOpts(ans,extra){
+  const s=new Set([ans]);shuffle([ans+50,ans-50,ans+100,ans-100,ans+25,ans-25,ans+10,ans-10,ans*2].concat(extra||[]).filter(x=>x>0&&x!==ans)).forEach(x=>{if(s.size<4)s.add(x);});
+  return shuffle(Array.from(s)).map(x=>({lab:BRL(x),h:`<span class="otext">${BRL(x)}</span>`,ok:x===ans}));
+}
+function qValores(level){
+  const out=[];
+  for(let i=0;i<6;i++){
+    let items=[],sum=0;
+    if(level===0){
+      const nb=rand(2)+1,nc=rand(3)+1;
+      for(let k=0;k<nb;k++){const v=[2,5,10,20][rand(4)];items.push(billH(v));sum+=v*100;}
+      for(let k=0;k<nc;k++){const v=[50,100][rand(2)];items.push(coinH(v));sum+=v;}
+    }else{
+      const nb=rand(2)+1,nc=rand(3)+2;
+      for(let k=0;k<nb;k++){const v=[5,10,20,50][rand(4)];items.push(billH(v));sum+=v*100;}
+      for(let k=0;k<nc;k++){const v=[5,10,25,50,100][rand(5)];items.push(coinH(v));sum+=v;}
+    }
+    out.push({dom:'din',lab:'Contar dinheiro: '+BRL(sum),ans:BRL(sum),stem:`<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:2px">${items.join('')}</div>`,prompt:'Quanto dinheiro tem aqui?',say:[{t:'Quanto dinheiro tem aqui?'}],opts:moneyOpts(sum),cols:2});
+  }
+  return out;
+}
+function qTroco(level){
+  const out=[];
+  for(let i=0;i<6;i++){
+    let paid,price;
+    if(level===0){paid=[1000,500,2000][rand(3)];price=(rand(paid/100-1)+1)*100;}
+    else{paid=[2000,5000,10000][rand(3)];price=Math.round((rand(paid/100*8)/10+paid/100*0.12)*2)*50;if(price>=paid)price=paid-250;if(price<=0)price=350;}
+    const ch=paid-price,it=['🍫','⚽','📒','🧃','🎈','🚗'][rand(6)];
+    out.push({dom:'din',lab:'Troco de '+BRL(paid)+' para '+BRL(price),ans:BRL(ch),stem:`<span class="stemtext">${it} custa <b>${BRL(price)}</b>. Você paga com <b>${BRL(paid)}</b>.</span>`,prompt:'Qual é o troco?',say:[{t:'O item custa '+BRL(price).replace('R$','')+' reais. Você paga com '+BRL(paid).replace('R$','')+' reais. Qual é o troco?'}],noauto:true,opts:moneyOpts(ch),cols:2});
+  }
+  return out;
+}
+function qBarato(){
+  const E=[['🍎',150],['🍌',90],['🥛',450],['🍫',300],['🧃',250],['🍪',200],['📒',800],['✏️',120],['🎈',50],['🚗',1500],['⚽',3500],['🧸',2500]];
+  return Array.from({length:6},()=>{
+    const t=pick(E,3),min=t.slice().sort((a,b)=>a[1]-b[1])[0],mx=t.slice().sort((a,b)=>b[1]-a[1])[0],ask=rand(2);
+    const a=ask?mx:min;
+    return {dom:'din',lab:'Qual é o mais '+(ask?'caro':'barato'),ans:a[0],stem:`<span class="stemtext">Qual é o mais <b>${ask?'caro':'barato'}</b>?</span>`,prompt:'Compare os preços.',say:[{t:'Qual é o mais '+(ask?'caro':'barato')+'?'}],
+      opts:t.map(x=>({lab:x[0],h:`<span style="display:grid;gap:2px;justify-items:center"><span class="emo">${x[0]}</span><span style="font:800 18px Arial,sans-serif">${BRL(x[1])}</span></span>`,ok:x===a})),cols:3};
+  });
+}
+function qCompras(level){
+  const out=[];
+  for(let i=0;i<6;i++){
+    const items=pick([['lápis',level?2.5:2],['caderno',level?9:8],['borracha',level?1.5:1],['suco',level?4.5:3],['bala',level?0.5:1],['pão',level?1.5:2]],2);
+    const q1=rand(3)+2,q2=rand(2)+1,tot=Math.round((q1*items[0][1]+q2*items[1][1])*100);
+    const nm=(q,n)=>q+' '+n+(q>1&&!/[sz]$/.test(n)?'s':'');
+    out.push({dom:'din',lab:'Total da compra: '+BRL(tot),ans:BRL(tot),stem:`<span class="stemtext">${nm(q1,items[0][0])} a ${BRL(items[0][1]*100)} cada e ${nm(q2,items[1][0])} a ${BRL(items[1][1]*100)} cada. Quanto você gasta?</span>`,prompt:'Some o total da compra.',say:[{t:'Quanto você gasta no total?'}],noauto:true,opts:moneyOpts(tot),cols:2});
+  }
+  return out;
+}
+function qPouparBig(){
+  const out=[];
+  const goals=[[60,5],[90,10],[120,15],[48,6],[200,25],[75,15],[150,10],[36,4]];
+  pick(goals,3).forEach(g=>{
+    const w=g[0]/g[1],s=new Set([w]);[w+1,w-1,w+2,w*2].forEach(x=>{if(x>0&&s.size<4)s.add(x);});
+    out.push({dom:'din',lab:'Poupar R$ '+g[1]+' por semana para R$ '+g[0],ans:w,stem:`<span class="stemtext">Você quer um jogo de <b>R$ ${g[0]}</b>. Guardando <b>R$ ${g[1]}</b> por semana, em quantas semanas consegue comprar?</span>`,prompt:'Pense em quantas vezes cabe.',say:[{t:'Você quer um jogo de '+g[0]+' reais. Guardando '+g[1]+' reais por semana, em quantas semanas consegue comprar?'}],noauto:true,opts:shuffle(Array.from(s)).map(x=>({lab:String(x),h:`<span class="num">${x}</span>`,ok:x===w})),cols:2});
+  });
+  pick([[40,25],[80,50],[60,50],[100,10],[200,25],[80,10],[120,50],[50,20]],3).forEach(g=>{
+    const pay=Math.round(g[0]*(100-g[1]))/100*100;
+    out.push({dom:'din',lab:g[1]+'% de desconto em R$ '+g[0],ans:BRL(pay),stem:`<span class="stemtext">Uma camiseta custa <b>R$ ${g[0]}</b> e está com <b>${g[1]}% de desconto</b>. Quanto você paga?</span>`,prompt:'Calcule o desconto e subtraia.',say:[{t:'Uma camiseta custa '+g[0]+' reais e está com '+g[1]+' por cento de desconto. Quanto você paga?'}],noauto:true,opts:moneyOpts(pay,[g[0]*100-pay,g[0]*100]),cols:2});
+  });
+  return shuffle(out);
+}
+/* ---- cores e formas (4–5 anos) ---- */
+const SHP={círculo:'<circle cx="50" cy="50" r="38"/>',quadrado:'<rect x="14" y="14" width="72" height="72" rx="4"/>',triângulo:'<path d="M50 10L92 88H8Z"/>',retângulo:'<rect x="6" y="26" width="88" height="48" rx="4"/>',estrela:'<path d="M50 6l13 28 31 4-23 21 6 31-27-15-27 15 6-31L6 38l31-4z"/>',coração:'<path d="M50 88C10 58 8 28 30 20c10-4 18 2 20 10 2-8 10-14 20-10 22 8 20 38-20 68z"/>'};
+const shapeSvg=(n,c,s)=>`<svg viewBox="0 0 100 100" width="${s||64}" height="${s||64}" fill="${c}" stroke="rgba(0,0,0,.18)" stroke-width="3" role="img" aria-label="${n}">${SHP[n]}</svg>`;
+function qShapes(){
+  const names=Object.keys(SHP),cols=['#FF6B6B','#4DABF7','#FFD43B','#51CF66','#9775FA','#FF922B'],out=[];
+  pick(names,4).forEach(n=>{
+    const o=shuffle([n].concat(pick(names.filter(x=>x!==n),2))),c=shuffle(cols);
+    out.push({dom:'for',lab:'Achar o '+n,ans:n,stem:`<span class="bigspk">${ICON.speaker}</span>`,prompt:'Ouça e toque na forma certa.',say:[{t:'Toque no '+n}],opts:o.map((x,i)=>({lab:x,h:shapeSvg(x,c[i]),ok:x===n})),cols:3});
+  });
+  [['triângulo',3],['quadrado',4]].forEach(a=>{
+    const s=new Set([a[1]]);[3,4,5,0,6].forEach(x=>{if(s.size<3)s.add(x);});
+    out.push({dom:'for',lab:'Lados do '+a[0],ans:a[1],stem:`<div style="display:grid;justify-items:center;gap:6px">${shapeSvg(a[0],'#4DABF7',90)}<span class="stemtext">Quantos lados tem?</span></div>`,prompt:'Conte os lados.',say:[{t:'Quantos lados tem essa forma?'}],opts:shuffle(Array.from(s)).map(x=>({lab:String(x),h:`<span class="num">${x}</span>`,ok:x===a[1]})),cols:3});
+  });
+  return out;
+}
+/* ---- mundos novos no menu ---- */
+MODS.relogio={title:'Relógios e tempo',sub:'Aprenda a ler as horas, medir o tempo e usar o calendário.',glyph:'🕒',acts:[
+  {id:'horas',t:'Que horas são?',d:'Leia o relógio de ponteiros',g:'🕒'},{id:'digital',t:'Achar o relógio',d:'Da hora digital ao relógio de ponteiros',g:'12:30'},
+  {id:'calendario',t:'Dias e meses',d:'Semana, meses e calendário',g:'📅'},{id:'duracao',t:'Quanto tempo passou?',d:'Duração e horas depois',g:'⏳',only:'big'}]};
+MODS.dinheiro={title:'Dinheiro',sub:'Moedas, notas, troco e escolhas de compra.',glyph:'💰',acts:[
+  {id:'valores',t:'Contar dinheiro',d:'Quanto dinheiro tem aqui?',g:'💵'},{id:'troco',t:'Qual é o troco?',d:'Pague e receba o troco',g:'🪙'},
+  {id:'barato',t:'Mais barato, mais caro',d:'Compare preços',g:'🏷️',only:'mid'},{id:'compras',t:'Quanto eu gasto?',d:'Some a compra',g:'🛒'},{id:'poupar',t:'Poupar e descontos',d:'Metas de poupança e porcentagem',g:'🐷',only:'big'}]};
+MODS.formas={title:'Cores e formas',sub:'Descubra cores, tamanhos e formas.',glyph:'🎨',acts:[{id:'cores',t:'Cores e tamanhos',d:'Ouça e toque na cor ou no tamanho',g:'🎨'},{id:'formas',t:'Formas',d:'Círculo, quadrado, triângulo...',g:'🔺'}]};
+const lvOf=()=>ageBand()==='big'?1:0;
+MQ('horas','relogio',()=>qHoras(lvOf()));MQ('digital','relogio',()=>qHoraDigital(lvOf()));MQ('calendario','relogio',()=>qCalendario(lvOf()));MQ('duracao','relogio',qDuracao);
+MQ('valores','dinheiro',()=>qValores(lvOf()));MQ('troco','dinheiro',()=>qTroco(lvOf()));MQ('barato','dinheiro',qBarato);MQ('compras','dinheiro',()=>qCompras(lvOf()));MQ('poupar','dinheiro',qPouparBig);
+MQ('cores','formas',qFormas);MQ('formas','formas',qShapes);
+/* 4–5 anos: figura passa para o Mundo das Letras e a leitura some */
+MODS.letras.acts.push({id:'figura',t:'Qual figura?',d:'Ouça a palavra e ache a figura',g:'👂',only:'pre'});MQ('figura','letras',qFigura);
+MODS.leitura.acts=MODS.leitura.acts.filter(a=>a.id!=='figura');
+MODS.mente.acts=MODS.mente.acts.filter(a=>a.id!=='formas');
+REC.for={t:'Cores e formas',m:'formas',id:'cores',ico:'🎨'};REC.hora={t:'Hora e tempo',m:'relogio',id:'horas',ico:'🕒'};REC.din={t:'Dinheiro',m:'dinheiro',id:'valores',ico:'💰'};
+Object.assign(PRE_OK,{letras:['explorar','achar','vogais','inicial','tracar','figura'],leitura:[],relogio:null,dinheiro:null,formas:null});
+CHAL_BIG.push(()=>qHoras(1),qDuracao,()=>qCalendario(1),()=>qValores(1),()=>qTroco(1),qPouparBig);
+const CHAL_MID=CHAL_GENS.concat([()=>qHoras(0),()=>qHoraDigital(0),()=>qCalendario(0),()=>qValores(0),()=>qTroco(0),qBarato]);
+CHAL_PRE.push(qShapes);
+function collectWorlds(band,birth){
+  const b=band==='auto'?bandFromBirth(birth):band,def=worldsFor(b);
+  const arr=ALLW.filter(k=>{const c=document.getElementById('wd-'+k);return c&&c.checked;});
+  if(!arr.length||(arr.length===def.length&&arr.every(k=>def.indexOf(k)>=0)))return null;
+  return arr;
+}
+function worldsPanelHTML(d){
+  const b=d.band&&d.band!=='auto'?d.band:bandFromBirth(d.birth),sel=Array.isArray(d.worlds)&&d.worlds.length?d.worlds:worldsFor(b);
+  return '<details class="panel"><summary><h3>Mundos liberados</h3></summary><p class="hint">O app escolhe os mundos pela idade. Você pode ligar ou desligar qualquer um. Se mudar a idade ou a faixa, a lista volta para o padrão da idade.</p>'
+    +ALLW.map(k=>'<label class="chk"><input type="checkbox" id="wd-'+k+'"'+(sel.indexOf(k)>=0?' checked':'')+'><span>'+esc(TILE[k]||('Mundo '+WNAME[k]))+'</span></label>').join('')+'</details>';
+}
+function bindPform(){
+  const pb=()=>{const v=$('#pf-band').value;return v==='auto'?bandFromBirth($('#pf-birth').value):v;};
+  const upd=reset=>{
+    const b=pb(),y=ageYears($('#pf-birth').value),info=$('#pf-bandinfo');
+    if(info)info.textContent='Faixa em uso: '+BAND_NAME[b]+(y!=null?' (idade: '+y+' anos)':'')+'. Mundos: '+worldsFor(b).map(k=>WNAME[k]).join(', ')+'.';
+    if(reset)ALLW.forEach(k=>{const c=$('#wd-'+k);if(c)c.checked=worldsFor(b).indexOf(k)>=0;});
+  };
+  $('#pf-birth').oninput=$('#pf-birth').onchange=()=>upd(true);$('#pf-band').onchange=()=>upd(true);upd(false);
+}
 
 ACTS['letras:ordem']=m=>quiz(m,{key:'letras:ordem',module:'letras',make:qOrdemAlfa,back:['menu','letras']});
 ACTS['letras:maiusc']=m=>quiz(m,{key:'letras:maiusc',module:'letras',make:qMaiMin,back:['menu','letras']});
@@ -2035,8 +2259,7 @@ function puzzle(m,cols,rows,key,opt){
     sfx.win();if(!opt.assess&&S.reinf==='stars')confetti();
     logEntry({mod:'puzzle',act:key,dom:'viso',lab:'Quebra-cabeça de '+n+' peças',ans:'',ok1:null,tries:1,ms:Date.now()-tStart-(PAUSED_MS-p0),listens:0,err:[],pieces:n,moves:moves,minMoves:minSw},opt.assess&&SESS?SESS.id:null);
     if(opt.assess){
-      say({t:'Muito bem! Vamos continuar.'});
-      $('#pzEnd',m).innerHTML='<div class="endcard"><b>Muito bem!</b><div class="row"><button class="btn primary" id="pzCont">Continuar</button></div></div>';
+      $('#pzEnd',m).innerHTML='<div class="endcard"><div class="row"><button class="btn primary" id="pzCont">Continuar</button></div></div>';
       $('#pzCont',m).onclick=()=>{sfx.tap();opt.onDone();};
       return;
     }
@@ -2106,10 +2329,12 @@ screens.pform=(m,arg)=>{
     <label class="fl" for="pf-band">Faixa do conteúdo</label>
     <select id="pf-band" class="inp"><option value="auto"${d.band==='auto'?' selected':''}>Automática pela idade</option><option value="pre"${d.band==='pre'?' selected':''}>4 a 5 anos (mais simples e visual)</option><option value="mid"${d.band==='mid'?' selected':''}>6 a 8 anos</option><option value="big"${d.band==='big'?' selected':''}>9 a 12 anos</option></select>
     <p class="hint">Sem data de nascimento, o app usa 6 a 8 anos. Escolha aqui para mudar as atividades, o desafio do dia e a avaliação guiada.</p>
+    <p class="hint" id="pf-bandinfo" role="status"></p>
     <label class="fl" for="pf-notes">Anotações (opcional)</label>
     <textarea id="pf-notes" class="inp" rows="3" maxlength="400">${esc(d.notes)}</textarea>
     <p class="hint">Use para registrar o que ajuda a criança (apoios, laudos, combinados). Fica salvo só neste aparelho e aparece no relatório.</p>
   </div>
+  ${worldsPanelHTML(d)}
   <details class="panel"><summary><h3>Ficha do aluno (anamnese, opcional)</h3></summary>
     <p class="hint">Para profissionais. O que for preenchido aparece no relatório impresso. Fica salvo só neste aparelho.</p>
     ${AN_F.map(x=>`<label class="fl" for="an-${x[0]}">${x[1]}</label><textarea id="an-${x[0]}" class="inp" rows="2" maxlength="500">${esc(an[x[0]]||'')}</textarea>`).join('')}
@@ -2125,12 +2350,13 @@ screens.pform=(m,arg)=>{
     <div class="row"><button class="btn" data-act="askClear" id="askClear">Apagar histórico de respostas</button><button class="btn" data-act="askDel" id="askDel">Excluir aluno</button></div>
     <div id="confirmBox" hidden><p class="warn" id="confirmTxt"></p><div class="row"><button class="btn" data-act="confirmYes">Sim, apagar</button><button class="btn" data-act="confirmNo">Cancelar</button></div></div></div>`:''}
   </div>`;
+  bindPform();
 };
 actions.pskin=b=>{const f=$('#pform');f.dataset.skin=b.dataset.v;$$('[data-act="pskin"]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));};
 actions.psave=()=>{
   const f=$('#pform'),name=$('#pf-name').value.trim();
   if(!name){$('#pf-err').hidden=false;$('#pf-name').focus();return;}
-  const vals={name:name,birth:$('#pf-birth').value,grade:$('#pf-grade').value,notes:$('#pf-notes').value.trim(),skin:normSkin(f.dataset.skin),band:$('#pf-band').value,an:AN_F.reduce((o,x)=>{o[x[0]]=$('#an-'+x[0]).value.trim();return o;},{})};
+  const vals={name:name,birth:$('#pf-birth').value,grade:$('#pf-grade').value,notes:$('#pf-notes').value.trim(),skin:normSkin(f.dataset.skin),band:$('#pf-band').value,worlds:collectWorlds($('#pf-band').value,$('#pf-birth').value),an:AN_F.reduce((o,x)=>{o[x[0]]=$('#an-'+x[0]).value.trim();return o;},{})};
   const id=f.dataset.id;
   if(id){
     const p=S.profiles.find(x=>x.id===id);Object.assign(p,vals);save();
@@ -2315,6 +2541,8 @@ const BLOCKS_BIG=[
  {k:'comp',n:6,min:4,mod:'leitura',t:'Interpretação de textos',intro:'Vamos ler textos e responder!',mk:()=>qTextoBig()},
  {k:'calc',n:8,min:4,mod:'contas',t:'Cálculo (contas de 2 algarismos, tabuada e divisão)',intro:'Vamos fazer contas!',mk:()=>qCalcBig(0).slice(0,3).concat(qCalcBig(1).slice(0,3),qCalcBig(2).slice(0,2))},
  {k:'rac',n:6,min:4,mod:'contas',t:'Raciocínio lógico-matemático',intro:'Vamos descobrir os números!',mk:()=>qRacBig()},
+ {k:'hora',n:5,min:3,mod:'relogio',t:'Hora e tempo',intro:'Vamos falar de horas!',mk:()=>qHoras(1).slice(0,3).concat(qDuracao().slice(0,2))},
+ {k:'din',n:6,min:3,mod:'dinheiro',t:'Dinheiro e consumo',intro:'Vamos falar de dinheiro!',mk:()=>qValores(1).slice(0,2).concat(qTroco(1).slice(0,2),qPouparBig().slice(0,2))},
  {k:'aten',n:6,min:3,mod:'mente',t:'Atenção visual',intro:'Vamos achar o que é diferente!',mk:()=>qAtencao()},
  {k:'mem',n:6,min:3,mod:'mente',t:'Memória de trabalho visual',intro:'Vamos treinar a memória!',mk:()=>qMemoria()},
  {k:'log',n:6,min:3,mod:'mente',t:'Padrões e raciocínio lógico',intro:'Vamos descobrir o que vem depois!',mk:()=>qPadroes()},
@@ -2404,7 +2632,7 @@ screens.avalrun=(m,arg)=>{
 /* ========== relatório ========== */
 const DOMS=[['letra','Reconhecimento de letras'],['fon','Consciência fonológica (letra inicial)'],['silc','Consciência silábica'],['ler','Leitura de palavras'],
   ['comp','Compreensão de frases e histórias'],['calc','Cálculo'],['aten','Atenção visual'],['mem','Memória de trabalho visual'],
-  ['log','Padrões e raciocínio lógico'],['viso','Quebra-cabeça (visuoespacial)'],['ling','Linguagem e vocabulário'],['for','Cores, formas e tamanhos'],['ort','Ortografia'],['rac','Raciocínio lógico-matemático'],['ing','Inglês (vocabulário)']];
+  ['log','Padrões e raciocínio lógico'],['viso','Quebra-cabeça (visuoespacial)'],['ling','Linguagem e vocabulário'],['hora','Hora e tempo'],['din','Dinheiro e consumo'],['for','Cores, formas e tamanhos'],['ort','Ortografia'],['rac','Raciocínio lógico-matemático'],['ing','Inglês (vocabulário)']];
 const BAND={insuf:'Poucos itens',aut:'Com autonomia',des:'Em desenvolvimento',apo:'Precisa de apoio'};
 const band=(n,p)=>n<3?'insuf':p>=80?'aut':p>=50?'des':'apo';
 const median=a=>{if(!a.length)return null;const s=a.slice().sort((x,y)=>x-y),h=Math.floor(s.length/2);return s.length%2?s[h]:(s[h-1]+s[h])/2;};

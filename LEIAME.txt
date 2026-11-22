@@ -92,3 +92,20 @@ VISUAL MAIS MODERNO
 - Cartoes e botoes com brilho de vidro e sombras suaves, animacao de entrada nas telas, resposta com marca de certo/errado (nao depende so da cor), Capi redonda nos jogos, barra inferior em formato de pilula, nuvens suaves no tema Mundo e lista de atividades mais compacta no celular.
 - As animacoes respeitam o Modo calmo e a preferencia de movimento reduzido do aparelho.
 - Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
+
+MUNDOS POR IDADE (NOVOS: RELOGIOS, DINHEIRO, CORES E FORMAS)
+- Ao cadastrar a data de nascimento, o app libera os mundos da idade:
+  4 a 5 anos: Letras, Numeros, Cores e Formas, Mente, Quebra-cabecas e Ingles (sem Leitura).
+  6 a 8 anos: Letras, Leitura, Numeros, Relogios, Dinheiro, Mente, Quebra-cabecas e Ingles.
+  9 a 12 anos: Leitura, Numeros, Dinheiro, Relogios, Mente, Quebra-cabecas e Ingles (sem Mundo das Letras).
+- Mundo dos Relogios: ler relogio de ponteiros, achar o relogio de uma hora digital, dias e meses, e (9 a 12) duracao e horas depois.
+- Mundo do Dinheiro: contar moedas e notas, troco, comparar precos, quanto gastar e (9 a 12) poupar e descontos.
+- Mundo das Cores e Formas (4 a 5 anos): cores, tamanhos, formas e lados.
+- Editar aluno > "Mundos liberados": o adulto pode ligar ou desligar qualquer mundo. Ao mudar idade ou faixa, volta para o padrao da idade.
+- Avaliacao de 9 a 12 anos ganhou as partes Hora e tempo e Dinheiro e consumo. A de 6 a 8 anos nao mudou.
+- Missao do dia, progresso, medalhas, desafio do dia e "Para hoje" seguem os mundos liberados.
+- Para atualizar no GitHub: index.html, sw.js e LEIAME.txt.
+
+AVALIACAO GUIADA SEM "MUITO BEM"
+- Na avaliacao guiada o app nao fala nem mostra "Muito bem! Vamos continuar." a cada resposta (nem ao fim do quebra-cabeca). As falas de abertura de cada parte e o "Terminamos! Muito obrigado!" continuam.
+- Para atualizar no GitHub: index.html e sw.js.
