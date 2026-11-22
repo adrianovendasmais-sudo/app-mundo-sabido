@@ -109,3 +109,37 @@ MUNDOS POR IDADE (NOVOS: RELOGIOS, DINHEIRO, CORES E FORMAS)
 AVALIACAO GUIADA SEM "MUITO BEM"
 - Na avaliacao guiada o app nao fala nem mostra "Muito bem! Vamos continuar." a cada resposta (nem ao fim do quebra-cabeca). As falas de abertura de cada parte e o "Terminamos! Muito obrigado!" continuam.
 - Para atualizar no GitHub: index.html e sw.js.
+
+v21 - FONTES LOCAIS E CACHE OFFLINE
+- As fontes (Fredoka, Nunito, Atkinson Hyperlegible) agora ficam na pasta fonts/. O aplicativo nao chama mais o Google Fonts.
+- O cache offline (sw.js, versao mundo-descobertas-v23) guarda tambem os icones e as fontes. A pasta fonts/ tem cache longo (_headers).
+- Ao publicar, envie a PASTA INTEIRA, incluindo fonts/.
+
+v22 - PRIVACIDADE E LGPD
+- Aviso "Antes de comecar" no primeiro uso, para adultos ("Sou adulto, li e concordo"). O aceite e pedido de novo se PRIV_V mudar no index.html.
+- Tela "Privacidade e termos de uso" (9 secoes), com links no aviso, em "Quem vai estudar?" e na Area dos adultos.
+- Area dos adultos > Privacidade e dados > "Apagar todos os dados deste aparelho" (com confirmacao).
+- Dicas de privacidade no cadastro do aluno e aviso de dados pessoais de crianca no relatorio impresso, no texto copiado e na copia de seguranca.
+- ANTES DE DIVULGAR: preencher PRIV_CONTACT no index.html (nome e e-mail do responsavel). O texto de privacidade e um modelo e nao substitui orientacao juridica.
+
+v23 - PIN DA AREA DOS ADULTOS
+- Area dos adultos > "Senha dos adultos (PIN)": PIN de 4 a 6 numeros, guardado so como hash SHA-256 com sal. Bloqueia area dos adultos, relatorio, metas, avaliacao guiada e cadastro/edicao de alunos.
+- Codigo de recuperacao (XXXX-XXXX-XXXX) mostrado uma unica vez. "Esqueci o PIN" + codigo remove o PIN.
+- Trava de 30 s apos 5 erros (persistida). O PIN e pedido de novo ao sair da area dos adultos ou apos 10 min parado (nao expira durante a avaliacao guiada).
+- A copia de seguranca nao leva o PIN; ao restaurar, o PIN do aparelho e mantido. Com PIN ativo, "Restaurar" so aparece na Area dos adultos.
+- O PIN e so uma barreira contra a crianca. Nao protege contra quem sabe mexer nos dados do navegador.
+- Para atualizar no GitHub/Netlify: index.html, sw.js, _headers, manifest.webmanifest, LEIAME.txt e a pasta fonts/.
+
+v24 - CODIGO ORGANIZADO EM ARQUIVOS
+- O index.html agora so tem a estrutura da pagina. O visual ficou em styles.css e a logica e o conteudo em app.js. Nada muda para quem usa.
+- O sw.js (cache mundo-descobertas-v24) guarda styles.css e app.js para uso offline.
+- Ao publicar, envie a PASTA INTEIRA: index.html, styles.css, app.js, sw.js, _headers, manifest.webmanifest, icones e fonts/.
+
+v25 - ACESSIBILIDADE (primeira rodada)
+- Auditoria automatica (axe-core, WCAG 2.1 AA) nos 3 temas, claro e escuro: sem violacoes nas telas inicial, area dos adultos, conquistas, menu e atividade.
+- Titulo principal (h1) em todas as telas, ordem de titulos corrigida no aviso inicial.
+- Contraste corrigido: tema Mundo (azul e texto secundario, inclusive com o aparelho em modo escuro) e tema Algodao-doce.
+- Alvos de toque de pelo menos 44 px (botoes do cabecalho, chips, voltar, campos e barras de ajuste). Em telas de 320 px o cabecalho mostra so o globo para nao sobrepor os botoes.
+- Foco de teclado visivel tambem em campos de selecao, texto, resumos e links.
+- AINDA FALTA: teste com leitor de tela real (TalkBack, VoiceOver, NVDA), teste so com teclado nas atividades e revisao com profissionais de TEA, TDAH e dislexia.
+- Cache: mundo-descobertas-v25.
