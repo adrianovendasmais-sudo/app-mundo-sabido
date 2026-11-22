@@ -143,3 +143,42 @@ v25 - ACESSIBILIDADE (primeira rodada)
 - Foco de teclado visivel tambem em campos de selecao, texto, resumos e links.
 - AINDA FALTA: teste com leitor de tela real (TalkBack, VoiceOver, NVDA), teste so com teclado nas atividades e revisao com profissionais de TEA, TDAH e dislexia.
 - Cache: mundo-descobertas-v25.
+
+
+v26 - AJUSTES DE USABILIDADE (sem mudar a identidade visual)
+- Botao "Começar minha missão" (vira "Continuar minha missão" depois da primeira atividade do dia) dentro de "Minha Missão de Hoje"; leva ao primeiro mundo ainda nao feito hoje e mostra "Próximo: ...". Quando todos os mundos do dia estao feitos, aparece "Missão de hoje cumprida!". O 0/N continua ligado aos dados reais.
+- Cartao de estrelas da tela inicial mais compacto: o saldo fica so no topo; o cartao mostra nivel e quanto falta para o proximo.
+- Nomes iguais entre missao, cartoes e titulo da tela de cada mundo: Numeros (antes "Contas"), Quebra-cabeças (antes "Peças"), Relogios (antes "Horas"), Mente (antes "Mente agil" no titulo). Mente NAO foi unido a nenhuma outra categoria.
+- Explicacao de como ganhar estrelas em Meu Progresso e Conquistas (regras reais: 1 por acerto de primeira, 2 a 5 por quebra-cabeça, 5 no desafio do dia) e quanto falta para o proximo nivel.
+- Textos menores maiores, rotulos da navegacao inferior podem quebrar linha, cabecalho sem sobreposicao em telas de 320 px (nome do app quebra em duas linhas).
+- Arquivos alterados: app.js, styles.css, sw.js (cache v26), LEIAME.txt.
+
+
+v27 - ACESSIBILIDADE, 2a RODADA
+- Link "Ir para o conteudo" (aparece ao apertar Tab) no inicio de cada tela.
+- Ao trocar de tela o foco vai para o conteudo; em cada pergunta o foco vai para o cartao da pergunta (leitor de tela le o enunciado) e, depois de um erro, para a proxima opcao disponivel.
+- Opcoes de resposta com nome acessivel; certo/errado ja tinham marca visual (✓ e ✕), alem da cor.
+- Quebra-cabeca: cada peca informa numero, posicao, se esta no lugar certo e se esta selecionada; uma area de aviso anuncia as trocas e quantas pecas estao no lugar. Funciona com Tab, Enter e Espaco.
+- Arquivos alterados: app.js, styles.css, sw.js (cache v27), LEIAME.txt.
+- Nao testado com TalkBack, VoiceOver ou NVDA reais; so com Chromium automatizado.
+
+
+v28 - CONTEUDO NOVO: CIENCIAS E NATUREZA
+- Nova atividade "Ciencias e natureza" no Mundo da Mente, para 6 a 8 anos (20 perguntas: bichos, plantas, corpo, espaco) e 9 a 12 anos (20 perguntas: fotossintese, planetas, cadeia alimentar, celula, energia). Cada rodada sorteia 6. Nao aparece para 4 a 5 anos.
+- Entra tambem no Desafio do dia dessas faixas.
+- E pratica livre: nao faz parte da avaliacao guiada, que continua com itens fixos. Perguntas escritas por nos, ainda sem revisao de professor(a).
+- Arquivos alterados: app.js, sw.js (cache v28), LEIAME.txt.
+
+
+v29 - USO EM ESCOLA: TURMAS
+- Campo opcional "Turma" no cadastro do aluno (Editar aluno). Alunos da mesma turma usam o mesmo texto (ex.: 3o A manha); o campo sugere as turmas ja criadas.
+- Tela "Quem vai estudar?": com 2 ou mais turmas aparecem botoes para filtrar por turma; a turma aparece no cartao do aluno.
+- Area dos adultos > "Relatorio da turma": quadro com aluno, turma, ano, estrelas, rodadas completas, dias seguidos, ultima atividade e avaliacoes guiadas; filtro por turma, impressao e planilha CSV. Mostra uso e participacao; nao e avaliacao individual nem diagnostico. Protegido pelo PIN dos adultos.
+- O backup (.json) ja leva a turma. Compartilhar alunos entre aparelhos continua sendo por backup/restauracao.
+- Arquivos alterados: app.js, styles.css, sw.js (cache v29), LEIAME.txt.
+
+
+v30 - MAIS TEMAS DE INGLES
+- 6 temas novos no Mundo do Ingles: Esportes, Legumes e verduras, Sentimentos, Bichinhos, Espaco e Cidade (de 8 a 10 palavras cada, com figura, voz em ingles e portugues, jogo e Desafio misto). Agora sao 24 temas.
+- Palavras escolhidas sem figura repetida de outros temas, para o jogo nao mostrar duas opcoes iguais.
+- Arquivos alterados: app.js, sw.js (cache v30), LEIAME.txt.
