@@ -17,7 +17,7 @@ const praise=()=>PRAISE[rand(PRAISE.length)];
 
 /* ========== progresso salvo ========== */
 const KEY='ferias-sabidas-v1';
-const PRIV_V=1;                /* suba este número se o uso dos dados mudar: o aviso inicial volta a aparecer */
+const PRIV_V=2;                /* suba este número se o uso dos dados mudar: o aviso inicial volta a aparecer */
 const PRIV_CONTACT='';         /* nome e e-mail do responsável pelo app (preencher antes de divulgar) */
 /* Preferências ficam em cada aluno (P.prefs) e são lidas por S.rate, S.sound, S.fx... (propriedades não enumeráveis).
    Estrelas, rodadas, dia e tema também ficam no aluno. S guarda só a lista de alunos e o aluno atual. */
@@ -529,6 +529,16 @@ natureza:{title:'Natureza',d:'Tree, flower, moon...',g:'Sun',items:[
  {en:'mountain',pt:'montanha',e:'⛰️'},{en:'sea',pt:'mar',e:'🌊'},{en:'cloud',pt:'nuvem',e:'☁️'},{en:'rainbow',pt:'arco-íris',e:'🌈'},{en:'leaf',pt:'folha',e:'🍃'}]}
 });
 
+STORIES.push(
+{t:'O dia de chuva',s:['Pedro olhou pela janela e viu a chuva cair.','A mãe fez um bolo de milho para o lanche.','Depois, Pedro vestiu a capa amarela e pulou nas poças.','À noite, ele tomou chocolate quente e dormiu feliz.'],
+ q:[{q:'De que cor era a capa do Pedro?',o:['Amarela','Azul','Vermelha'],a:'Amarela'},{q:'O que a mãe fez?',o:['Um bolo de milho','Uma sopa','Um suco'],a:'Um bolo de milho'},{q:'Onde o Pedro pulou?',o:['Nas poças','No sofá','Na cama'],a:'Nas poças'}]},
+{t:'A pipa da Duda',s:['Duda ganhou uma pipa vermelha.','No sábado, ela foi até a praça.','O vento estava forte, e a pipa subiu bem alto.','Duda segurou a linha com as duas mãos e sorriu.'],
+ q:[{q:'De que cor era a pipa?',o:['Vermelha','Verde','Rosa'],a:'Vermelha'},{q:'Aonde a Duda foi?',o:['À praça','À escola','Ao mercado'],a:'À praça'},{q:'Como estava o vento?',o:['Forte','Parado','Gelado'],a:'Forte'}]},
+{t:'O jardim da vovó',s:['A vovó Rosa tem um jardim cheio de flores.','Todas as manhãs, ela rega as plantas.','Uma abelha vem visitar as flores amarelas.','Quando as flores crescem, a vovó faz um buquê para a neta.'],
+ q:[{q:'Qual é o nome da vovó?',o:['Rosa','Lia','Ana'],a:'Rosa'},{q:'O que a vovó faz de manhã?',o:['Rega as plantas','Faz bolo','Vai à praia'],a:'Rega as plantas'},{q:'Quem visita as flores amarelas?',o:['Uma abelha','Um gato','Um cavalo'],a:'Uma abelha'}]},
+{t:'O cachorro Tobi',s:['Tobi é um cachorro cor de caramelo.','Ele adora passear no parque.','Um dia, Tobi achou um osso grande debaixo da árvore.','Então ele escondeu o osso no quintal.'],
+ q:[{q:'Qual é a cor do Tobi?',o:['Caramelo','Preto','Branco'],a:'Caramelo'},{q:'Onde o Tobi gosta de passear?',o:['No parque','Na escola','No mar'],a:'No parque'},{q:'Onde ele escondeu o osso?',o:['No quintal','No sofá','Na cozinha'],a:'No quintal'}]}
+);
 Object.assign(EN,{
 esportes:{title:'Esportes',d:'Soccer, swim, dance...',g:'Run',items:[
  {en:'basketball',pt:'basquete',e:'🏀'},{en:'volleyball',pt:'vôlei',e:'🏐'},{en:'tennis',pt:'tênis',e:'🎾'},{en:'surf',pt:'surfar',e:'🏄'},
@@ -644,7 +654,8 @@ function mathQs(level){
 function qIngles(p){return qInglesRaw(p).map(q=>{q.dom='ing';q.lab=q.after[0].t;return q;});}
 function qInglesRaw(poolIn){
   const seenEn=new Set();
-  const pool=poolIn.filter(x=>{const k=x.en.toLowerCase();if(seenEn.has(k))return false;seenEn.add(k);return true;});
+  const seenVis=new Set();
+  const pool=poolIn.filter(x=>{const k=x.en.toLowerCase();if(seenEn.has(k))return false;const v=x.e||x.c||(x.n!=null?'n'+x.n:'');if(v&&seenVis.has(v))return false;seenEn.add(k);if(v)seenVis.add(v);return true;});
   const items=pick(pool,Math.min(6,pool.length));
   const types=shuffle(['A','B','C','A','B','C']);
   return items.map((it,idx)=>{
@@ -1109,6 +1120,7 @@ const BIG_NO={letras:['explorar','achar','inicial','maiusc','tracar','ordem'],le
 function actsFor(k){
   const b=ageBand(),M=MODS[k];
   return M.acts.filter(a=>{
+    if(a.noPre&&b==='pre')return false;
     if(a.only&&a.only!==b)return false;
     const custom=!!(P&&Array.isArray(P.worlds)&&P.worlds.length);
     if(b==='pre'&&!a.only&&!custom){const ok=PRE_OK[k];return ok===null||(ok&&ok.indexOf(a.id)>=0);}
@@ -1351,14 +1363,76 @@ const CIEN_BIG=[
 ['O morcego é um animal de qual grupo?','Mamífero',['Ave','Réptil','Inseto']],['Qual é a menor unidade que forma os seres vivos?','Célula',['Órgão','Osso','Músculo']],
 ['Qual planeta é conhecido como planeta vermelho?','Marte',['Vênus','Júpiter','Mercúrio']],['O corpo ajuda a produzir qual vitamina com a luz do sol?','Vitamina D',['Vitamina C','Vitamina K','Vitamina B12']],
 ['O que acontece com a água que evapora e esfria nas nuvens?','Condensa e pode virar chuva',['Vira areia','Desaparece para sempre','Vira gelo no mar']],['Qual destes é um recurso renovável?','Energia do Sol',['Petróleo','Carvão mineral','Gás natural']]];
+const CIEN_PRE=[
+['Qual bicho vive na água?',['🐟','peixe'],[['🐶','cachorro'],['🐦','passarinho'],['🐱','gato']]],
+['Qual bicho voa?',['🐦','passarinho'],[['🐶','cachorro'],['🐢','tartaruga'],['🐮','vaca']]],
+['O que a gente usa para ouvir?',['👂','orelha'],[['👁️','olho'],['👃','nariz'],['👅','língua']]],
+['O que a gente usa para ver?',['👁️','olho'],[['👂','orelha'],['👃','nariz'],['🦶','pé']]],
+['O que a gente usa para sentir cheiro?',['👃','nariz'],[['👁️','olho'],['👂','orelha'],['🦶','pé']]],
+['Qual é bem quente?',['☀️','sol'],[['❄️','neve'],['🧊','gelo'],['⛄','boneco de neve']]],
+['Qual é bem gelado?',['🧊','gelo'],[['☀️','sol'],['🔥','fogo'],['🍳','frigideira']]],
+['O que a planta precisa para crescer?',['💧','água'],[['🍭','pirulito'],['🧸','ursinho'],['📱','celular']]],
+['O que aparece no céu de noite?',['🌙','lua'],[['☀️','sol'],['🌈','arco-íris'],['🚗','carro']]],
+['Qual bicho faz mel?',['🐝','abelha'],[['🐶','cachorro'],['🐟','peixe'],['🐢','tartaruga']]],
+['De onde nascem as frutas?',['🌳','árvore'],[['🚗','carro'],['🪑','cadeira'],['🧱','tijolo']]],
+['Com o que a gente escova os dentes?',['🪥','escova de dentes'],[['🥄','colher'],['🍴','garfo'],['🖍️','giz de cera']]],
+['O que a gente faz para ficar limpinho?',['🛁','tomar banho'],[['🎮','jogar'],['🛌','dormir'],['🍭','comer doce']]],
+['Qual bicho é bem grande e tem tromba?',['🐘','elefante'],[['🐭','rato'],['🐰','coelho'],['🐱','gato']]],
+['Qual bicho pula e vive perto da lagoa?',['🐸','sapo'],[['🐶','cachorro'],['🐮','vaca'],['🐦','passarinho']]],
+['O que cai do céu quando chove?',['💧','água'],[['🧱','pedra'],['🍎','maçã'],['🧸','ursinho']]]];
 function qCiencia(){
+  if(ageBand()==='pre')return pick(CIEN_PRE,6).map(c=>({dom:'',lab:'Ciências: '+c[0],ans:c[1][1],stem:`<span class="stemtext">${esc(c[0])}</span>`,prompt:'Toque na resposta.',say:[{t:c[0]}],
+    opts:shuffle([c[1]].concat(c[2])).map(x=>({lab:x[1],h:`<span class="emo">${x[0]}</span>`,ok:x===c[1]})),cols:2,after:[{t:c[1][1]}]}));
   const pool=ageBand()==='big'?CIEN_BIG:CIEN_MID;
   return pick(pool,6).map(c=>({dom:'',lab:'Ciências: '+c[0].slice(0,60),ans:c[1],stem:`<span class="stemtext">${esc(c[0])}</span>`,prompt:'Escolha a resposta certa.',say:[{t:c[0]}],noauto:true,
     opts:shuffle([c[1]].concat(c[2])).map(x=>({lab:x,h:`<span class="otext">${esc(x)}</span>`,ok:x===c[1]})),cols:1}));
 }
 MODS.mente.acts.push({id:'ciencia',t:'Ciências e natureza',d:'Bichos, plantas, corpo humano e espaço',g:'🔬'});
 MQ('ciencia','mente',qCiencia);
-CHAL_BIG.push(qCiencia);CHAL_MID.push(qCiencia);
+CHAL_BIG.push(qCiencia);CHAL_MID.push(qCiencia);CHAL_PRE.push(qCiencia);PRE_OK.mente.push('ciencia');
+
+/* ========== histórias em inglês com interpretação (prática livre) ========== */
+const EN_STORIES=[
+{t:"Tom's Cat",lv:'Fácil',s:['Tom has a cat.','The cat is black.','The cat likes milk.','Tom loves his cat.'],pt:['Tom tem um gato.','O gato é preto.','O gato gosta de leite.','Tom ama o seu gato.'],
+ q:[{q:'What color is the cat?',o:['Black','White','Brown'],a:'Black'},{q:'What does the cat like?',o:['Milk','Juice','Rice'],a:'Milk'},{q:'Who loves the cat?',o:['Tom','Anna','Dad'],a:'Tom'}]},
+{t:'A Sunny Day',lv:'Fácil',s:['It is a sunny day.','Mia goes to the park.','She plays with a red ball.','Her dog runs after the ball.'],pt:['É um dia de sol.','Mia vai ao parque.','Ela brinca com uma bola vermelha.','O cachorro dela corre atrás da bola.'],
+ q:[{q:'How is the weather?',o:['Sunny','Rainy','Cold'],a:'Sunny'},{q:'Where does Mia go?',o:['To the park','To school','To the beach'],a:'To the park'},{q:'What color is the ball?',o:['Red','Blue','Green'],a:'Red'}]},
+{t:'At School',lv:'Fácil',s:['Ben is at school.','He has a blue bag.','In the bag, he has two books and a pencil.','Ben likes to read.'],pt:['Ben está na escola.','Ele tem uma mochila azul.','Na mochila, ele tem dois livros e um lápis.','Ben gosta de ler.'],
+ q:[{q:"What color is Ben's bag?",o:['Blue','Red','Yellow'],a:'Blue'},{q:'How many books does Ben have?',o:['Two','One','Three'],a:'Two'},{q:'What does Ben like to do?',o:['Read','Swim','Sleep'],a:'Read'}]},
+{t:'My Family',lv:'Fácil',s:['I have a small family.','My mother is a teacher.','My father is a cook.','I have one brother.','We eat dinner together.'],pt:['Eu tenho uma família pequena.','Minha mãe é professora.','Meu pai é cozinheiro.','Eu tenho um irmão.','Nós jantamos juntos.'],
+ q:[{q:"What is the mother's job?",o:['A teacher','A doctor','A cook'],a:'A teacher'},{q:'How many brothers does the child have?',o:['One','Two','None'],a:'One'},{q:'Who eats dinner together?',o:['The family','Only the father','Only the brother'],a:'The family'}]},
+{t:'The Lost Key',lv:'Médio',s:['Anna cannot find her key.','She looks under the table and behind the sofa.','Then she checks her coat.','The key is in the pocket!','Anna is very happy.'],pt:['Anna não consegue achar a chave.','Ela procura embaixo da mesa e atrás do sofá.','Então ela confere o casaco.','A chave está no bolso!','Anna fica muito feliz.'],
+ q:[{q:'What is Anna looking for?',o:['Her key','Her phone','Her shoes'],a:'Her key'},{q:'Where does she find it?',o:['In her coat pocket','Under the table','Behind the sofa'],a:'In her coat pocket'},{q:'How does Anna feel at the end?',o:['Happy','Angry','Tired'],a:'Happy'}]},
+{t:'Saturday Plans',lv:'Médio',s:['On Saturday, Leo wakes up early.','He eats breakfast and rides his bike to the beach.','There, he meets his friends and they play volleyball.','In the evening, he goes home tired.'],pt:['No sábado, Leo acorda cedo.','Ele toma café da manhã e vai de bicicleta até a praia.','Lá, ele encontra os amigos e eles jogam vôlei.','À noite, ele volta para casa cansado.'],
+ q:[{q:'How does Leo go to the beach?',o:['By bike','By bus','By car'],a:'By bike'},{q:'What do the friends play?',o:['Volleyball','Soccer','Tennis'],a:'Volleyball'},{q:'How is Leo in the evening?',o:['Tired','Hungry','Cold'],a:'Tired'}]},
+{t:'The Rainy Picnic',lv:'Médio',s:['Sara planned a picnic, but it started to rain.','She did not cancel it.','She put a blanket in the living room and ate sandwiches with her sister.','It was a fun picnic!'],pt:['Sara planejou um piquenique, mas começou a chover.','Ela não cancelou.','Ela colocou uma manta na sala e comeu sanduíches com a irmã.','Foi um piquenique divertido!'],
+ q:[{q:'What happened to the picnic?',o:['It moved inside the house','It was canceled','It was at the park'],a:'It moved inside the house'},{q:'Where did they eat?',o:['In the living room','In the garden','At school'],a:'In the living room'},{q:'Who ate with Sara?',o:['Her sister','Her teacher','Her dog'],a:'Her sister'}]},
+{t:'The New Student',lv:'Médio',s:['Carlos is a new student at school.','He is shy, so he sits alone at lunch.','A girl named Julia invites him to sit with her group.','Soon, Carlos has new friends.'],pt:['Carlos é um aluno novo na escola.','Ele é tímido, por isso senta sozinho no almoço.','Uma garota chamada Julia o convida para sentar com o grupo dela.','Logo, Carlos tem novos amigos.'],
+ q:[{q:'Why does Carlos sit alone?',o:['He is shy','He is angry','He is sick'],a:'He is shy'},{q:'Who invites Carlos?',o:['Julia','The teacher','His mother'],a:'Julia'},{q:'What happens soon?',o:['He makes new friends','He changes schools','He goes home'],a:'He makes new friends'}]}
+];
+function enStoryQs(i){
+  return EN_STORIES[i].q.map(q=>({dom:'ing',lab:q.q,ans:q.a,stem:`<span class="stemtext">${esc(q.q)}</span>`,prompt:'Escolha a resposta certa. As respostas estão em inglês.',say:[{t:q.q,lang:'en-US',rate:S.rate*0.9}],noauto:true,
+    opts:shuffle(q.o).map(o=>({lab:o,h:`<span class="otext">${esc(o)}</span>`,ok:o===q.a})),cols:1,after:[{t:q.a,lang:'en-US',rate:S.rate*0.9}]}));
+}
+MODS.ingles.acts.push({id:'historias',t:'Histórias em inglês',d:'Leia, ouça e responda perguntas',g:'📖',noPre:true});
+MODS.ingles.acts.splice(-1,0,MODS.ingles.acts.pop());
+ACTS['ingles:historias']=m=>{
+  m.innerHTML=`${backBtn('menu','ingles')}<h2 class="mtitle" style="--c:var(--c-ingles)">Histórias em inglês</h2><p class="msub">Histórias curtas. Ouça em inglês, veja a tradução se precisar e responda às perguntas.</p>
+  <div class="acts" style="--c:var(--c-ingles)">${EN_STORIES.map((s,i)=>`<button class="act" data-go="act"${dataArg({m:'ingles',id:'historia',i:i})}><span class="glyph sm">${i+1}</span><span><b>${esc(s.t)}</b><small>${s.lv} · ${s.s.length} frases · ${s.q.length} perguntas</small></span></button>`).join('')}</div>`;
+};
+ACTS['ingles:historia']=(m,arg)=>{
+  const i=arg.i,st=EN_STORIES[i];let showPt=false;
+  m.innerHTML=`${backBtn('act',{m:'ingles',id:'historias'})}<h2 class="mtitle" style="--c:var(--c-ingles)">${esc(st.t)}</h2>
+  <div class="story">${st.s.map((s,k)=>`<button class="sent" data-k="${k}" lang="en">${esc(s)}<small class="ptr" hidden style="display:block;font-weight:600;opacity:.8;margin-top:4px">${esc(st.pt[k])}</small></button>`).join('')}</div>
+  <div class="row" style="--c:var(--c-ingles)"><button class="btn primary" id="sAll">${ICON.speaker}<span>Ouvir a história</span></button><button class="btn" id="sPt" aria-pressed="false">Ver em português</button><button class="btn" id="sQ">Responder as perguntas</button></div>`;
+  const sents=$$('.sent',m);
+  const mark=k=>sents.forEach((b,j)=>b.classList.toggle('on',j===k));
+  const en=t=>({t:t,lang:'en-US',rate:S.rate*0.9});
+  sents.forEach((b,k)=>b.onclick=()=>{mark(k);say(en(st.s[k]),()=>mark(-1));});
+  $('#sAll',m).onclick=()=>{say(st.s.map(en),()=>mark(-1),mark);};
+  $('#sPt',m).onclick=e=>{showPt=!showPt;$$('.ptr',m).forEach(x=>{x.hidden=!showPt;});e.currentTarget.setAttribute('aria-pressed',String(showPt));e.currentTarget.textContent=showPt?'Esconder o português':'Ver em português';};
+  $('#sQ',m).onclick=()=>{sfx.tap();quiz(m,{key:'ingles:hist'+i,module:'ingles',make:()=>enStoryQs(i),back:['act',{m:'ingles',id:'historia',i:i}]});};
+};
 
 CHAL_PRE.push(qShapes);
 function collectWorlds(band,birth){
@@ -2689,6 +2763,7 @@ screens.intro=m=>{
     <li>O aplicativo é para crianças de 4 a 12 anos e deve ser usado com o conhecimento de um adulto responsável.</li>
     <li>Ele guarda o nome ou apelido da criança, as respostas, o progresso e as configurações. Também pode guardar data de nascimento, ano escolar e anotações, se você preencher.</li>
     <li>Tudo fica <b>somente neste aparelho</b>. Nada é enviado para um servidor do aplicativo e não há conta nem anúncios.</li>
+    <li>Quem disponibiliza o aplicativo pode contar as visitas de forma anônima (sem cookies e sem identificar a criança), só para saber quantas pessoas o acessam. Os dados dos alunos não entram nessa contagem.</li>
     <li>Use apelido, sem sobrenome, CPF, endereço ou telefone. Dados de saúde só com autorização da família.</li>
     <li>Você pode apagar tudo quando quiser, na Área dos adultos.</li>
   </ul>
@@ -2698,7 +2773,7 @@ screens.intro=m=>{
 actions.privOk=()=>{S.privOk=PRIV_V;save();go(P?'home':'who',undefined,{replace:true});};
 const PRIV_SECS=[
  ['1. Quais dados o aplicativo guarda',['Nome ou apelido do aluno, respostas e tempos nas atividades, estrelas, figurinhas, avaliações guiadas, metas e configurações.','Se o adulto preencher: data de nascimento, ano escolar, anotações, ficha do aluno (anamnese) e observações do relatório.','O aplicativo não pede sobrenome, CPF, endereço, telefone, e-mail nem foto. Evite colocar esses dados nas anotações.']],
- ['2. Onde os dados ficam',['Somente neste aparelho, no armazenamento do navegador. O aplicativo não tem conta, login nem servidor próprio, e não envia os dados dos alunos para a internet.','Ao abrir o endereço do aplicativo, o serviço que o hospeda pode registrar acessos comuns (como o endereço de IP). Isso não inclui os dados dos alunos.','A voz de leitura usa o recurso do próprio aparelho. Em alguns aparelhos, o sistema de voz pode usar um serviço online do fabricante.']],
+ ['2. Onde os dados ficam',['Somente neste aparelho, no armazenamento do navegador. O aplicativo não tem conta, login nem servidor próprio, e não envia os dados dos alunos para a internet.','Ao abrir o endereço do aplicativo, o serviço que o hospeda pode registrar acessos comuns (como o endereço de IP). Isso não inclui os dados dos alunos.','O responsável pelo aplicativo pode usar uma ferramenta de estatística de visitas que não usa cookies e não identifica a pessoa (conta acessos, tipo de aparelho e país). Ela não lê nem recebe nomes, respostas, progresso ou anotações dos alunos.','A voz de leitura usa o recurso do próprio aparelho. Em alguns aparelhos, o sistema de voz pode usar um serviço online do fabricante.']],
  ['3. Quem pode ver',['Quem usa este aparelho e este navegador. O PIN da Área dos adultos protege contra a criança, mas não contra quem tem conhecimento técnico e acesso ao aparelho.','Se outras pessoas usam o aparelho, mantenha cada aluno em um perfil com apelido.']],
  ['4. Consentimento (LGPD, art. 14)',['A Lei Geral de Proteção de Dados (Lei 13.709/2018) exige que dados de crianças sejam tratados no melhor interesse delas e, em geral, com consentimento específico de um dos pais ou do responsável legal.','Ao tocar em “Sou adulto, li e concordo”, você declara que é o responsável pela criança ou que foi autorizado pela família a cadastrá-la.']],
  ['5. Seus direitos',['Você pode corrigir os dados (Área dos adultos > Editar aluno), apagar o histórico de um aluno, excluir um aluno ou apagar todos os dados deste aparelho (Área dos adultos > Privacidade e dados).','Também pode pedir confirmação do que é tratado, acesso e eliminação dos dados, nos termos do art. 18 da LGPD, a quem disponibilizou o aplicativo.']],

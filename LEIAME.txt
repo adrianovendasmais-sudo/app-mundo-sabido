@@ -182,3 +182,40 @@ v30 - MAIS TEMAS DE INGLES
 - 6 temas novos no Mundo do Ingles: Esportes, Legumes e verduras, Sentimentos, Bichinhos, Espaco e Cidade (de 8 a 10 palavras cada, com figura, voz em ingles e portugues, jogo e Desafio misto). Agora sao 24 temas.
 - Palavras escolhidas sem figura repetida de outros temas, para o jogo nao mostrar duas opcoes iguais.
 - Arquivos alterados: app.js, sw.js (cache v30), LEIAME.txt.
+
+
+v31 - CORRECAO EM CELULARES ESTREITOS (360 px)
+- Nomes dos mundos nao quebram mais no meio da palavra ("Nume-ros", "Cabe-cas"): so quebram entre palavras ou no hifen de "Quebra-Cabecas"; a setinha dos cartoes some abaixo de 420 px para dar espaco ao nome.
+- Cabecalho: o nome "Mundo das Descobertas" aparece inteiro em uma linha e os botoes (estrelas, pausa, som, ajustes) ficam na linha de baixo; o cabecalho deixa de ficar fixo nessas telas, para nao se sobrepor ao conteudo ao rolar.
+- Arquivos alterados: styles.css, sw.js (cache v31), LEIAME.txt.
+
+
+v32 - CONTAGEM ANONIMA DE VISITAS (texto de privacidade)
+- O aviso inicial e a tela de privacidade agora dizem que o responsavel pelo app pode contar visitas de forma anonima (sem cookies, sem identificar a crianca, sem ler dados dos alunos). Como o uso dos dados mudou, o aviso "Antes de comecar" volta a aparecer uma vez para novo aceite (PRIV_V = 2).
+- O codigo do app NAO envia nada: a contagem vem da ferramenta ligada no servico de hospedagem.
+- COMO LIGAR NA CLOUDFLARE PAGES: no painel da Cloudflare, abra o projeto do Pages e ative o "Web Analytics" (sem cookies; mostra visitas, aparelhos e paises). Confira no painel o nome exato da opcao, que a Cloudflare pode mudar. Nao precisa mexer no index.html.
+- So publique esta versao junto com a ativacao da contagem; se nao for usar contagem, volte PRIV_V para 1 e retire os trechos "estatistica de visitas" e "contar as visitas".
+- Arquivos alterados: app.js, sw.js (cache v32), LEIAME.txt.
+
+
+v33 - CIENCIAS PARA 4 A 5 ANOS
+- "Ciencias e natureza" (Mundo da Mente) agora tambem aparece para 4 a 5 anos, em versao so com figuras e voz: 16 perguntas curtas (bichos, corpo, sol e lua, agua, plantas, higiene), cada rodada sorteia 6. Entra no Desafio do dia dessa faixa.
+- Pratica livre, fora da avaliacao guiada. Perguntas escritas por nos, sem revisao de professor(a).
+- Arquivos alterados: app.js, sw.js (cache v33), LEIAME.txt.
+
+
+v34 - MAIS HISTORIAS E JOGO DE INGLES SEM FIGURAS IGUAIS
+- 4 historias novas no Mundo da Leitura (O dia de chuva, A pipa da Duda, O jardim da vovo, O cachorro Tobi), cada uma com 3 perguntas. Agora sao 13 historias. As antigas mantem a mesma ordem.
+- Jogo de ingles (Desafio misto e jogos dos temas): nao mostra mais duas opcoes com a mesma figura (por exemplo sol, nuvem, carro, trem, arco-iris, que existiam em mais de um tema).
+- Arquivos alterados: app.js, sw.js (cache v34), LEIAME.txt.
+
+
+v35 - HISTORIAS EM INGLES COM INTERPRETACAO
+- Nova atividade "Historias em ingles" no Mundo do Ingles (6 a 12 anos; nao aparece para 4 a 5): 8 historias curtas, 4 faceis (4 a 5 frases simples) e 4 medias. Cada frase pode ser tocada para ouvir em ingles; "Ouvir a historia" le tudo; "Ver em portugues" mostra a traducao de cada frase; "Responder as perguntas" faz 3 perguntas de interpretacao, com pergunta e respostas em ingles.
+- Pratica livre, fora da avaliacao guiada. Textos escritos por nos, sem revisao de professor(a) de ingles. A voz em ingles depende das vozes do aparelho.
+- Arquivos alterados: app.js, sw.js (cache v35), LEIAME.txt.
+
+
+v36 - CARTOES AO LADO DA CAPI MAIS ESTREITOS
+- Na tela inicial (tema Mundo), o balao "Ola!" e o cartao de nivel/estrelas ficaram mais estreitos e baixos (letras menores, menos espaco interno); a Capi ganhou mais largura. O texto continua inteiro, sem cortes.
+- Arquivos alterados: styles.css, sw.js (cache v36), LEIAME.txt.

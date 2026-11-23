@@ -693,3 +693,30 @@ button,.btn,.chip,.opt,.act,.mtile,.chal,.pcard,.skincard,.armitem,.iconbtn{-web
 #main:focus,.qcard:focus{outline:none}
 .qcard:focus-visible{outline:4px solid var(--c-letras);outline-offset:3px}
 .chip[aria-pressed="true"]{background:var(--c-letras);border-color:var(--c-letras);color:var(--on-c)}
+
+/* ===== celulares estreitos (360 px): nomes dos mundos e cabeçalho sem cortes (v31) ===== */
+.mtile .mt{hyphens:manual;-webkit-hyphens:manual;overflow-wrap:normal;word-break:normal}
+@media (max-width:420px){
+  .mtile{grid-template-columns:auto minmax(0,1fr);gap:6px;padding:8px 10px}
+  .mtile .chev{display:none}
+  .mtile img{width:42px;height:40px}
+  .mtile .mt{font-size:14px;line-height:1.15}
+  .top{position:static;flex-wrap:wrap}
+  .top .brand{flex:1 1 100%;min-width:0}
+  .top .brand span,.top .logo{white-space:nowrap}
+  .top .logo .lg{display:flex!important}
+  .top .tools{flex:1 1 100%;justify-content:flex-end}
+}
+
+/* ===== cartões ao lado da Capi mais estreitos e baixos (v36) ===== */
+.mhero{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:4px 8px}
+.mside{gap:6px}
+.mside .bubble{padding:8px 11px;border-radius:22px;border-width:2px}
+.mside .bubble h1{font-size:clamp(17px,5vw,24px);line-height:1.1}
+.mside .bubble p{font-size:13px;line-height:1.25;margin-top:2px}
+.mside .bubble::before{width:14px;height:14px;left:-8px;border-width:2px}
+.mside .xp,.mside .xpc{padding:7px 10px;gap:4px;border-radius:18px}
+.mside .xp .rx{font-size:14px;line-height:1.15}
+.mside .xp .rx small{font-size:12px;line-height:1.2}
+.mside .xpbar{height:10px}
+.mcap .cfig{max-width:230px}
