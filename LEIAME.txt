@@ -219,3 +219,10 @@ v35 - HISTORIAS EM INGLES COM INTERPRETACAO
 v36 - CARTOES AO LADO DA CAPI MAIS ESTREITOS
 - Na tela inicial (tema Mundo), o balao "Ola!" e o cartao de nivel/estrelas ficaram mais estreitos e baixos (letras menores, menos espaco interno); a Capi ganhou mais largura. O texto continua inteiro, sem cortes.
 - Arquivos alterados: styles.css, sw.js (cache v36), LEIAME.txt.
+
+v37 - INGLES: HISTORIAS MAIS LONGAS E CONVERSAS CURTAS; NOMES PADRONIZADOS
+- 4 historias novas em ingles para 9 a 12 anos (nivel "Mais dificil", 6 frases e 5 perguntas): The School Garden, The Science Fair, The Lighthouse, Learning to Swim (EN_STORIES). Pratica livre.
+- Nova atividade "Conversas curtas" no Mundo do Ingles (EN_DLG, 20 dialogos, sorteia 6; ouvir a pergunta e escolher a resposta). Pratica livre, escondida para 4 a 5 anos.
+- Nomes padronizados: "Contas" virou "Numeros" e "Mente agil" virou "Mente" (titulos, relatorios, rotina visual e desafio do dia).
+- ATELIE DE PROJETOS (7+ anos): cartao na tela inicial (so aparece para faixas 6-8 e 9-12 quando a idade, se informada, e 7 ou mais). 4 projetos de varios dias: Meu zoologico, Minha barraca, Diario do feijao, Minha historia (PROJ no app.js). Sem "certo/errado": a crianca escolhe, testa opcoes e recebe PISTAS (cenarios), monta orcamentos (a pista mostra quanto passou), escreve como pensou e registra observacoes reais. Estrelas por esforco (2 por etapa, +1 por testar mais de uma opcao ou explicar com detalhes, +3 ao concluir). No maximo 2 etapas por dia; o diario do feijao espera 2 dias entre observacoes. Portfolio (tela projfolio) com tudo o que a crianca criou, historia completa com voz e impressao. Dados em P.proj (entram na copia de seguranca). Nao entra na avaliacao guiada nem no relatorio.
+- Arquivos alterados: app.js, styles.css, sw.js (cache v37), LEIAME.txt. Falta revisao por professor(a) (ingles e conteudo dos projetos).

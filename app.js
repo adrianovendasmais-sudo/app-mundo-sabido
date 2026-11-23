@@ -37,7 +37,7 @@ function newProfile(o){
   return {id:'p'+Date.now().toString(36)+Math.floor(Math.random()*1000),name:o.name||'Aluno(a)',birth:o.birth||'',grade:o.grade||'',klass:o.klass||'',notes:o.notes||'',
     skin:normSkin(o.skin),stars:o.stars||0,rounds:o.rounds||{},
     day:(o.day&&typeof o.day==='object')?o.day:{d:'',m:{}},log:[],sessions:[],rep:{by:'',obs:'',beh:''},
-    band:o.band||'auto',worlds:o.worlds||null,an:o.an||{},prefs:Object.assign({},DEFAULT_PREFS,o.prefs||{}),tokens:{n:0},routine:[],rday:{d:'',done:{}},goals:[],streak:{last:'',n:0},stick:[],chal:'',cap:{eyes:'',neck:'',ear:'',back:''},lvl:{}};
+    band:o.band||'auto',worlds:o.worlds||null,an:o.an||{},prefs:Object.assign({},DEFAULT_PREFS,o.prefs||{}),tokens:{n:0},routine:[],rday:{d:'',done:{}},goals:[],streak:{last:'',n:0},stick:[],chal:'',cap:{eyes:'',neck:'',ear:'',back:''},lvl:{},proj:{}};
 }
 if(!Array.isArray(S.profiles))S.profiles=[];
 if(!S.profiles.length&&legacy&&(legacy.stars||legacy.skin||(legacy.rounds&&Object.keys(legacy.rounds).length))){
@@ -64,6 +64,7 @@ S.profiles.forEach(p=>{
   if(!p.chal)p.chal='';
   if(!p.cap)p.cap={eyes:'',neck:'',ear:'',back:''};
   if(!p.lvl)p.lvl={};
+  if(!p.proj||typeof p.proj!=='object')p.proj={};
   if(!p.band)p.band='auto';
   if(!Array.isArray(p.worlds)||!p.worlds.length)p.worlds=null;
   if(!p.an)p.an={};
@@ -565,16 +566,16 @@ letras:{title:'Letras e sílabas',sub:'Conheça o alfabeto, junte sílabas e des
   acts:[{id:'explorar',t:'Conhecer as letras',d:'Toque na letra e escute',g:'A'},{id:'silabas',t:'Montar palavras',d:'Junte as sílabas na ordem',g:'BO'},{id:'inicial',t:'Qual letra começa?',d:'Ouça a palavra e escolha a letra',g:'?'},{id:'achar',t:'Ache a letra',d:'Ouça o nome e toque na letra',g:'Bê'},{id:'silfalta',t:'Qual sílaba falta?',d:'Complete a palavra',g:'BO_'}]},
 leitura:{title:'Leitura',sub:'Leia palavras, complete frases e ouça histórias curtas. O botão Ouvir ajuda quando travar.',glyph:'Lê',
   acts:[{id:'palavra',t:'Palavra e figura',d:'Leia a palavra e ache a figura',g:'Ba'},{id:'frase',t:'Complete a frase',d:'Escolha a palavra que falta',g:'__'},{id:'historias',t:'Histórias',d:'Ouça, leia e responda',g:'Li'}]},
-contas:{title:'Contas',sub:'Somar, subtrair e tabuada. A voz lê cada conta em voz alta.',glyph:'2+3',
+contas:{title:'Números',sub:'Somar, subtrair e tabuada. A voz lê cada conta em voz alta.',glyph:'2+3',
   acts:[{id:'n1',t:'Até 10',d:'Somar e subtrair com bolinhas',g:'10'},{id:'n2',t:'Até 20',d:'Contas um pouco maiores',g:'20'},{id:'n3',t:'Tabuada',d:'Vezes 2, 3, 4, 5 e 10',g:'×'},{id:'n4',t:'Problemas',d:'Pequenas histórias com contas',g:'?'}]},
-mente:{title:'Mente ágil',sub:'Jogos de atenção, memória e lógica. Observe, lembre e descubra o que vem depois.',glyph:'🧠',
+mente:{title:'Mente',sub:'Jogos de atenção, memória e lógica. Observe, lembre e descubra o que vem depois.',glyph:'🧠',
   acts:[{id:'diferente',t:'Ache o diferente',d:'Atenção visual',g:'👀'},{id:'memoria',t:'Memória',d:'Olhe, guarde e lembre',g:'🤔'},{id:'padrao',t:'O que vem depois?',d:'Padrões e sequências',g:'🔁'}]},
 puzzle:{title:'Quebra-cabeça',sub:'Troque as peças de lugar até a imagem ficar completa.',glyph:ICON.piece,
   acts:[{id:'p1',t:'Fácil',d:'4 peças',g:'4'},{id:'p2',t:'Médio',d:'6 peças',g:'6'},{id:'p3',t:'Difícil',d:'9 peças',g:'9'}]},
 ingles:{title:'Inglês',sub:'Ouça as palavras em inglês, repita em voz alta e depois jogue.',glyph:'Hi!',
   acts:Object.keys(EN).map(k=>({id:k,t:EN[k].title,d:EN[k].d,g:EN[k].g})).concat([{id:'mix',t:'Desafio misto',d:'Perguntas de todos os temas',g:'?'}])}
 };
-const MNAME={letras:'Letras',leitura:'Leitura',contas:'Contas',mente:'Mente ágil',puzzle:'Quebra-cabeça',ingles:'Inglês'};
+const MNAME={letras:'Letras',leitura:'Leitura',contas:'Números',mente:'Mente',puzzle:'Quebra-cabeça',ingles:'Inglês'};
 
 /* ========== perguntas (jogos de escolha) ========== */
 function qLetraInicial(){
@@ -717,7 +718,7 @@ function addStars(n){
   if(e){e.textContent=S.stars;const p=e.parentNode;p.classList.remove('bump');void p.offsetWidth;p.classList.add('bump');}
 }
 const NAVS=[['home','Início','M3 11.5L12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z'],['progress','Meu Progresso','M4 20V10h4v10zm6 0V4h4v16zm6 0v-7h4v7z'],['achv','Conquistas','M7 3h10v3h3v3a4 4 0 0 1-4 4h-.3A5 5 0 0 1 13 16.9V19h3v2H8v-2h3v-2.1A5 5 0 0 1 8.3 13H8a4 4 0 0 1-4-4V6h3zM6 8v1a2 2 0 0 0 1.2 1.8A9 9 0 0 1 7 8zm12 0h-1.2a9 9 0 0 1-.2 2.8A2 2 0 0 0 18 9z'],['who','Perfil','M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z']];
-const NAV_ON={home:'home',menu:'home',progress:'progress',achv:'achv',armario:'achv',who:'who',pform:'who'};
+const NAV_ON={home:'home',menu:'home',proj:'home',projv:'home',projs:'home',projfolio:'home',progress:'progress',achv:'achv',armario:'achv',who:'who',pform:'who'};
 function navHTML(){
   const show=S.skin==='mundo'&&P&&NAV_ON[view.name];
   document.body.classList.toggle('hasnav',!!show);
@@ -763,7 +764,7 @@ screens.home=m=>{
   const ri=rankInfo();
   if(S.skin==='mundo')return homeMundo(m,d,done,ri);
   m.innerHTML=`<section class="hero2"><div>${S.masc?mascot('happy'):''}</div><div class="bubble"><h1>Olá, ${esc(P?P.name.split(' ')[0]:'')}!</h1><p>O que vamos aprender hoje?</p></div></section>
-  ${routineHTML()}${progressCompact(ri)}${recHTML()}${challengeHTML()}
+  ${routineHTML()}${progressCompact(ri)}${recHTML()}${challengeHTML()}${projCardHTML()}
   <div class="xp"><div class="rx"><span>Missão de hoje</span><span>${done}/${worlds().length}</span></div>
   <div class="badges">${worlds().map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div>${missionBtn(d)}</div>
   <div class="tiles">${worlds().map(k=>{const M=MODS[k],n=roundsOf(k);
@@ -777,7 +778,7 @@ const MT=[['letras','Mundo das Letras','abc','linear-gradient(160deg,#6DB6FF,#3F
 function homeMundo(m,d,done,ri){
   m.innerHTML=`<section class="mhero"><div class="mcap">${S.masc?mascot('happy','big'):''}</div>
   <div class="mside"><div class="bubble"><h1>Olá, ${esc(P?P.name.split(' ')[0]:'')}!</h1><p>O que vamos aprender hoje?</p></div>${progressCompact(ri)}</div></section>
-  ${routineHTML()}${recHTML()}${challengeHTML()}
+  ${routineHTML()}${recHTML()}${challengeHTML()}${projCardHTML()}
   <div class="xp"><div class="rx"><span>🎯 Minha Missão de Hoje</span><span class="pillc">${done}/${worlds().length}</span></div>
   <div class="badges">${worlds().map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div>${missionBtn(d)}</div>
   <div class="mtiles">${worlds().map(k=>MT.find(t=>t[0]===k)).filter(Boolean).map(t=>`<button class="mtile" style="--bg-t:${t[3]};--tc:${t[4]}" data-go="menu"${dataArg(t[0])}><img src="${MIMG[t[2]]}" alt="" aria-hidden="true"><span class="mt">${t[1]}</span><i class="chev" aria-hidden="true">›</i></button>`).join('')}</div>
@@ -1083,7 +1084,7 @@ MODS.contas.acts.unshift({id:'meu',t:'Contas do meu nível',d:'Sobe sozinho quan
 MODS.leitura.acts.unshift({id:'meu',t:'Palavras do meu nível',d:'Fica mais difícil quando você vai bem',g:'⬆️'});
 /* recomendação do dia: olha as últimas respostas de cada área */
 const REC={ler:{t:'Leitura de palavras',m:'leitura',id:'meu',ico:'📖'},fon:{t:'Letras e sons',m:'letras',id:'inicial',ico:'🔤'},letra:{t:'Reconhecer letras',m:'letras',id:'achar',ico:'🔠'},
-  silc:{t:'Montar palavras',m:'letras',id:'silabas',ico:'🧩'},comp:{t:'Completar frases',m:'leitura',id:'frase',ico:'✏️'},calc:{t:'Contas',m:'contas',id:'meu',ico:'➕'},
+  silc:{t:'Montar palavras',m:'letras',id:'silabas',ico:'🧩'},comp:{t:'Completar frases',m:'leitura',id:'frase',ico:'✏️'},calc:{t:'Números',m:'contas',id:'meu',ico:'➕'},
   aten:{t:'Atenção',m:'mente',id:'diferente',ico:'👀'},mem:{t:'Memória',m:'mente',id:'memoria',ico:'🤔'},log:{t:'Lógica',m:'mente',id:'padrao',ico:'🔁'},viso:{t:'Quebra-cabeça',m:'puzzle',id:'p1',ico:'🧩'}};
 function recommend(){
   if(!P||!P.log.length)return null;
@@ -1432,6 +1433,236 @@ ACTS['ingles:historia']=(m,arg)=>{
   $('#sAll',m).onclick=()=>{say(st.s.map(en),()=>mark(-1),mark);};
   $('#sPt',m).onclick=e=>{showPt=!showPt;$$('.ptr',m).forEach(x=>{x.hidden=!showPt;});e.currentTarget.setAttribute('aria-pressed',String(showPt));e.currentTarget.textContent=showPt?'Esconder o português':'Ver em português';};
   $('#sQ',m).onclick=()=>{sfx.tap();quiz(m,{key:'ingles:hist'+i,module:'ingles',make:()=>enStoryQs(i),back:['act',{m:'ingles',id:'historia',i:i}]});};
+};
+
+/* ---- v37: histórias em inglês mais longas (9–12 anos) ---- */
+EN_STORIES.push(
+{t:'The School Garden',lv:'Mais difícil',s:['Last spring, our class decided to build a garden behind the school.','Every student brought something: seeds, small shovels or old buckets.','We planted tomatoes, carrots and sunflowers.','Each morning, two students watered the plants before class.','After two months, the sunflowers were taller than the teacher!','We shared the vegetables with the school kitchen.'],
+ pt:['Na primavera passada, nossa turma decidiu construir uma horta atrás da escola.','Cada aluno trouxe algo: sementes, pazinhas ou baldes velhos.','Plantamos tomates, cenouras e girassóis.','Toda manhã, dois alunos molhavam as plantas antes da aula.','Depois de dois meses, os girassóis estavam mais altos que a professora!','Dividimos os legumes com a cozinha da escola.'],
+ q:[{q:'Where did the class build the garden?',o:['Behind the school','In a park','At home'],a:'Behind the school'},{q:'What did the students bring?',o:['Seeds, shovels or buckets','Only food','Computers'],a:'Seeds, shovels or buckets'},{q:'When did two students water the plants?',o:['Every morning','Every night','Only on Sundays'],a:'Every morning'},{q:'What happened to the sunflowers after two months?',o:['They were taller than the teacher','They died','They were very small'],a:'They were taller than the teacher'},{q:'What did the class do with the vegetables?',o:['Shared them with the school kitchen','Sold them at a market','Threw them away'],a:'Shared them with the school kitchen'}]},
+{t:'The Science Fair',lv:'Mais difícil',s:['Marina was nervous about the science fair.','Her project showed how plants grow toward the light.','For three weeks, she kept a small plant in a box with a hole on one side.','Every few days, she took a photo and measured the stem.','On the day of the fair, the judges asked many questions.','Marina answered calmly, and she won second place.'],
+ pt:['Marina estava nervosa com a feira de ciências.','O projeto dela mostrava como as plantas crescem em direção à luz.','Durante três semanas, ela manteve uma plantinha numa caixa com um buraco de um lado.','A cada poucos dias, ela tirava uma foto e media o caule.','No dia da feira, os jurados fizeram muitas perguntas.','Marina respondeu com calma e ganhou o segundo lugar.'],
+ q:[{q:'How did Marina feel before the fair?',o:['Nervous','Bored','Angry'],a:'Nervous'},{q:'What did her project show?',o:['Plants grow toward the light','Plants need no water','Plants grow only at night'],a:'Plants grow toward the light'},{q:'How long did she watch the plant?',o:['Three weeks','Three days','Three years'],a:'Three weeks'},{q:'What did she do every few days?',o:['Took a photo and measured the stem','Changed the plant','Watered it with juice'],a:'Took a photo and measured the stem'},{q:'What place did Marina win?',o:['Second place','First place','Third place'],a:'Second place'}]},
+{t:'The Lighthouse',lv:'Mais difícil',s:['A long time ago, a man named Henry lived in a lighthouse by the sea.','Every evening, he climbed 120 steps to turn on the big light.','The light helped ships to avoid the dangerous rocks.','One stormy night, a small boat was lost in the fog.','Henry rang a loud bell and kept the light on until morning.','The boat arrived safely, and the sailors thanked him.'],
+ pt:['Há muito tempo, um homem chamado Henry morava num farol à beira-mar.','Toda noite, ele subia 120 degraus para acender a luz grande.','A luz ajudava os navios a evitar as pedras perigosas.','Numa noite de tempestade, um barco pequeno se perdeu na neblina.','Henry tocou um sino alto e manteve a luz acesa até de manhã.','O barco chegou em segurança e os marinheiros agradeceram.'],
+ q:[{q:'Where did Henry live?',o:['In a lighthouse','On a ship','In a forest'],a:'In a lighthouse'},{q:'How many steps did he climb?',o:['120','12','1,200'],a:'120'},{q:'Why was the light important?',o:['It helped ships avoid the rocks','It warmed the sea','It scared the fish'],a:'It helped ships avoid the rocks'},{q:'What was the problem one stormy night?',o:['A small boat was lost in the fog','The light broke','Henry was sick'],a:'A small boat was lost in the fog'},{q:'How did Henry help the boat?',o:['He rang a bell and kept the light on','He sailed out to it','He called the police'],a:'He rang a bell and kept the light on'}]},
+{t:'Learning to Swim',lv:'Mais difícil',s:['Pedro was afraid of deep water, so he never went into the pool.','His cousin Lia offered to teach him.','First, he only sat on the edge and moved his feet.','Next, he practiced floating with a foam board.','It took many weeks, but he did not give up.','Now Pedro swims across the pool and helps other kids who feel scared.'],
+ pt:['Pedro tinha medo de água funda, então nunca entrava na piscina.','A prima dele, Lia, ofereceu-se para ensiná-lo.','Primeiro, ele só sentava na borda e mexia os pés.','Depois, ele praticou flutuar com uma prancha de espuma.','Levou muitas semanas, mas ele não desistiu.','Agora Pedro atravessa a piscina e ajuda outras crianças que têm medo.'],
+ q:[{q:'Why did Pedro never go into the pool?',o:['He was afraid of deep water','He did not like his cousin','He had no swimsuit'],a:'He was afraid of deep water'},{q:'Who offered to teach him?',o:['His cousin Lia','His teacher','His father'],a:'His cousin Lia'},{q:'What did he do first?',o:['Sat on the edge and moved his feet','Jumped in','Swam across'],a:'Sat on the edge and moved his feet'},{q:'What does "he did not give up" mean?',o:['He kept trying','He stopped','He got angry'],a:'He kept trying'},{q:'What does Pedro do now?',o:['Swims and helps other kids','Never swims','Teaches adults only'],a:'Swims and helps other kids'}]}
+);
+
+/* ---- v37: conversas curtas em inglês (prática livre) ---- */
+const EN_DLG=[
+['Hello! How are you?','I am fine, thank you.',['I am ten years old.','It is on the table.']],
+['What is your name?','My name is Ana.',['I like pizza.','It is Monday.']],
+['How old are you?','I am nine years old.',['I am from Brazil.','I am fine.']],
+['Where are you from?','I am from Brazil.',['I am nine.','Yes, please.']],
+['What time is it?','It is three o\'clock.',['It is red.','I like it.']],
+['Do you like pizza?','Yes, I do.',['It is Tuesday.','I am happy.']],
+['Would you like some water?','Yes, please.',['I am ten.','See you later.']],
+['Thank you!','You are welcome.',['Good morning.','I am sorry.']],
+['I am sorry.','It is OK.',['You are welcome.','Nice to meet you.']],
+['Good morning!','Good morning! How are you?',['Good night!','Goodbye!']],
+['Nice to meet you.','Nice to meet you, too.',['See you tomorrow.','I am hungry.']],
+['What is your favorite color?','My favorite color is blue.',['I am six years old.','It is a dog.']],
+['Can you help me, please?','Sure! What do you need?',['I am a student.','Today is sunny.']],
+['What is the weather like today?','It is rainy.',['It is my brother.','I have two cats.']],
+['Do you have a pet?','Yes, I have a dog.',['Yes, it is nine o\'clock.','No, I am Tom.']],
+['What do you want for lunch?','I want rice and beans.',['I am at school.','It is cold.']],
+['Where is the bathroom?','It is down the hall.',['It is my birthday.','I like soccer.']],
+['See you tomorrow!','See you! Bye!',['Nice to meet you.','You are welcome.']],
+['Happy birthday!','Thank you very much!',['Good night.','I am sorry.']],
+['What do you do on weekends?','I play soccer with my friends.',['I am a teacher.','It is a big house.']]
+];
+function qDialogos(){
+  return pick(EN_DLG,6).map(c=>({dom:'ing',lab:c[0],ans:c[1],stem:`<span class="stemtext" lang="en">“${esc(c[0])}”</span>`,prompt:'Escolha a melhor resposta. Ouça a frase e responda em inglês.',say:[{t:c[0],lang:'en-US',rate:S.rate*0.9}],noauto:true,
+    opts:shuffle([c[1]].concat(c[2])).map(x=>({lab:x,h:`<span class="otext" lang="en">${esc(x)}</span>`,ok:x===c[1]})),cols:1,after:[{t:c[1],lang:'en-US',rate:S.rate*0.9}]}));
+}
+MODS.ingles.acts.splice(-1,0,{id:'dialogos',t:'Conversas curtas',d:'Ouça a pergunta e escolha a resposta',g:'💬',noPre:true});
+MQ('dialogos','ingles',qDialogos);
+
+/* ========== v37: Ateliê de projetos (7+ anos) — sem "certo/errado": escolher, testar, receber pistas e explicar ========== */
+const dayDiff=(a,b)=>Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5);
+function projOk(){
+  if(!P||ageBand()==='pre')return false;
+  const y=ageYears(P.birth);return y==null||y>=7;
+}
+const brl=n=>{n=Math.round(n*100)/100;return 'R$ '+(n%1?n.toFixed(2).replace('.',','):String(n));};
+const PROJ=[
+{id:'zoo',e:'🦁',t:'Meu zoológico',d:'Escolha os bichos, cuide dos espaços e do dinheiro.',steps:[
+ {k:'pick',t:'Escolher o tema',q:'Que tipo de zoológico você quer criar?',opts:[['🌍','Savana'],['🌳','Floresta'],['🧊','Polo Norte'],['🌊','Mar']],why:'Por que você escolheu esse tema?'},
+ {k:'scn',t:'Cada bicho no seu lugar',intro:'Os bichos chegaram! Teste onde cada um fica melhor. Cada tentativa traz uma pista.',items:[
+  {q:'Onde o pinguim vai morar?',o:[['🧊 Área gelada','Combina! O pinguim vive em lugares frios e nada muito bem.',1],['🏜️ Área de deserto','Pista: no deserto faz muito calor e quase não tem água. O pinguim ficaria desconfortável. Que tal testar outro lugar?',0],['🌴 Floresta quente','Pista: lá é quente e úmido, bem diferente do frio de onde o pinguim vem.',0]]},
+  {q:'Onde o camelo vai morar?',o:[['🏜️ Área de deserto','Combina! O camelo guarda gordura na corcova e aguenta muito tempo sem beber.',1],['🧊 Área gelada','Pista: o camelo vem de lugares quentes e secos. No gelo ele passaria frio.',0],['🌊 Lago grande','Pista: o camelo não é bom nadador e não precisa de tanta água. Tente outro lugar.',0]]},
+  {q:'O que o leão vai comer?',o:[['🥩 Carne','Combina! O leão é carnívoro: precisa de carne para ter energia.',1],['🥬 Só alface','Pista: o leão tem dentes feitos para cortar carne. Só com alface ele ficaria com fome.',0],['🍌 Só frutas','Pista: frutas são ótimas para macacos, mas o leão precisa de outro tipo de comida.',0]]}]},
+ {k:'budget',t:'Fazer o orçamento',q:'Você tem R$ 100 para a primeira semana. Escolha no que vai gastar.',budget:100,min:3,items:[['🥩','Comida para os bichos',40],['🛠️','Cercas novas',35],['🌿','Plantas e árvores',20],['🩺','Cuidados do veterinário',30],['🎨','Placas e cartazes',15],['🪑','Bancos para os visitantes',25]]},
+ {k:'write',t:'Contar como pensei',q:'Como você decidiu o que escolher? Teve algo que você quis mudar no meio do caminho?',ph:'Escreva do seu jeito...'},
+ {k:'write',t:'Dar um nome',q:'Qual é o nome do seu zoológico? Escreva uma frase para convidar as pessoas a visitar.',ph:'Ex.: Zoo Aventura, venha conhecer...'}]},
+{id:'limonada',e:'🍋',t:'Minha barraca',d:'Planeje uma barraca: o que vender, quanto gastar e que preço cobrar.',steps:[
+ {k:'pick',t:'Escolher o produto',q:'O que você vai vender na sua barraca?',opts:[['🍋','Limonada'],['🍇','Suco de uva'],['🍰','Bolo'],['🍿','Pipoca']],why:'Por que as pessoas vão querer comprar isso?'},
+ {k:'budget',t:'Comprar o material',q:'Você tem R$ 40 para comprar o material. Escolha o que vai levar.',budget:40,min:4,items:[['🍋','Limões',12],['🍬','Açúcar',6],['🥤','Copos',8],['🧊','Gelo',5],['🫙','Jarra grande',10],['🪧','Cartaz colorido',4],['🥢','Canudos',7],['🧻','Guardanapos',3]]},
+ {k:'scn',t:'Testar preços',intro:'Preço é uma decisão difícil. Teste as opções e leia as pistas.',items:[
+  {q:'Você vende cada copo por R$ 0,50. Se vender 20 copos, quanto entra?',o:[['R$ 10','Isso! Dois copos dão R$ 1. Então 20 copos dão 10 reais.',1],['R$ 20','Pista: R$ 0,50 é metade de R$ 1. Então 20 copos dão a metade de 20.',0],['R$ 5','Pista: a cada 2 copos você ganha R$ 1. Quantos reais dão 20 copos?',0]]},
+  {q:'E se você cobrar R$ 10 por copo?',o:[['Poucas pessoas vão comprar','Combina! Quando o preço é muito alto, muita gente desiste de comprar.',1],['Vai vender muito mais','Pista: pense em você: compraria um copo de limonada por R$ 10?',0],['Nada muda','Pista: o preço faz diferença para quem compra. Tente outra ideia.',0]]},
+  {q:'E se você cobrar R$ 0,10 por copo?',o:[['Vende muito, mas ganha pouco','Combina! Muita gente compra, mas o dinheiro pode não cobrir o que você gastou.',1],['Ganha muito dinheiro','Pista: você gastou R$ 40 no material. Quantos copos precisaria vender a R$ 0,10 para cobrir isso?',0],['Ninguém vai querer','Pista: um preço baixo atrai compradores. O problema pode ser outro.',0]]}]},
+ {k:'write',t:'Conversa com o cliente',q:'Um cliente diz: "Está caro!". O que você responde? E se sobrar produto no fim do dia, o que você faz?',ph:'Escreva do seu jeito...'},
+ {k:'write',t:'Meu plano final',q:'Escreva seu plano: que preço vai cobrar, quantos copos pretende vender e como vai chamar os clientes.',ph:'Meu plano é...'}]},
+{id:'feijao',e:'🌱',t:'Diário do feijão',d:'Plante de verdade e observe durante alguns dias. Volte para registrar.',steps:[
+ {k:'do',t:'Plantar o feijão',q:'Pegue um copo, algodão molhado e um grão de feijão. Coloque o grão no algodão e deixe perto da janela. Peça ajuda a um adulto, se precisar.',note:'O que você acha que vai acontecer? Escreva sua previsão.',btn:'Já plantei!'},
+ {k:'do',t:'Primeira observação',wait:2,q:'Passaram alguns dias. Olhe o seu feijão com calma. O algodão ainda está úmido? Ele mudou?',note:'O que você viu? Pode descrever ou comparar com o dia em que plantou.',btn:'Já observei!'},
+ {k:'do',t:'Segunda observação',wait:2,q:'Observe de novo. Se tiver uma régua, meça o tamanho do broto ou da raiz.',note:'O que mudou desde a última vez? Se mediu, escreva o tamanho.',btn:'Já observei!'},
+ {k:'write',t:'O que descobri',wait:1,q:'Sua previsão estava certa? O que a planta precisou para crescer? O que você faria diferente numa próxima vez?',ph:'Descobri que...'}]},
+{id:'historia',e:'📖',t:'Minha história',d:'Crie uma história com personagem, problema e final. No fim, ouça ela pronta.',steps:[
+ {k:'pick',t:'Escolher o personagem',q:'Quem é o personagem principal da sua história?',opts:[['🦸','Super-herói'],['🐉','Dragão'],['🧑‍🚀','Astronauta'],['🦊','Raposa esperta']],why:'Dê um nome ao personagem e diga uma coisa que ele faz muito bem.'},
+ {k:'write',t:'O lugar',q:'Onde a história começa? Descreva o lugar para quem vai ler.',ph:'A história começa em...'},
+ {k:'write',t:'O problema',q:'Qual problema aparece? Algo precisa dar errado para a história ficar interessante.',ph:'Um dia, aconteceu que...'},
+ {k:'pick',t:'A ajuda',q:'Que ajuda aparece para resolver o problema?',opts:[['🧑‍🤝‍🧑','Um amigo'],['✨','Um objeto mágico'],['💡','Uma ideia inteligente'],['💪','Muita coragem']],why:'Conte como isso resolve o problema.'},
+ {k:'write',t:'O final',q:'Como a história termina? O personagem mudou depois dessa aventura?',ph:'No final...'}]}
+];
+function psteps(id){return (P.proj&&P.proj[id]&&P.proj[id].s)||[];}
+function pCount(id){return psteps(id).filter(Boolean).length;}
+function pAvail(pr,i){
+  const st=psteps(pr.id);
+  if(st[i])return {ok:true,done:true};
+  for(let k=0;k<i;k++)if(!st[k])return {ok:false,msg:'Termine a etapa anterior'};
+  const w=pr.steps[i].wait||0,prev=i>0?st[i-1]:null;
+  if(prev&&w>0){const dd=dayDiff(prev.d,today());if(dd<w)return {ok:false,msg:w-dd===1?'Volte amanhã':'Volte em '+(w-dd)+' dias'};}
+  if(!w){const n=st.filter(x=>x&&x.d===today()).length;if(n>=2)return {ok:false,msg:'Por hoje chega! Volte amanhã'};}
+  return {ok:true};
+}
+function pCommit(pr,i,ans,bonus){
+  if(!P.proj)P.proj={};
+  const p=P.proj[pr.id]||(P.proj[pr.id]={s:[]}),first=!p.s[i];
+  ans.d=first?today():(p.s[i].d||today());
+  p.s[i]=ans;
+  let earned=0,fin=false;
+  if(first){
+    earned=2+(bonus?1:0);
+    if(p.s.filter(Boolean).length===pr.steps.length&&!p.fin){p.fin=today();earned+=3;fin=true;}
+  }
+  save();if(earned)addStars(earned);
+  return {earned:earned,fin:fin};
+}
+function projCardHTML(){
+  if(!projOk())return '';
+  const cur=PROJ.find(p=>pCount(p.id)>0&&pCount(p.id)<p.steps.length);
+  const sub=cur?'Continue: '+cur.t+' ('+pCount(cur.id)+'/'+cur.steps.length+')':'Projetos de vários dias. Aqui você escolhe, testa e explica.';
+  return '<div class="chalrow one"><button class="chal rec proj" data-go="proj"><span class="ci" aria-hidden="true">🛠️</span><span class="ct"><b>Ateliê de projetos</b><small>'+esc(sub)+'</small></span><span class="cb">Abrir</span></button></div>';
+}
+screens.proj=m=>{
+  if(!projOk())return go('home',undefined,{replace:true});
+  m.innerHTML=`${backBtn('home')}<h2 class="mtitle" style="--c:var(--c-mente)">Ateliê de projetos</h2>
+  <p class="msub">Projetos de vários dias. Aqui não existe resposta certa ou errada: você escolhe, testa, muda de ideia e conta como pensou. As estrelas vêm do seu esforço.</p>
+  <div class="acts" style="--c:var(--c-mente)">${PROJ.map(p=>{const n=pCount(p.id),t=p.steps.length;
+    return `<button class="act" data-go="projv"${dataArg({id:p.id})}><span class="glyph sm" aria-hidden="true">${p.e}</span><span><b>${esc(p.t)}</b><small>${esc(p.d)} · ${n===t?'Concluído ✓':n?n+' de '+t+' etapas':t+' etapas'}</small></span></button>`;}).join('')}</div>
+  <div class="row"><button class="chip" data-go="projfolio">📁 Meu portfólio</button></div>`;
+};
+screens.projv=(m,arg)=>{
+  const pr=PROJ.find(x=>x.id===(arg&&arg.id));if(!pr||!projOk())return go('proj',undefined,{replace:true});
+  m.innerHTML=`${backBtn('proj')}<h2 class="mtitle" style="--c:var(--c-mente)">${pr.e} ${esc(pr.t)}</h2><p class="msub">${esc(pr.d)}</p>
+  <ol class="psteps">${pr.steps.map((s,i)=>{const a=pAvail(pr,i),cur=a.ok&&!a.done;
+    const tag=a.done?'Feita ✓ (ver ou mudar)':cur?'Fazer agora':a.msg;
+    return `<li>${a.ok?`<button class="pstep${cur?' cur':''}${a.done?' done':''}" data-go="projs"${dataArg({id:pr.id,i:i})}>`:'<div class="pstep lock">'}<span class="pn" aria-hidden="true">${a.done?'✓':i+1}</span><span class="pt"><b>${esc(s.t)}</b><small>${esc(tag)}</small></span>${a.ok?'</button>':'</div>'}</li>`;}).join('')}</ol>
+  <div class="row"><button class="chip" data-go="projfolio">📁 Meu portfólio</button></div>`;
+};
+function projAnswerLines(pr,i,a){
+  const s=pr.steps[i];if(!a)return [];
+  if(s.k==='pick')return [(s.opts[a.v]?s.opts[a.v][0]+' '+s.opts[a.v][1]:'')+(a.w?' — '+a.w:'')];
+  if(s.k==='scn')return s.items.map((it,j)=>{const o=it.o[a.c&&a.c[j]];return o?it.q+' → '+o[0]:'';}).filter(Boolean);
+  if(s.k==='budget')return [(a.sel||[]).map(k=>s.items[k]?s.items[k][0]+' '+s.items[k][1]+' ('+brl(s.items[k][2])+')':'').join(', ')+'. Total: '+brl(a.tot||0)+' de '+brl(s.budget)+'.'];
+  return [a.w||''].filter(Boolean);
+}
+function projStory(){
+  const pr=PROJ.find(x=>x.id==='historia'),st=psteps('historia'),out=[];
+  const pk=(i)=>{const a=st[i],s=pr.steps[i];return a&&s.opts[a.v]?s.opts[a.v]:null;};
+  if(st[0]){const o=pk(0);out.push((o?'O personagem é '+o[1].toLowerCase()+'. ':'')+(st[0].w||''));}
+  [1,2].forEach(i=>{if(st[i]&&st[i].w)out.push(st[i].w);});
+  if(st[3]){const o=pk(3);out.push((o?'A ajuda foi: '+o[1].toLowerCase()+'. ':'')+(st[3].w||''));}
+  if(st[4]&&st[4].w)out.push(st[4].w);
+  return out.map(x=>x.trim()).filter(Boolean);
+}
+screens.projfolio=m=>{
+  if(!projOk())return go('home',undefined,{replace:true});
+  const any=PROJ.filter(p=>pCount(p.id)>0);
+  m.innerHTML=`${backBtn('proj')}<h2 class="mtitle" style="--c:var(--c-mente)">Meu portfólio</h2><p class="msub">Tudo o que você criou e pensou nos projetos fica guardado aqui.</p>
+  ${any.length?any.map(p=>`<section class="panel"><h3>${p.e} ${esc(p.t)} <small>${pCount(p.id)}/${p.steps.length}</small></h3>${p.steps.map((s,i)=>{const L=projAnswerLines(p,i,psteps(p.id)[i]);return L.length?`<div class="pf"><b>${esc(s.t)}</b>${L.map(x=>`<p>${esc(x)}</p>`).join('')}</div>`:'';}).join('')}
+  ${p.id==='historia'&&projStory().length>1?`<div class="pf story2"><b>Minha história completa</b>${projStory().map(x=>`<p>${esc(x)}</p>`).join('')}<button class="btn noprint" id="pfListen">${ICON.speaker}<span>Ouvir minha história</span></button></div>`:''}</section>`).join(''):'<div class="panel"><p>Você ainda não guardou nada. Comece um projeto e volte aqui depois.</p><button class="btn primary" data-go="proj">Ver projetos</button></div>'}
+  ${any.length?'<div class="row noprint"><button class="chip" data-act="print">Imprimir meu portfólio</button></div>':''}`;
+  const b=$('#pfListen',m);if(b)b.onclick=()=>{sfx.tap();say(projStory().map(t=>({t:t})));};
+};
+screens.projs=(m,arg)=>{
+  const pr=PROJ.find(x=>x.id===(arg&&arg.id)),i=arg&&arg.i,st=pr&&pr.steps[i];
+  if(!st||!projOk())return go('proj',undefined,{replace:true});
+  if(!pAvail(pr,i).ok)return go('projv',{id:pr.id},{replace:true});
+  const old=psteps(pr.id)[i]||null;
+  m.innerHTML=`${backBtn('projv',{id:pr.id})}<h2 class="mtitle" style="--c:var(--c-mente)">${pr.e} ${esc(pr.t)}</h2><p class="msub">Etapa ${i+1} de ${pr.steps.length}: ${esc(st.t)}</p><div class="panel" id="pbody"></div>`;
+  const body=$('#pbody',m);
+  const spk=t=>`<button class="btn noprint" type="button" id="pspk">${ICON.speaker}<span>Ouvir</span></button>`;
+  const bindSpk=t=>{const b=$('#pspk',body);if(b)b.onclick=()=>{sfx.tap();say({t:t});};};
+  const refocus=sel=>{const f=sel&&$(sel,body);if(f)try{f.focus({preventScroll:true});}catch(e){}};
+  const end=(res,msg)=>{
+    sfx.ok();if(res.fin)rain();
+    const nx=i+1<pr.steps.length?pAvail(pr,i+1):null;
+    body.innerHTML=`<div class="pend" role="status"><div class="pbig" aria-hidden="true">${res.fin?'🎉':'🌟'}</div><h3>${res.fin?'Projeto concluído!':'Etapa guardada!'}</h3><p>${esc(msg)}</p>${res.earned&&S.reinf==='stars'?`<p class="pstar">+${res.earned} ⭐ pelo seu esforço</p>`:''}
+    <div class="row">${res.fin?'<button class="btn primary" data-go="projfolio">Ver meu portfólio</button>':nx&&nx.ok?`<button class="btn primary" data-go="projs"${dataArg({id:pr.id,i:i+1})}>Próxima etapa</button>`:`<p class="hint">${esc(nx&&nx.msg?nx.msg+' para a próxima etapa.':'')}</p>`}<button class="btn" data-go="projv"${dataArg({id:pr.id})}>Voltar ao projeto</button></div></div>`;
+    const h=$('h3',body);if(h){h.setAttribute('tabindex','-1');h.focus();}
+  };
+  if(st.k==='pick'){
+    let sel=old?old.v:-1,why=old&&old.w||'';
+    const draw=()=>{
+      body.innerHTML=`<h3 id="pq">${esc(st.q)}</h3>${spk()}<div class="popts" role="group" aria-labelledby="pq">${st.opts.map((o,k)=>`<button class="popt" data-k="${k}" aria-pressed="${sel===k}"><span aria-hidden="true">${o[0]}</span><b>${esc(o[1])}</b></button>`).join('')}</div>
+      <label class="fl" for="pw">${esc(st.why)} <small>(se quiser)</small></label><textarea id="pw" class="inp" rows="3" maxlength="400">${esc(why)}</textarea>
+      <p class="hint" id="pmsg" role="status"></p><button class="btn primary" id="pok">Guardar minha escolha</button>`;
+      bindSpk(st.q);
+      $$('.popt',body).forEach(b=>b.onclick=()=>{sfx.tap();sel=+b.dataset.k;draw();refocus('.popt[data-k="'+sel+'"]');});
+      $('#pw',body).oninput=e=>{why=e.target.value;};
+      $('#pok',body).onclick=()=>{if(sel<0){$('#pmsg',body).textContent='Escolha uma das opções primeiro.';return;}end(pCommit(pr,i,{v:sel,w:why.trim()},why.trim().length>=20),'Sua escolha e suas ideias já estão no portfólio. Você pode mudar quando quiser.');};
+    };draw();
+  }else if(st.k==='scn'){
+    let j=0,chosen=old&&old.c?old.c.slice():[],tried=[],last=-1,pend=-1,xs=0;
+    const draw=()=>{
+      const it=st.items[j];
+      body.innerHTML=`<p class="hint">${j===0?esc(st.intro)+' ':''}Situação ${j+1} de ${st.items.length}</p><h3 id="pq">${esc(it.q)}</h3>${spk()}<div class="popts one" role="group" aria-labelledby="pq">${it.o.map((o,k)=>`<button class="popt" data-k="${k}" aria-pressed="${pend===k}"><b>${esc(o[0])}</b></button>`).join('')}</div>
+      <div class="clue" id="pclue" role="status" aria-live="polite">${pend>=0?`<span aria-hidden="true">${it.o[pend][2]?'🌟':'💡'}</span> ${esc(it.o[pend][1])}`:'Toque numa opção para testar e ver a pista.'}</div>
+      <div class="row"><button class="btn primary" id="pok"${pend<0?' disabled aria-disabled="true"':''}>Escolher esta opção</button></div>`;
+      bindSpk(it.q);
+      $$('.popt',body).forEach(b=>b.onclick=()=>{sfx.tap();pend=+b.dataset.k;if(tried.indexOf(pend)<0)tried.push(pend);draw();refocus('.popt[data-k="'+pend+'"]');});
+      $('#pok',body).onclick=()=>{
+        if(pend<0)return;chosen[j]=pend;xs+=tried.length-1;tried=[];pend=-1;
+        if(j+1<st.items.length){j++;draw();const h=$('#pq',body);if(h){h.setAttribute('tabindex','-1');h.focus();}}
+        else end(pCommit(pr,i,{c:chosen},xs>0),xs>0?'Você testou '+(xs+st.items.length)+' opções antes de decidir. Testar é uma ótima forma de aprender!':'Você fez suas escolhas. Da próxima vez, teste outras opções para ver as pistas.');
+      };
+    };draw();
+  }else if(st.k==='budget'){
+    let sel=old&&old.sel?old.sel.slice():[];
+    const tot=()=>sel.reduce((a,k)=>a+st.items[k][2],0);
+    const draw=()=>{
+      const t=tot(),left=st.budget-t;
+      body.innerHTML=`<h3 id="pq">${esc(st.q)}</h3>${spk()}<div class="popts one" role="group" aria-labelledby="pq">${st.items.map((o,k)=>`<button class="popt" data-k="${k}" aria-pressed="${sel.indexOf(k)>=0}"><span aria-hidden="true">${o[0]}</span><b>${esc(o[1])}</b><i>${brl(o[2])}</i></button>`).join('')}</div>
+      <div class="clue" role="status" aria-live="polite"><span aria-hidden="true">${left<0?'💡':'💰'}</span> Gasto: ${brl(t)} de ${brl(st.budget)}. ${left<0?'Pista: passou '+brl(-left)+'. Tire algum item ou troque por um mais barato.':left===0?'Você usou todo o dinheiro.':'Ainda sobram '+brl(left)+'.'}</div>
+      <p class="hint" id="pmsg" role="status"></p><button class="btn primary" id="pok">Guardar meu orçamento</button>`;
+      bindSpk(st.q);
+      $$('.popt',body).forEach(b=>b.onclick=()=>{sfx.tap();const k=+b.dataset.k,p=sel.indexOf(k);if(p>=0)sel.splice(p,1);else sel.push(k);draw();refocus('.popt[data-k="'+k+'"]');});
+      $('#pok',body).onclick=()=>{
+        if(tot()>st.budget){$('#pmsg',body).textContent='Ainda passou do dinheiro. Tire ou troque algum item e tente de novo.';return;}
+        if(sel.length<st.min){$('#pmsg',body).textContent='Escolha pelo menos '+st.min+' itens para o seu projeto funcionar.';return;}
+        const l=st.budget-tot();
+        end(pCommit(pr,i,{sel:sel.slice(),tot:tot()},sel.length>=st.min+1),l>0?'Seu orçamento fechou e ainda sobraram '+brl(l)+'. Será que a sobra pode servir para algo?':'Seu orçamento fechou certinho, sem sobrar nada.');
+      };
+    };draw();
+  }else{
+    const isDo=st.k==='do';let txt=old&&old.w||'';
+    body.innerHTML=`<h3 id="pq">${esc(st.q)}</h3>${spk()}${isDo?`<label class="fl" for="pw">${esc(st.note)} <small>(se quiser)</small></label>`:`<label class="fl" for="pw">Sua resposta</label>`}
+    <textarea id="pw" class="inp" rows="${isDo?3:5}" maxlength="600" placeholder="${esc(st.ph||'Escreva do seu jeito...')}">${esc(txt)}</textarea>
+    <p class="hint" id="pmsg" role="status"></p><button class="btn primary" id="pok">${esc(isDo?st.btn:'Guardar')}</button>`;
+    bindSpk(st.q);
+    $('#pw',body).oninput=e=>{txt=e.target.value;};
+    $('#pok',body).onclick=()=>{
+      const w=txt.trim();
+      if(!isDo&&w.length<3){$('#pmsg',body).textContent='Escreva pelo menos uma frase curta.';return;}
+      end(pCommit(pr,i,{w:w},w.length>=40),isDo?'Registro guardado. Observar com calma é como cientistas trabalham.':'Suas palavras já estão no portfólio.'+(w.length>=40?' Você explicou com detalhes!':''));
+    };
+  }
 };
 
 CHAL_PRE.push(qShapes);

@@ -720,3 +720,27 @@ button,.btn,.chip,.opt,.act,.mtile,.chal,.pcard,.skincard,.armitem,.iconbtn{-web
 .mside .xp .rx small{font-size:12px;line-height:1.2}
 .mside .xpbar{height:10px}
 .mcap .cfig{max-width:230px}
+
+/* v37: Ateliê de projetos */
+.chalrow.one{grid-template-columns:minmax(0,1fr)}
+.chal.proj{background:linear-gradient(135deg,#0B7285,#1864AB)}
+.chal.proj .ct small{display:block!important}
+.psteps{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.pstep{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:18px;padding:12px 14px;min-height:64px}
+.pstep.cur{border-color:var(--c-mente);border-width:3px}
+.pstep.done{background:var(--bg)}
+.pstep.lock{opacity:.8;border-style:dashed}
+.pstep .pn{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:800 18px var(--f-display);background:var(--c-mente);color:var(--on-c)}
+.pstep.lock .pn{background:var(--line);color:var(--ink)}
+.pstep .pt{display:grid;min-width:0}.pstep .pt b{font:800 18px var(--f-display)}.pstep .pt small{font-size:15px;color:var(--muted);font-weight:700}
+.popts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.popts.one{grid-template-columns:minmax(0,1fr)}
+.popt{display:flex;align-items:center;gap:10px;text-align:left;background:var(--bg);color:var(--ink);border:3px solid var(--line);border-radius:18px;padding:12px 14px;min-height:60px;font:700 18px var(--f-body)}
+.popt span{font-size:28px;line-height:1}.popt b{font-weight:800;flex:1;min-width:0}.popt i{font-style:normal;font-weight:800;color:var(--muted);white-space:nowrap}
+.popt[aria-pressed="true"]{border-color:var(--c-mente);background:color-mix(in srgb,var(--c-mente) 14%,var(--bg))}
+.popt[aria-pressed="true"]::after{content:"✓";font-weight:800;color:var(--c-mente)}
+.clue{background:color-mix(in srgb,var(--c-mente) 12%,var(--bg));border:2px solid color-mix(in srgb,var(--c-mente) 45%,var(--line));border-radius:16px;padding:12px 14px;font-size:17px;font-weight:700;line-height:1.4;color:var(--ink)}
+.pend{text-align:center;display:grid;gap:8px;justify-items:center}.pbig{font-size:54px;line-height:1}.pstar{font-weight:800;color:var(--ink)!important}
+.pf{border-top:2px solid var(--line);padding-top:8px;display:grid;gap:4px}.pf p{overflow-wrap:anywhere;white-space:pre-wrap}
+.panel h3 small{font-size:15px;color:var(--muted);font-weight:700}
+@media (max-width:420px){.popts{grid-template-columns:minmax(0,1fr)}}
