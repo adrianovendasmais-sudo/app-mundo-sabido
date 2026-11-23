@@ -1,12 +1,12 @@
 # Mundo das Descobertas — guia para escolas
 
-Versão 38. Este guia é para quem instala e coordena o aplicativo na escola (secretaria, TI ou coordenação). O app funciona **sem servidor e sem conta**: os dados ficam no navegador de cada aparelho.
+Versão 39. Este guia é para quem instala e coordena o aplicativo na escola (secretaria, TI ou coordenação). O app funciona **sem servidor e sem conta**: os dados ficam no navegador de cada aparelho.
 
 ## 1. Como funciona (em uma frase)
 O aplicativo é um site que se instala como app e funciona offline. Nada é enviado para a internet: nomes, progresso e relatórios ficam só no aparelho.
 
 ## 2. Publicar
-1. Publique a **pasta inteira** (inclui `fonts/` e `images/`) em um serviço de hospedagem estática: Netlify, Cloudflare Pages ou GitHub Pages. Se faltar `app.js` ou `styles.css`, o app abre em branco.
+1. Publique a **pasta inteira** (o essencial é `index.html`, `styles.css`, `app.js`, `sw.js`, `manifest.webmanifest`, os ícones e `fonts/`) em um serviço de hospedagem estática: Netlify, Cloudflare Pages ou GitHub Pages. Se faltar `app.js` ou `styles.css`, o app abre em branco.
 2. Abra o endereço no aparelho. Para instalar: menu do navegador > "Instalar aplicativo" (Chrome/Edge) ou "Adicionar à tela de início" (Safari).
 3. Na primeira abertura, um adulto lê e aceita o aviso de privacidade.
 4. Depois da primeira visita o app funciona sem internet.
@@ -28,6 +28,7 @@ Painel da escola > **Aparelho compartilhado: ligado**. O app deixa de continuar 
 
 ## 6. Acompanhamento
 - **Relatório da turma** (com PIN): uso e participação por aluno, rodadas por área e projetos concluídos. Pode imprimir ou baixar em CSV.
+- **Avaliação guiada interrompida**: se parar no meio, ao voltar o app pergunta se quer continuar de onde parou ou começar uma nova (a parte interrompida é refeita desde o início).
 - **Relatório do aluno** e **avaliação guiada**: instrumentos de acompanhamento, **não são diagnóstico**. Resultados devem ser interpretados por profissional habilitado.
 - Os dados de cada aparelho só aparecem naquele aparelho. Para reunir a turma, importe as cópias em um aparelho (item 7).
 

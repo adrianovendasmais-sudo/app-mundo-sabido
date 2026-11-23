@@ -236,3 +236,8 @@ v38 - ESCOLAS: PAINEL DA ESCOLA, ESTRUTURA MODULAR E TESTES
 - manifest: id, categories e display_override. _headers: cache de images/.
 - GUIA_ESCOLAS.md: passo a passo para secretaria/TI (publicar, instalar, rede, configurar turma, aparelhos compartilhados, copias, LGPD, limites).
 - Arquivos novos: src/, build.js, tests/, package.json, images/, GUIA_ESCOLAS.md. Cache v38.
+
+v39 - CORRECAO DE IMAGENS E AVALIACAO INTERROMPIDA
+- IMAGENS: na v38 as imagens ficavam em images/ e, se a pasta nao fosse publicada, os cartoes dos mundos apareciam quebrados e a Capi virava o desenho simples (visto em celular). Agora o build EMBUTE images/ dentro do app.js (como na v37): so e preciso publicar index.html, styles.css, app.js, sw.js, manifest, icones e fonts/. images/ e apenas a fonte para o build e nao precisa ser publicada. O service worker deixou de listar images/ e passou a tolerar arquivo ausente na instalacao (antes, um arquivo faltando fazia o cache offline falhar inteiro).
+- AVALIACAO GUIADA INTERROMPIDA: ao reabrir o app (ou ao abrir "Avaliacao guiada") com uma avaliacao pela metade (ate 14 dias), aparece "Avaliacao em andamento" (area dos adultos, com PIN) com "Continuar de onde parou" ou "Comecar uma nova". Continuar retoma na proxima parte; a parte interrompida e refeita desde o inicio (os itens parciais dela sao descartados para nao contar em duplicado). Comecar uma nova mantem o que foi feito como avaliacao parcial no relatorio. Na tela inicial aparece o cartao "Avaliacao em andamento" para o adulto. "Parar por hoje" agora volta a Area dos adultos. Sessoes guardam o progresso em sess.at.
+- Testes: 37 verificacoes (inclui imagens carregando e retomada da avaliacao). Cache v39.
