@@ -17,7 +17,10 @@ const praise=()=>PRAISE[rand(PRAISE.length)];
 
 /* ========== progresso salvo ========== */
 const KEY='ferias-sabidas-v1';
-const PRIV_V=2;                /* suba este número se o uso dos dados mudar: o aviso inicial volta a aparecer */
+const PRIV_V=3;                /* suba este número se o uso dos dados mudar: o aviso inicial volta a aparecer */
+const LIC_URL='';              /* endereço do Worker de licença (veja worker/LEIAME.md). Vazio = app 100% liberado, sem venda. */
+const BUY_HOTMART='';          /* link de compra no Hotmart */
+const BUY_KIWIFY='';           /* link de compra na Kiwify */
 const PRIV_CONTACT='';         /* nome e e-mail do responsável pelo app (preencher antes de divulgar) */
 /* Preferências ficam em cada aluno (P.prefs) e são lidas por S.rate, S.sound, S.fx... (propriedades não enumeráveis).
    Estrelas, rodadas, dia e tema também ficam no aluno. S guarda só a lista de alunos e o aluno atual. */
@@ -736,6 +739,7 @@ function render(){
   if(bare&&view.name!=='privacy')view={name:'intro'};
   else if(!P&&['who','pform','pin','privacy'].indexOf(view.name)<0)view={name:'who'};
   gateAdult();
+  gateLic();
   if(bare)document.body.classList.remove('hasnav');
   app.innerHTML=bare?'<main id="main"></main>':'<button class="skip" data-act="skipmain">Ir para o conteúdo</button>'+(S.skin==='mundo'?'<div class="grass" aria-hidden="true"></div>':'')+headerHTML()+'<main id="main"></main>'+navHTML();
   const f=screens[view.name]||screens.home;
@@ -769,7 +773,7 @@ screens.home=m=>{
   <div class="xp"><div class="rx"><span>Missão de hoje</span><span>${done}/${worlds().length}</span></div>
   <div class="badges">${worlds().map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div>${missionBtn(d)}</div>
   <div class="tiles">${worlds().map(k=>{const M=MODS[k],n=roundsOf(k);
-    return `<button class="tile" style="--c:var(--c-${k})" data-go="menu"${dataArg(k)}><span class="glyph">${M.glyph}</span><span class="ttl">${TILE[k]||M.title}</span><span class="dsc">${esc(SHORT[k])}</span><span class="cnt">${n?n+(n===1?' rodada completa':' rodadas completas'):'Comece por aqui'}</span></button>`;}).join('')}</div>`;
+    return `<button class="tile" style="--c:var(--c-${k})" data-go="menu"${dataArg(k)}><span class="glyph">${M.glyph}</span><span class="ttl">${TILE[k]||M.title}${lockBadge(k)}</span><span class="dsc">${esc(SHORT[k])}</span><span class="cnt">${n?n+(n===1?' rodada completa':' rodadas completas'):'Comece por aqui'}</span></button>`;}).join('')}</div>`;
   m.insertAdjacentHTML('beforeend','<div class="row"><button class="chip" data-act="skinpick">Trocar tema</button><button class="chip" data-go="who">Trocar aluno</button><button class="chip" data-go="achv">Conquistas</button><button class="chip" data-go="armario">Armário da Capi</button></div>');
 };
 
@@ -782,7 +786,7 @@ function homeMundo(m,d,done,ri){
   ${routineHTML()}${recHTML()}${challengeHTML()}${avPendHTML()}${projCardHTML()}
   <div class="xp"><div class="rx"><span>🎯 Minha Missão de Hoje</span><span class="pillc">${done}/${worlds().length}</span></div>
   <div class="badges">${worlds().map(k=>`<div class="badge${d[k]?' done':''}" style="--c:var(--c-${k})"><span>${d[k]?'✓':BADGE[k][0]}</span>${BADGE[k][1]}</div>`).join('')}</div>${missionBtn(d)}</div>
-  <div class="mtiles">${worlds().map(k=>MT.find(t=>t[0]===k)).filter(Boolean).map(t=>`<button class="mtile" style="--bg-t:${t[3]};--tc:${t[4]}" data-go="menu"${dataArg(t[0])}><img src="${MIMG[t[2]]}" alt="" aria-hidden="true"><span class="mt">${t[1]}</span><i class="chev" aria-hidden="true">›</i></button>`).join('')}</div>
+  <div class="mtiles">${worlds().map(k=>MT.find(t=>t[0]===k)).filter(Boolean).map(t=>`<button class="mtile" style="--bg-t:${t[3]};--tc:${t[4]}" data-go="menu"${dataArg(t[0])}><img src="${MIMG[t[2]]}" alt="" aria-hidden="true"><span class="mt">${t[1]}${lockBadge(t[0])}</span><i class="chev" aria-hidden="true">›</i></button>`).join('')}</div>
   <div class="row"><button class="chip" data-act="skinpick">Trocar tema</button><button class="chip" data-go="armario">👕 Armário da Capi</button></div>`;
 }
 screens.progress=m=>{
@@ -2618,7 +2622,7 @@ screens.report=(m,arg)=>{
   m.innerHTML=`<div class="noprint">${backBtn('parents')}<h2 class="mtitle" style="--c:var(--c-letras)">Relatório de ${esc(P.name)}</h2>
   <div class="panel"><label class="fl" for="repSel">Quais registros incluir</label><select id="repSel" class="inp">${opts}</select>
   <div class="row" style="--c:var(--c-letras)"><button class="btn primary" data-act="print">Imprimir</button><button class="btn" data-act="copy">Copiar texto</button><button class="btn" data-act="csv">Baixar planilha (CSV)</button></div>
-  <p class="hint">Imprimir e baixar funcionam quando o aplicativo está aberto no navegador, por exemplo no endereço publicado no Netlify. Dentro do Claude esses botões podem não responder; use “Copiar texto”.</p>
+  <p class="hint">Imprimir e baixar funcionam quando o aplicativo está aberto no navegador. Se algum botão não responder neste aparelho, use “Copiar texto”.</p>
   <textarea id="copyBox" class="inp" rows="8" readonly hidden aria-label="Texto do relatório"></textarea></div></div>${sheetHTML(R)}`;
   $('#repSel',m).onchange=e=>go('report',{sel:e.target.value},{replace:true});
   [['by','rp-by','pn-by'],['beh','rp-beh','pn-beh'],['obs','rp-obs','pn-obs']].forEach(a=>{
@@ -2662,8 +2666,9 @@ screens.parents=m=>{
   const ns=P.sessions.filter(s=>P.log.some(e=>e.sid===s.id)).length;
   m.innerHTML=`${backBtn('home')}<h2 class="mtitle" style="--c:var(--c-letras)">Área dos adultos</h2><p class="msub">Avaliação, relatório e ajustes de ${esc(P.name)}. Cada aluno tem as próprias configurações, salvas neste aparelho.</p>${updBarHTML()}
   <div class="panel"><h3>Avaliação e relatório</h3><p>Para avaliar outra criança, use “Trocar aluno” na tela inicial.</p>
-  <div class="row" style="--c:var(--c-letras)"><button class="btn primary" data-go="aval">Iniciar avaliação guiada</button><button class="btn" data-go="report">Ver e imprimir relatório</button><button class="btn" data-go="metas">Metas</button><button class="btn" data-go="turma">Relatório da turma</button><button class="btn" data-go="escola">Painel da escola</button></div>
+  <div class="row" style="--c:var(--c-letras)"><button class="btn primary" data-go="aval">Iniciar avaliação guiada${proLock()}</button><button class="btn" data-go="report">Ver e imprimir relatório</button><button class="btn" data-go="metas">Metas</button><button class="btn" data-go="turma">Relatório da turma${proLock()}</button><button class="btn" data-go="escola">Painel da escola${proLock()}</button></div>
   <p>${P.log.length} respostas registradas, ${ns} ${ns===1?'avaliação guiada':'avaliações guiadas'}.</p></div>
+  ${licPanelHTML()}
   <div class="panel"><h3>Alunos</h3>
   ${S.profiles.map(p=>`<div class="rowline"><span><b>${esc(p.name)}</b>${p.klass?' · '+esc(p.klass):''}${p.id===P.id?' (atual)':''}</span><button class="chip" data-go="pform" data-arg="${esc(JSON.stringify({id:p.id}))}">Editar</button></div>`).join('')}
   <div class="row"><button class="btn" data-go="pform">Cadastrar novo aluno</button></div></div>
@@ -3005,7 +3010,7 @@ screens.intro=m=>{
   <div class="panel"><h2>O que você precisa saber</h2><ul class="plist">
     <li>O aplicativo é para crianças de 4 a 12 anos e deve ser usado com o conhecimento de um adulto responsável.</li>
     <li>Ele guarda o nome ou apelido da criança, as respostas, o progresso e as configurações. Também pode guardar data de nascimento, ano escolar e anotações, se você preencher.</li>
-    <li>Tudo fica <b>somente neste aparelho</b>. Nada é enviado para um servidor do aplicativo e não há conta nem anúncios.</li>
+    <li>Os dados dos alunos ficam <b>somente neste aparelho</b>. Não há conta nem anúncios. Se você ativar a versão completa, só o <b>e-mail da compra</b> é enviado, para conferir o pagamento.</li>
     <li>Quem disponibiliza o aplicativo pode contar as visitas de forma anônima (sem cookies e sem identificar a criança), só para saber quantas pessoas o acessam. Os dados dos alunos não entram nessa contagem.</li>
     <li>Use apelido, sem sobrenome, CPF, endereço ou telefone. Dados de saúde só com autorização da família.</li>
     <li>Você pode apagar tudo quando quiser, na Área dos adultos.</li>
@@ -3015,8 +3020,8 @@ screens.intro=m=>{
 };
 actions.privOk=()=>{S.privOk=PRIV_V;save();go(P?'home':'who',undefined,{replace:true});};
 const PRIV_SECS=[
- ['1. Quais dados o aplicativo guarda',['Nome ou apelido do aluno, respostas e tempos nas atividades, estrelas, figurinhas, avaliações guiadas, metas e configurações.','Se o adulto preencher: data de nascimento, ano escolar, anotações, ficha do aluno (anamnese) e observações do relatório.','O aplicativo não pede sobrenome, CPF, endereço, telefone, e-mail nem foto. Evite colocar esses dados nas anotações.']],
- ['2. Onde os dados ficam',['Somente neste aparelho, no armazenamento do navegador. O aplicativo não tem conta, login nem servidor próprio, e não envia os dados dos alunos para a internet.','Ao abrir o endereço do aplicativo, o serviço que o hospeda pode registrar acessos comuns (como o endereço de IP). Isso não inclui os dados dos alunos.','O responsável pelo aplicativo pode usar uma ferramenta de estatística de visitas que não usa cookies e não identifica a pessoa (conta acessos, tipo de aparelho e país). Ela não lê nem recebe nomes, respostas, progresso ou anotações dos alunos.','A voz de leitura usa o recurso do próprio aparelho. Em alguns aparelhos, o sistema de voz pode usar um serviço online do fabricante.']],
+ ['1. Quais dados o aplicativo guarda',['Nome ou apelido do aluno, respostas e tempos nas atividades, estrelas, figurinhas, avaliações guiadas, metas e configurações.','Se o adulto preencher: data de nascimento, ano escolar, anotações, ficha do aluno (anamnese) e observações do relatório.','O aplicativo não pede sobrenome, CPF, endereço, telefone nem foto do aluno. O único dado do adulto é o e-mail da compra, pedido só para ativar a versão completa. Evite colocar esses dados nas anotações.']],
+ ['2. Onde os dados ficam',['Somente neste aparelho, no armazenamento do navegador. O aplicativo não tem conta nem login e não envia os dados dos alunos para a internet. Para a versão completa, o e-mail informado é enviado a um serviço de licença, que guarda esse e-mail, a data da compra e um código do aparelho (sem nome nem dados do aluno) apenas para liberar o acesso e evitar uso indevido.','Ao abrir o endereço do aplicativo, o serviço que o hospeda pode registrar acessos comuns (como o endereço de IP). Isso não inclui os dados dos alunos.','O responsável pelo aplicativo pode usar uma ferramenta de estatística de visitas que não usa cookies e não identifica a pessoa (conta acessos, tipo de aparelho e país). Ela não lê nem recebe nomes, respostas, progresso ou anotações dos alunos.','A voz de leitura usa o recurso do próprio aparelho. Em alguns aparelhos, o sistema de voz pode usar um serviço online do fabricante.']],
  ['3. Quem pode ver',['Quem usa este aparelho e este navegador. O PIN da Área dos adultos protege contra a criança, mas não contra quem tem conhecimento técnico e acesso ao aparelho.','Se outras pessoas usam o aparelho, mantenha cada aluno em um perfil com apelido.']],
  ['4. Consentimento (LGPD, art. 14)',['A Lei Geral de Proteção de Dados (Lei 13.709/2018) exige que dados de crianças sejam tratados no melhor interesse delas e, em geral, com consentimento específico de um dos pais ou do responsável legal.','Ao tocar em “Sou adulto, li e concordo”, você declara que é o responsável pela criança ou que foi autorizado pela família a cadastrá-la.']],
  ['5. Seus direitos',['Você pode corrigir os dados (Área dos adultos > Editar aluno), apagar o histórico de um aluno, excluir um aluno ou apagar todos os dados deste aparelho (Área dos adultos > Privacidade e dados).','Também pode pedir confirmação do que é tratado, acesso e eliminação dos dados, nos termos do art. 18 da LGPD, a quem disponibilizou o aplicativo.']],
@@ -3246,6 +3251,114 @@ screens.escola=m=>{
 };
 actions.sharedToggle=()=>{S.shared=!S.shared;if(!S.idleMin)S.idleMin=5;save();render();};
 actions.idleSet=b=>{S.idleMin=+b.dataset.n;save();render();};
+/* ========== versão completa (licença por e-mail da compra) ==========
+   Grátis: Mundo das Letras, Leitura e Números, 1 aluno.  Completa: todos os mundos, avaliação guiada, projetos e painel da escola.
+   Com LIC_URL vazio (02-estado.js) o app funciona 100% liberado, como antes. */
+const FREE_W=['letras','leitura','contas'];
+const PAID_V=['aval','avalrun','avresume','turma','escola','proj','projv','projfolio','projs'];
+/* só nos planos Profissional e Escola (família: apenas atividades, relatório do aluno, metas e projetos) */
+const PRO_V=['aval','avalrun','avresume','turma','escola'];
+const PRO_PLANOS=['pro','escola'];
+const proOk=()=>!licOn()||(licensed()&&(!S.lic||!S.lic.plano||PRO_PLANOS.indexOf(S.lic.plano)>=0));
+const proLock=()=>licOn()&&!proOk()?' 🔒':'';
+const licOn=()=>!!LIC_URL;
+const licensed=()=>!licOn()||!!(S.lic&&S.lic.ok);
+const FREE_PERFIS=1;
+const PLANO_NOME={familia1:'Família (1 criança)',familia2:'Família (até 2 crianças)',pro:'Profissional',escola:'Escola'};
+function perfisMax(){if(!licOn())return 0;if(licensed())return +(S.lic&&S.lic.perfis)||0;return FREE_PERFIS;}
+const perfisBlocked=()=>{const n=perfisMax();return n>0&&S.profiles.length>=n;};
+const worldLocked=k=>licOn()&&!licensed()&&FREE_W.indexOf(k)<0;
+function paidView(v){
+  if(!v)return false;
+  if(PAID_V.indexOf(v.name)>=0)return true;
+  if(v.name==='menu')return FREE_W.indexOf(v.arg)<0&&!!MODS[v.arg];
+  if(v.name==='act')return !!(v.arg&&FREE_W.indexOf(v.arg.m)<0);
+  return false;
+}
+function gateLic(){
+  if(!licOn())return;
+  if(view.name==='pform'&&!(view.arg&&view.arg.id)&&perfisBlocked()){view={name:'premium',arg:{why:'perfis',from:{name:'who'}}};return;}
+  if(licOn()&&licensed()&&!proOk()&&PRO_V.indexOf(view.name)>=0){view={name:'premium',arg:{why:'plano',from:{name:'parents'}}};return;}
+  if(!licensed()&&paidView(view))view={name:'premium',arg:{from:{name:view.name,arg:view.arg}}};
+}
+const lockBadge=k=>worldLocked(k)?'<span class="lockb" aria-hidden="true">🔒</span><span class="sr"> (versão completa)</span>':'';
+function devId(){
+  if(!S.dev){S.dev='d'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);save();}
+  return S.dev;
+}
+async function licCall(path,email){
+  const ctl=typeof AbortController!=='undefined'?new AbortController():null,tm=setTimeout(()=>{try{ctl&&ctl.abort();}catch(e){}},12000);
+  try{
+    const r=await fetch(LIC_URL.replace(/\/+$/,'')+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,dev:devId()}),signal:ctl?ctl.signal:undefined});
+    return await r.json();
+  }finally{clearTimeout(tm);}
+}
+const maskMail=e=>{const p=String(e||'').split('@');return p.length<2?'':p[0].slice(0,2)+'***@'+p[1];};
+screens.premium=(m,arg)=>{
+  const why=arg&&arg.why;
+  if(why==='plano'){
+    m.innerHTML=`${backBtn('parents')}<h2 class="mtitle" style="--c:var(--c-letras)">Plano Profissional ou Escola</h2>
+    <div class="panel"><h3>Este recurso não está no seu plano</h3>
+    <p>A <b>avaliação guiada</b>, o <b>relatório da turma</b> e o <b>painel da escola</b> fazem parte dos planos <b>Profissional</b> e <b>Escola</b>. O seu plano${S.lic&&PLANO_NOME[S.lic.plano]?' ('+esc(PLANO_NOME[S.lic.plano])+')':''} inclui todos os mundos de atividades, o relatório do aluno, as metas e os projetos.</p>
+    <p>Para usar a avaliação guiada, adquira o plano Profissional ou o plano Escola${PRIV_CONTACT?' ou fale com o suporte: '+esc(PRIV_CONTACT):''}.</p>
+    <div class="row">${BUY_HOTMART?`<a class="btn primary" href="${esc(BUY_HOTMART)}" target="_blank" rel="noopener">Ver planos no Hotmart</a>`:''}${BUY_KIWIFY?`<a class="btn primary" href="${esc(BUY_KIWIFY)}" target="_blank" rel="noopener">Ver planos na Kiwify</a>`:''}</div></div>`;
+    return;
+  }
+  if(licensed()&&!why)return go('home',undefined,{replace:true});
+  if(why==='perfis'){
+    const n=perfisMax();
+    m.innerHTML=`${backBtn('who')}<h2 class="mtitle" style="--c:var(--c-letras)">Limite de alunos</h2>
+    <div class="panel"><h3>${licensed()?'O seu plano chegou ao limite':'A versão gratuita tem 1 aluno'}</h3>
+    <p>${licensed()?`O plano ${esc(PLANO_NOME[S.lic.plano]||'atual')} permite ${n} aluno${n===1?'':'s'}. Para cadastrar mais, escolha um plano maior (${S.lic.plano==='familia1'?'Família até 2 crianças, ':''}Profissional ou Escola) ou fale com o suporte${PRIV_CONTACT?': '+esc(PRIV_CONTACT):''}.`:'Para cadastrar mais alunos, escolha um plano da versão completa. Os alunos que já estão cadastrados continuam aparecendo.'}</p>
+    ${licensed()?'':'<div class="row"><button class="btn primary" data-go="premium">Ver a versão completa</button></div>'}</div>`;
+    return;
+  }
+  const buy=(BUY_HOTMART?`<a class="btn primary" href="${esc(BUY_HOTMART)}" target="_blank" rel="noopener">Comprar pelo Hotmart</a>`:'')+(BUY_KIWIFY?`<a class="btn primary" href="${esc(BUY_KIWIFY)}" target="_blank" rel="noopener">Comprar pela Kiwify</a>`:'');
+  m.innerHTML=`${backBtn('home')}<h2 class="mtitle" style="--c:var(--c-letras)">Versão completa</h2>
+  <div class="panel"><h3>Para continuar, peça a um adulto</h3>
+  <p>A versão gratuita tem os mundos das Letras, da Leitura e dos Números. A versão completa libera:</p>
+  <p>• <b>todos os mundos</b> (Relógios, Dinheiro, Cores e formas, Mente, Quebra-cabeças e Inglês com histórias)<br>• relatório do aluno, metas e projetos<br>• nos planos <b>Profissional</b> e <b>Escola</b>: avaliação guiada, relatório da turma e painel da escola</p>
+  <p><b>Pagamento único</b>, sem mensalidade. Há planos para 1 criança (2 aparelhos), até 2 crianças (3 aparelhos), Profissional (alunos ilimitados, 2 aparelhos) e Escola (alunos ilimitados, 20 aparelhos).</p>
+  ${buy?`<div class="row">${buy}</div>`:''}</div>
+  <div class="panel"><h3>Já comprei</h3>
+  <p>Digite o <b>mesmo e-mail usado na compra</b> para liberar neste aparelho.</p>
+  <label class="fl" for="lic-email">E-mail da compra</label>
+  <input id="lic-email" class="inp" type="email" inputmode="email" autocomplete="email" maxlength="120" value="${esc(S.licMail||'')}">
+  <div class="row"><button class="btn primary" data-act="licGo">Liberar versão completa</button></div>
+  <p id="licMsg" role="status" aria-live="polite"></p>
+  <p><small>O e-mail é enviado apenas para conferir a compra. Os dados dos alunos continuam somente neste aparelho.</small></p></div>`;
+  S.licBack=arg&&arg.from||null;
+};
+actions.licGo=async b=>{
+  const inp=$('#lic-email'),msg=$('#licMsg'),email=(inp?inp.value:'').trim().toLowerCase();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){if(msg)msg.textContent='Digite um e-mail válido.';return;}
+  if(b)b.disabled=true;if(msg)msg.textContent='Conferindo a compra…';
+  let j=null;
+  try{j=await licCall('/ativar',email);}catch(e){j=null;}
+  if(b)b.disabled=false;
+  if(!j){if(msg)msg.textContent='Não consegui conferir agora. Veja se há internet e tente de novo.';return;}
+  if(!j.ok){if(msg)msg.textContent=j.msg||'Não encontramos uma compra aprovada com esse e-mail.';return;}
+  S.lic={ok:1,email:email,at:Date.now(),chk:Date.now(),plano:j.plano||'',perfis:+j.perfis||0};S.licMail=email;save();
+  const from=S.licBack;S.licBack=null;
+  go(from&&from.name!=='premium'?from.name:'home',from&&from.name!=='premium'?from.arg:undefined,{replace:true});
+};
+actions.licOff=()=>{delete S.lic;save();render();};
+function licPanelHTML(){
+  if(!licOn())return '';
+  return licensed()
+   ?`<div class="panel"><h3>Versão completa</h3><p>✅ Ativa neste aparelho${S.lic&&S.lic.email?' ('+esc(maskMail(S.lic.email))+')':''}.${S.lic&&PLANO_NOME[S.lic.plano]?' Plano: '+esc(PLANO_NOME[S.lic.plano])+'.':''}</p><div class="row"><button class="chip" data-act="licOff">Desativar neste aparelho</button></div></div>`
+   :`<div class="panel"><h3>Versão completa</h3><p>Você está na versão gratuita (Letras, Leitura e Números, 1 aluno).</p><div class="row"><button class="btn primary" data-go="premium">Ver a versão completa</button></div></div>`;
+}
+/* confere de vez em quando se a compra continua válida (reembolso trava de novo). Sem internet, nada muda. */
+async function licBoot(){
+  if(!licOn()||!S.lic||!S.lic.ok||!S.lic.email)return;
+  if(Date.now()-(S.lic.chk||0)<7*864e5)return;
+  try{
+    const j=await licCall('/checar',S.lic.email);
+    if(j&&j.ok){S.lic.chk=Date.now();if(j.plano){S.lic.plano=j.plano;S.lic.perfis=+j.perfis||0;}save();}
+    else if(j&&j.revoked){delete S.lic;save();render();}
+  }catch(e){}
+}
 /* ========== início ========== */
 applyPrefs();
 if(S.cur&&!S.shared)setProfile(S.cur);
@@ -3258,4 +3371,5 @@ hist=[{name:view.name,arg:view.arg}];hpos=0;
 try{history.replaceState({i:0},'');}catch(e){}
 applySkin();
 render();
+licBoot();
 })();

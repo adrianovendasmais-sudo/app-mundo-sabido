@@ -749,3 +749,8 @@ button,.btn,.chip,.opt,.act,.mtile,.chal,.pcard,.skincard,.armitem,.iconbtn{-web
 .updbar{border-color:var(--c-letras);border-width:3px}
 .warn{color:var(--ink);font-weight:700}
 .inp::placeholder{color:var(--muted);opacity:1}
+/* v40: versão completa */
+.lockb{margin-left:6px;font-size:.8em}
+.mtile .mt .lockb{margin-left:4px}
+a.btn.primary{display:inline-block;text-decoration:none;text-align:center}
+#licMsg{min-height:1.4em;font-weight:700}

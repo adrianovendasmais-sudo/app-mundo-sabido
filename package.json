@@ -1,6 +1,6 @@
 {
   "name": "mundo-das-descobertas",
-  "version": "39.0.0",
+  "version": "42.0.0",
   "private": true,
   "description": "App educativo infantil (PWA, sem servidor). O código-fonte fica em src/; o app.js é gerado por build.js.",
   "scripts": {

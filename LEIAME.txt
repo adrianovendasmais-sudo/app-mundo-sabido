@@ -241,3 +241,21 @@ v39 - CORRECAO DE IMAGENS E AVALIACAO INTERROMPIDA
 - IMAGENS: na v38 as imagens ficavam em images/ e, se a pasta nao fosse publicada, os cartoes dos mundos apareciam quebrados e a Capi virava o desenho simples (visto em celular). Agora o build EMBUTE images/ dentro do app.js (como na v37): so e preciso publicar index.html, styles.css, app.js, sw.js, manifest, icones e fonts/. images/ e apenas a fonte para o build e nao precisa ser publicada. O service worker deixou de listar images/ e passou a tolerar arquivo ausente na instalacao (antes, um arquivo faltando fazia o cache offline falhar inteiro).
 - AVALIACAO GUIADA INTERROMPIDA: ao reabrir o app (ou ao abrir "Avaliacao guiada") com uma avaliacao pela metade (ate 14 dias), aparece "Avaliacao em andamento" (area dos adultos, com PIN) com "Continuar de onde parou" ou "Comecar uma nova". Continuar retoma na proxima parte; a parte interrompida e refeita desde o inicio (os itens parciais dela sao descartados para nao contar em duplicado). Comecar uma nova mantem o que foi feito como avaliacao parcial no relatorio. Na tela inicial aparece o cartao "Avaliacao em andamento" para o adulto. "Parar por hoje" agora volta a Area dos adultos. Sessoes guardam o progresso em sess.at.
 - Testes: 37 verificacoes (inclui imagens carregando e retomada da avaliacao). Cache v39.
+
+v40 - VERSAO COMPLETA (PAGAMENTO UNICO) COM LIBERACAO PELO E-MAIL DA COMPRA
+- Gratis: mundos Letras, Leitura e Numeros. Completa: todos os mundos, avaliacao guiada, projetos e painel da escola. Mundos pagos mostram cadeado e abrem a tela "Versao completa" (comprar no Hotmart/Kiwify ou digitar o e-mail da compra).
+- Novo: worker/ (Worker da Cloudflare + KV que recebe os avisos do Hotmart e da Kiwify; veja worker/LEIAME.md). Reembolso/chargeback travam de novo; ate 5 aparelhos por e-mail.
+- Enquanto LIC_URL (src/02-estado.js, e app.js) estiver vazio o app fica 100% liberado.
+- Privacidade: PRIV_V=3 (o aviso inicial volta a aparecer; cita o e-mail da compra).
+- Arquivos para publicar: app.js, styles.css, sw.js (cache v40). Worker: worker/licenca.js. Testes: 37 do app + 19 do Worker (node worker/teste.mjs).
+
+v41 - PLANOS (FAMILIA 1, FAMILIA 2, PROFISSIONAL, ESCOLA) COM LIMITE DE ALUNOS E APARELHOS
+- Familia 1: 1 aluno, 2 aparelhos. Familia 2: 2 alunos, 3 aparelhos. Profissional: alunos ilimitados, 2 aparelhos. Escola: alunos ilimitados, 20 aparelhos. Gratis: 1 aluno (quem ja tem mais alunos continua com eles, so nao cadastra novos).
+- Aparelho extra: acao 'extra' no /admin do Worker (worker/LEIAME.md). Cada produto no Hotmart/Kiwify tem o proprio webhook com &plano=...
+- Arquivos para publicar: app.js, sw.js (cache v41). Worker: worker/licenca.js atualizado. Testes: 37 do app, 26 do Worker, 4 de limite de alunos.
+
+v42 - AVALIACAO GUIADA SO NOS PLANOS PROFISSIONAL E ESCOLA
+- Planos Familia 1 e Familia 2: todos os mundos, relatorio do aluno, metas e projetos. Avaliacao guiada, relatorio da turma e painel da escola ficam com cadeado e abrem uma tela explicando que fazem parte dos planos Profissional e Escola. Profissional e Escola liberam tudo.
+- Quem usa o app sem licenca (gratis) continua vendo so Letras, Leitura e Numeros (1 aluno).
+- Texto da tela de relatorio sem mencao a Netlify/Claude.
+- Para mudar quais telas sao so dos planos maiores: lista PRO_V em src/24-licenca.js (e rode node build.js). Cache v42.
